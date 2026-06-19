@@ -1,0 +1,968 @@
+{
+  "translation-revision-date": "2026-06-19 12:00+0000",
+  "generator": "maca-njuvs build-sv-translations.py",
+  "domain": "maca-njuvs",
+  "locale_data": {
+    "maca-njuvs": {
+      "": {
+        "domain": "maca-njuvs",
+        "lang": "sv_SE",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "%1$d / %2$d characters": [
+        "%1$d / %2$d tecken"
+      ],
+      "%1$s (%2$s)": [
+        "%1$s (%2$s)"
+      ],
+      "%d characters left": [
+        "%d tecken kvar"
+      ],
+      "%s (English)": [
+        "%s (Engelska)"
+      ],
+      "Active": [
+        "Aktiv"
+      ],
+      "Add a test image URL in Social settings to test Instagram.": [
+        "Lägg till en testbild-URL i inställningarna för sociala medier för att testa Instagram."
+      ],
+      "Add event": [
+        "Lägg till evenemang"
+      ],
+      "Add exception": [
+        "Lägg till undantag"
+      ],
+      "Add news": [
+        "Lägg till nyhet"
+      ],
+      "Add the blocks “maca News” and “maca Events” from the maca Njuvs category in the block editor.": [
+        "Lägg till blocken “maca News” och “maca Events” från kategorin maca Njuvs i blockredigeraren."
+      ],
+      "Add this exact URL under Facebook Login → Valid OAuth Redirect URIs in your Meta app.": [
+        "Lägg till denna exakta URL under Facebook Login → Valid OAuth Redirect URIs i din Meta-app."
+      ],
+      "All categories": [
+        "Alla kategorier"
+      ],
+      "All day": [
+        "Heldag"
+      ],
+      "Already imported": [
+        "Redan importerad"
+      ],
+      "App ID": [
+        "App ID"
+      ],
+      "App Secret": [
+        "App Secret"
+      ],
+      "Archived": [
+        "Arkiverad"
+      ],
+      "Back to list": [
+        "Tillbaka till listan"
+      ],
+      "Back to settings": [
+        "Tillbaka till inställningar"
+      ],
+      "Blocks": [
+        "Block"
+      ],
+      "Book a table": [
+        "Boka bord"
+      ],
+      "Building preview…": [
+        "Skapar förhandsgranskning…"
+      ],
+      "Calendar feed": [
+        "Kalenderflöde"
+      ],
+      "Calendar navigation": [
+        "Kalendernavigering"
+      ],
+      "Cancel": [
+        "Avbryt"
+      ],
+      "Cancel or reschedule a single date in a recurring series.": [
+        "Avbryt eller omplanera ett enskilt datum i en återkommande serie."
+      ],
+      "Cancelled": [
+        "Avbruten"
+      ],
+      "Caption": [
+        "Bildtext"
+      ],
+      "Category": [
+        "Kategori"
+      ],
+      "Channel": [
+        "Kanal"
+      ],
+      "Channels": [
+        "Kanaler"
+      ],
+      "Characters": [
+        "Tecken"
+      ],
+      "Choose Published to show on the website. Draft and scheduled items are hidden until published.": [
+        "Välj Publicerad för att visa på webbplatsen. Utkast och schemalagda objekt döljs tills de publiceras."
+      ],
+      "Choose page…": [
+        "Välj sida…"
+      ],
+      "Click an event in the calendar to see the full description, price and booking.": [
+        "Klicka på ett evenemang i kalendern för att se fullständig beskrivning, pris och bokning."
+      ],
+      "Close": [
+        "Stäng"
+      ],
+      "Connect Facebook & Instagram": [
+        "Anslut Facebook och Instagram"
+      ],
+      "Connect Facebook first.": [
+        "Anslut Facebook först."
+      ],
+      "Connect Facebook under %s to enable social publishing.": [
+        "Anslut Facebook under %s för att aktivera publicering på sociala medier."
+      ],
+      "Connect an Instagram Business account to the Facebook page first.": [
+        "Anslut ett Instagram Business-konto till Facebook-sidan först."
+      ],
+      "Connect page": [
+        "Anslut sida"
+      ],
+      "Connect your Meta app to publish news and events to your Facebook Page and Instagram account.": [
+        "Anslut din Meta-app för att publicera nyheter och evenemang på din Facebook-sida och ditt Instagram-konto."
+      ],
+      "Connection": [
+        "Anslutning"
+      ],
+      "Content": [
+        "Innehåll"
+      ],
+      "Content type": [
+        "Innehållstyp"
+      ],
+      "Continuous horizontal scroll. Without this, swipe or scroll sideways when there are several news items.": [
+        "Kontinuerlig horisontell rullning. Utan detta sveper eller scrollar du åt sidan när det finns flera nyheter."
+      ],
+      "Copy existing WordPress posts (Inlägg) into maca Njuvs as news items. Original posts are kept — nothing is deleted.": [
+        "Kopiera befintliga WordPress-inlägg (Inlägg) till maca Njuvs som nyheter. Originalinlagen behålls — inget raderas."
+      ],
+      "Copy feed URL": [
+        "Kopiera flödes-URL"
+      ],
+      "Could not connect the selected page.": [
+        "Kunde inte ansluta den valda sidan."
+      ],
+      "Could not create news item.": [
+        "Kunde inte skapa nyhet."
+      ],
+      "Could not save event.": [
+        "Kunde inte spara evenemang."
+      ],
+      "Could not save exception.": [
+        "Kunde inte spara undantag."
+      ],
+      "Could not save news item.": [
+        "Kunde inte spara nyhet."
+      ],
+      "Czech": [
+        "Tjeckiska"
+      ],
+      "Daily": [
+        "Dagligen"
+      ],
+      "Danish": [
+        "Danska"
+      ],
+      "Date": [
+        "Datum"
+      ],
+      "Delete": [
+        "Radera"
+      ],
+      "Delete this event?": [
+        "Radera detta evenemang?"
+      ],
+      "Delete this news item?": [
+        "Radera denna nyhet?"
+      ],
+      "Description": [
+        "Beskrivning"
+      ],
+      "Disconnect": [
+        "Koppla från"
+      ],
+      "Disconnect Facebook and Instagram?": [
+        "Koppla från Facebook och Instagram?"
+      ],
+      "Done!": [
+        "Klart!"
+      ],
+      "Draft": [
+        "Utkast"
+      ],
+      "Dutch": [
+        "Nederländska"
+      ],
+      "Edit": [
+        "Redigera"
+      ],
+      "Edit news item": [
+        "Redigera nyhet"
+      ],
+      "Enable maca Njuvs": [
+        "Aktivera maca Njuvs"
+      ],
+      "Enable maca Njuvs to publish the calendar feed.": [
+        "Aktivera maca Njuvs för att publicera kalenderflödet."
+      ],
+      "Enable maca Njuvs under Settings.": [
+        "Aktivera maca Njuvs under Inställningar."
+      ],
+      "End": [
+        "Slut"
+      ],
+      "End must be after start.": [
+        "Slut måste vara efter start."
+      ],
+      "Ends on (optional)": [
+        "Slutar den (valfritt)"
+      ],
+      "English": [
+        "Engelska"
+      ],
+      "Enter Meta App ID and App Secret first.": [
+        "Ange Meta App ID och App Secret först."
+      ],
+      "Event deleted.": [
+        "Evenemang raderat."
+      ],
+      "Event details": [
+        "Evenemangsdetaljer"
+      ],
+      "Event saved.": [
+        "Evenemang sparat."
+      ],
+      "Events": [
+        "Evenemang"
+      ],
+      "Every": [
+        "Varje"
+      ],
+      "Exception removed.": [
+        "Undantag borttaget."
+      ],
+      "Exception saved.": [
+        "Undantag sparat."
+      ],
+      "Excerpt": [
+        "Utdrag"
+      ],
+      "Expires at": [
+        "Går ut"
+      ],
+      "Expiry date has passed.": [
+        "Utgångsdatum har passerat."
+      ],
+      "Facebook": [
+        "Facebook"
+      ],
+      "Facebook & Instagram": [
+        "Facebook och Instagram"
+      ],
+      "Facebook and Instagram publishing is not available for demo users.": [
+        "Publicering på Facebook och Instagram är inte tillgänglig för demokonton."
+      ],
+      "Facebook and Instagram were disconnected.": [
+        "Facebook och Instagram har kopplats från."
+      ],
+      "Facebook authorization was cancelled.": [
+        "Facebook-auktorisering avbröts."
+      ],
+      "Facebook is not connected.": [
+        "Facebook är inte anslutet."
+      ],
+      "Facebook page connected.": [
+        "Facebook-sida ansluten."
+      ],
+      "Facebook page:": [
+        "Facebook-sida:"
+      ],
+      "Facebook test post published.": [
+        "Facebook-testinlägg publicerat."
+      ],
+      "Facebook:": [
+        "Facebook:"
+      ],
+      "Failed": [
+        "Misslyckades"
+      ],
+      "Feed URL copied.": [
+        "Flödes-URL kopierad."
+      ],
+      "Finnish": [
+        "Finska"
+      ],
+      "Fixed on the side while scrolling on desktop. Click a news item to read the full text in a popup. On mobile it appears last on the page.": [
+        "Fast på sidan vid scrollning på dator. Klicka på en nyhet för att läsa hela texten i en popup. På mobil visas den sist på sidan."
+      ],
+      "Fixed panel left": [
+        "Fast panel vänster"
+      ],
+      "Fixed panel right": [
+        "Fast panel höger"
+      ],
+      "For recurring events, social posts are sent once for the series (first occurrence only).": [
+        "För återkommande evenemang skickas inlägg på sociala medier en gång för serien (endast första förekomsten)."
+      ],
+      "Forbidden": [
+        "Förbjudet"
+      ],
+      "French": [
+        "Franska"
+      ],
+      "Fri": [
+        "fre"
+      ],
+      "German": [
+        "Tyska"
+      ],
+      "Google Calendar": [
+        "Google Calendar"
+      ],
+      "Guide": [
+        "Guide"
+      ],
+      "Guide file not found or could not be read.": [
+        "Guidefilen hittades inte eller kunde inte läsas."
+      ],
+      "If the feed returns 404, save Permalink settings once under Settings → Permalinks.": [
+        "Om flödet returnerar 404, spara permalänksinställningarna en gång under Inställningar → Permalänkar."
+      ],
+      "Image": [
+        "Bild"
+      ],
+      "Import": [
+        "Importera"
+      ],
+      "Import as news": [
+        "Importera som nyhet"
+      ],
+      "Import finished: %1$d imported, %2$d skipped, %3$d failed.": [
+        "Import klar: %1$d importerade, %2$d överhoppade, %3$d misslyckade."
+      ],
+      "Import from WordPress": [
+        "Importera från WordPress"
+      ],
+      "Import is not available.": [
+        "Import är inte tillgänglig."
+      ],
+      "Import selected WordPress posts as maca Njuvs news?": [
+        "Importera valda WordPress-inlägg som maca Njuvs-nyheter?"
+      ],
+      "In page (table/column)": [
+        "På sidan (tabell/kolumn)"
+      ],
+      "Instagram": [
+        "Instagram"
+      ],
+      "Instagram is not connected to the selected Facebook page.": [
+        "Instagram är inte anslutet till den valda Facebook-sidan."
+      ],
+      "Instagram limits captions to 2,200 characters. The text below is truncated as it will be sent.": [
+        "Instagram begränsar bildtexter till 2 200 tecken. Texten nedan är avkortad som den kommer att skickas."
+      ],
+      "Instagram requires an image on the item.": [
+        "Instagram kräver en bild på objektet."
+      ],
+      "Instagram requires an image.": [
+        "Instagram kräver en bild."
+      ],
+      "Instagram test post published.": [
+        "Instagram-testinlägg publicerat."
+      ],
+      "Instagram:": [
+        "Instagram:"
+      ],
+      "Invalid OAuth state. Try connecting again.": [
+        "Ogiltigt OAuth-tillstånd. Försök ansluta igen."
+      ],
+      "Invalid exception date.": [
+        "Ogiltigt undantagsdatum."
+      ],
+      "Invalid request.": [
+        "Ogiltig begäran."
+      ],
+      "Italian": [
+        "Italienska"
+      ],
+      "Layout": [
+        "Layout"
+      ],
+      "Leave blank to keep the current secret.": [
+        "Lämna tomt för att behålla det nuvarande hemligheten."
+      ],
+      "List": [
+        "Lista"
+      ],
+      "Local language": [
+        "Lokalt språk"
+      ],
+      "Location": [
+        "Plats"
+      ],
+      "Main heading — shown on the website, in the banner, and first in the social post caption.": [
+        "Huvudrubrik — visas på webbplatsen, i bannern och först i bildtexten på sociala medier."
+      ],
+      "Message": [
+        "Meddelande"
+      ],
+      "Meta API request failed.": [
+        "Meta API-begäran misslyckades."
+      ],
+      "Meta app credentials": [
+        "Meta-appuppgifter"
+      ],
+      "Meta app settings saved.": [
+        "Meta-appinställningar sparade."
+      ],
+      "Modified exceptions need new start and end.": [
+        "Ändrade undantag behöver ny start och slut."
+      ],
+      "Modified time": [
+        "Ändringstid"
+      ],
+      "Mon": [
+        "mån"
+      ],
+      "Month calendar": [
+        "Månadskalender"
+      ],
+      "Monthly": [
+        "Månadsvis"
+      ],
+      "New start / end": [
+        "Ny start / slut"
+      ],
+      "New time": [
+        "Ny tid"
+      ],
+      "News": [
+        "Nyheter"
+      ],
+      "News deleted.": [
+        "Nyhet raderad."
+      ],
+      "News item is missing.": [
+        "Nyheten saknas."
+      ],
+      "News saved.": [
+        "Nyhet sparad."
+      ],
+      "News settings": [
+        "Nyhetsinställningar"
+      ],
+      "Next": [
+        "Nästa"
+      ],
+      "No": [
+        "Nej"
+      ],
+      "No Facebook pages found for this account.": [
+        "Inga Facebook-sidor hittades för detta konto."
+      ],
+      "No Instagram Business account is linked to this page.": [
+        "Inget Instagram Business-konto är kopplat till denna sida."
+      ],
+      "No events yet.": [
+        "Inga evenemang ännu."
+      ],
+      "No image selected. Instagram requires an image.": [
+        "Ingen bild vald. Instagram kräver en bild."
+      ],
+      "No news items exist yet. Add one under maca Njuvs → Nyheter.": [
+        "Inga nyheter finns ännu. Lägg till en under maca Njuvs → Nyheter."
+      ],
+      "No news to show right now.": [
+        "Inga nyheter att visa just nu."
+      ],
+      "No news yet.": [
+        "Inga nyheter ännu."
+      ],
+      "No social posts yet.": [
+        "Inga inlägg på sociala medier ännu."
+      ],
+      "No upcoming events.": [
+        "Inga kommande evenemang."
+      ],
+      "Norwegian": [
+        "Norska"
+      ],
+      "Note": [
+        "Obs"
+      ],
+      "Nothing is visible to visitors yet.": [
+        "Inget är synligt för besökare ännu."
+      ],
+      "Nothing to publish to social media.": [
+        "Inget att publicera på sociala medier."
+      ],
+      "Number of events": [
+        "Antal evenemang"
+      ],
+      "Number of items": [
+        "Antal objekt"
+      ],
+      "Number of news in banner": [
+        "Antal nyheter i bannern"
+      ],
+      "OAuth redirect URI": [
+        "OAuth redirect URI"
+      ],
+      "Occurrence date": [
+        "Förekomstdatum"
+      ],
+      "Occurrence exceptions": [
+        "Förekomstundantag"
+      ],
+      "On Android or desktop: use Google Calendar or copy the feed URL into your calendar app.": [
+        "På Android eller dator: använd Google Calendar eller kopiera flödes-URL:en till din kalenderapp."
+      ],
+      "On iPhone/iPad: tap “Subscribe in calendar app”, then open Calendar → Calendars and make sure the subscribed calendar is checked.": [
+        "På iPhone/iPad: tryck på “Prenumerera i kalenderapp”, öppna sedan Calendar → Calendars och kontrollera att den prenumererade kalendern är ikryssad."
+      ],
+      "One-time": [
+        "Engångs"
+      ],
+      "Open Social media": [
+        "Öppna sociala medier"
+      ],
+      "Open settings": [
+        "Öppna inställningar"
+      ],
+      "Optional. Leave empty to publish immediately. A future date with status Published becomes Scheduled until then.": [
+        "Valfritt. Lämna tomt för att publicera direkt. Ett framtida datum med status Publicerad blir Schemalagd tills dess."
+      ],
+      "Optional. Only applies to posts, not pages.": [
+        "Valfritt. Gäller endast inlägg, inte sidor."
+      ],
+      "Optional. Shown on the website when set.": [
+        "Valfritt. Visas på webbplatsen när det är angivet."
+      ],
+      "Or after number of occurrences (optional)": [
+        "Eller efter antal förekomster (valfritt)"
+      ],
+      "Page": [
+        "Sida"
+      ],
+      "Pages": [
+        "Sidor"
+      ],
+      "Pending": [
+        "Väntande"
+      ],
+      "Polish": [
+        "Polska"
+      ],
+      "Portuguese": [
+        "Portugisiska"
+      ],
+      "Post not found.": [
+        "Inlägget hittades inte."
+      ],
+      "Posts": [
+        "Inlägg"
+      ],
+      "Posts found: %1$d. Already imported: %2$d. Remaining: %3$d.": [
+        "Inlägg hittade: %1$d. Redan importerade: %2$d. Återstående: %3$d."
+      ],
+      "Preview is only available for news.": [
+        "Förhandsgranskning är endast tillgänglig för nyheter."
+      ],
+      "Preview social post": [
+        "Förhandsgranska inlägg på sociala medier"
+      ],
+      "Previous": [
+        "Föregående"
+      ],
+      "Price": [
+        "Pris"
+      ],
+      "Public HTTPS image used for Instagram test posts.": [
+        "Offentlig HTTPS-bild som används för Instagram-testinlägg."
+      ],
+      "Public feed for calendar apps. Updates when events change.": [
+        "Offentligt flöde för kalenderappar. Uppdateras när evenemang ändras."
+      ],
+      "Publish": [
+        "Publicera"
+      ],
+      "Publish again to Facebook": [
+        "Publicera igen på Facebook"
+      ],
+      "Publish again to Instagram": [
+        "Publicera igen på Instagram"
+      ],
+      "Publish at": [
+        "Publiceringstid"
+      ],
+      "Publish date is in the future (%s).": [
+        "Publiceringsdatum ligger i framtiden (%s)."
+      ],
+      "Publish failed.": [
+        "Publicering misslyckades."
+      ],
+      "Publish log": [
+        "Publiceringslogg"
+      ],
+      "Publish news and events on your website with Gutenberg blocks. Guests can subscribe to the event calendar via iCal.": [
+        "Publicera nyheter och evenemang på din webbplats med Gutenberg-block. Gäster kan prenumerera på evenemangskalendern via iCal."
+      ],
+      "Published": [
+        "Publicerad"
+      ],
+      "Published news with “Website” checked appears here. Publish date is optional.": [
+        "Publicerade nyheter med “Webbplats” ikryssad visas här. Publiceringsdatum är valfritt."
+      ],
+      "Publishing": [
+        "Publicering"
+      ],
+      "Publishing to Facebook…": [
+        "Publicerar på Facebook…"
+      ],
+      "Publishing to Instagram…": [
+        "Publicerar på Instagram…"
+      ],
+      "Publishing to social media": [
+        "Publicering på sociala medier"
+      ],
+      "Read full news: %s": [
+        "Läs hela nyheten: %s"
+      ],
+      "Reconnect": [
+        "Återanslut"
+      ],
+      "Recurrence": [
+        "Återkommande"
+      ],
+      "Remove": [
+        "Ta bort"
+      ],
+      "Remove this exception?": [
+        "Ta bort detta undantag?"
+      ],
+      "Republish creates a new post on the channel. Title, excerpt, and content are sent as the caption.": [
+        "Återpublicering skapar ett nytt inlägg på kanalen. Rubrik, utdrag och innehåll skickas som bildtext."
+      ],
+      "Sat": [
+        "lör"
+      ],
+      "Save App ID and App Secret first, then connect.": [
+        "Spara App ID och App Secret först, anslut sedan."
+      ],
+      "Save Meta settings": [
+        "Spara Meta-inställningar"
+      ],
+      "Save and publish": [
+        "Spara och publicera"
+      ],
+      "Save settings": [
+        "Spara inställningar"
+      ],
+      "Saving…": [
+        "Sparar…"
+      ],
+      "Scheduled": [
+        "Schemalagd"
+      ],
+      "Scheduled for %s.": [
+        "Schemalagd till %s."
+      ],
+      "Scheduled without a publish date.": [
+        "Schemalagd utan publiceringsdatum."
+      ],
+      "Scrolling ticker": [
+        "Rullande tickertext"
+      ],
+      "Select Facebook page": [
+        "Välj Facebook-sida"
+      ],
+      "Select image": [
+        "Välj bild"
+      ],
+      "Select this block and open “News settings” in the right sidebar to change layout.": [
+        "Välj detta block och öppna “Nyhetsinställningar” i höger sidopanel för att ändra layout."
+      ],
+      "Send test post": [
+        "Skicka testinlägg"
+      ],
+      "Sending test post to Facebook…": [
+        "Skickar testinlägg till Facebook…"
+      ],
+      "Sending test post to Instagram…": [
+        "Skickar testinlägg till Instagram…"
+      ],
+      "Settings": [
+        "Inställningar"
+      ],
+      "Settings saved.": [
+        "Inställningar sparade."
+      ],
+      "Setup guide: Facebook & Instagram": [
+        "Installationsguide: Facebook och Instagram"
+      ],
+      "Short summary for the banner and list. Included in the social post caption after the title.": [
+        "Kort sammanfattning för bannern och listan. Ingår i bildtexten på sociala medier efter rubriken."
+      ],
+      "Show book-a-table button on this event": [
+        "Visa boka-bord-knapp på detta evenemang"
+      ],
+      "Show calendar subscription": [
+        "Visa kalenderprenumeration"
+      ],
+      "Show date": [
+        "Visa datum"
+      ],
+      "Show excerpt": [
+        "Visa utdrag"
+      ],
+      "Show image": [
+        "Visa bild"
+      ],
+      "Show location": [
+        "Visa plats"
+      ],
+      "Show news and events on the website and in blocks": [
+        "Visa nyheter och evenemang på webbplatsen och i block"
+      ],
+      "Show on website": [
+        "Visa på webbplatsen"
+      ],
+      "Show published news from maca Njuvs.": [
+        "Visa publicerade nyheter från maca Njuvs."
+      ],
+      "Show upcoming events from maca Njuvs.": [
+        "Visa kommande evenemang från maca Njuvs."
+      ],
+      "Skip posts that were imported before": [
+        "Hoppa över inlägg som importerats tidigare"
+      ],
+      "Skipped": [
+        "Överhoppad"
+      ],
+      "Social media": [
+        "Sociala medier"
+      ],
+      "Social preview is not available.": [
+        "Förhandsgranskning av sociala medier är inte tillgänglig."
+      ],
+      "Social publishing is not available.": [
+        "Publicering på sociala medier är inte tillgänglig."
+      ],
+      "Social status": [
+        "Status på sociala medier"
+      ],
+      "Social text": [
+        "Text för sociala medier"
+      ],
+      "Something went wrong.": [
+        "Något gick fel."
+      ],
+      "Spanish": [
+        "Spanska"
+      ],
+      "Start": [
+        "Start"
+      ],
+      "Start and end date/time are required.": [
+        "Start- och slutdatum/tid krävs."
+      ],
+      "Status": [
+        "Status"
+      ],
+      "Status is Archived.": [
+        "Statusen är Arkiverad."
+      ],
+      "Status is Draft — set to Published and save.": [
+        "Statusen är Utkast — sätt till Publicerad och spara."
+      ],
+      "Status is not published.": [
+        "Statusen är inte publicerad."
+      ],
+      "Stays where you place the block — for tables and columns. Scrolls with the page. Click a headline to read more.": [
+        "Stannar där du placerar blocket — för tabeller och kolumner. Scrollar med sidan. Klicka på en rubrik för att läsa mer."
+      ],
+      "Subscribe": [
+        "Prenumerera"
+      ],
+      "Subscribe URL": [
+        "Prenumerations-URL"
+      ],
+      "Subscribe in calendar app": [
+        "Prenumerera i kalenderapp"
+      ],
+      "Subscribe to events": [
+        "Prenumerera på evenemang"
+      ],
+      "Sun": [
+        "sön"
+      ],
+      "Swedish": [
+        "Svenska"
+      ],
+      "Table booking": [
+        "Bordsbokning"
+      ],
+      "Test image URL": [
+        "Testbild-URL"
+      ],
+      "Test post from %s via maca Njuvs.": [
+        "Testinlägg från %s via maca Njuvs."
+      ],
+      "The calendar updates automatically when events change in maca Njuvs.": [
+        "Kalendern uppdateras automatiskt när evenemang ändras i maca Njuvs."
+      ],
+      "The social post text may not exceed 2,200 characters (Instagram limit).": [
+        "Texten för sociala medier får inte överstiga 2 200 tecken (Instagram-gräns)."
+      ],
+      "This can take a little while — please keep this tab open.": [
+        "Detta kan ta en stund — håll denna flik öppen."
+      ],
+      "This is the text that will be sent to the selected channels.": [
+        "Detta är texten som kommer att skickas till de valda kanalerna."
+      ],
+      "This post has already been imported.": [
+        "Detta inlägg har redan importerats."
+      ],
+      "This post type cannot be imported.": [
+        "Denna inläggstyp kan inte importeras."
+      ],
+      "Thu": [
+        "tor"
+      ],
+      "Time": [
+        "Tid"
+      ],
+      "Title": [
+        "Rubrik"
+      ],
+      "Title is required.": [
+        "Rubrik krävs."
+      ],
+      "Title, excerpt, and content are combined for social posts. Maximum 2,200 characters (Instagram limit).": [
+        "Rubrik, utdrag och innehåll kombineras för inlägg på sociala medier. Maximalt 2 200 tecken (Instagram-gräns)."
+      ],
+      "Top banner": [
+        "Toppbanner"
+      ],
+      "Tue": [
+        "tis"
+      ],
+      "Type": [
+        "Typ"
+      ],
+      "Unknown social channel.": [
+        "Okänd social kanal."
+      ],
+      "Update event": [
+        "Uppdatera evenemang"
+      ],
+      "Update news": [
+        "Uppdatera nyhet"
+      ],
+      "Use image": [
+        "Använd bild"
+      ],
+      "Use the link button to add hyperlinks. Basic formatting is supported.": [
+        "Använd länkknappen för att lägga till hyperlänkar. Grundläggande formatering stöds."
+      ],
+      "Use webcal:// in Apple Calendar and many other apps.": [
+        "Använd webcal:// i Apple Calendar och många andra appar."
+      ],
+      "Use your own Meta Developer app. Maca does not host OAuth or tokens for you.": [
+        "Använd din egen Meta Developer-app. Maca lagrar inte OAuth eller tokens åt dig."
+      ],
+      "User token expires around %s (refreshed automatically when possible).": [
+        "Användartoken går ut runt %s (uppdateras automatiskt när det är möjligt)."
+      ],
+      "View": [
+        "Visa"
+      ],
+      "Visible on site": [
+        "Synlig på webbplatsen"
+      ],
+      "Web": [
+        "Webb"
+      ],
+      "Website": [
+        "Webbplats"
+      ],
+      "Wed": [
+        "ons"
+      ],
+      "Week starts on Monday": [
+        "Veckan börjar på måndag"
+      ],
+      "Weekdays": [
+        "Vardagar"
+      ],
+      "Weekly": [
+        "Veckovis"
+      ],
+      "When": [
+        "När"
+      ],
+      "Yes": [
+        "Ja"
+      ],
+      "You do not have permission to connect Facebook for this site.": [
+        "Du har inte behörighet att ansluta Facebook för denna webbplats."
+      ],
+      "day(s)": [
+        "dag(ar)"
+      ],
+      "every %d": [
+        "var %d"
+      ],
+      "iCal feed URL": [
+        "iCal-flödes-URL"
+      ],
+      "maca Events": [
+        "maca Events"
+      ],
+      "maca News": [
+        "maca News"
+      ],
+      "maca Njuvs": [
+        "maca Njuvs"
+      ],
+      "maca Njuvs is disabled under Settings — visitors will not see this until it is enabled.": [
+        "maca Njuvs är inaktiverat under Inställningar — besökare ser inte detta förrän det aktiveras."
+      ],
+      "maca Njuvs is disabled. Enable it under Settings for visitors to see news on the site.": [
+        "maca Njuvs är inaktiverat. Aktivera det under Inställningar för att besökare ska se nyheter på webbplatsen."
+      ],
+      "maca Njuvs is disabled. Enable it under maca Njuvs → Settings.": [
+        "maca Njuvs är inaktiverat. Aktivera det under maca Njuvs → Inställningar."
+      ],
+      "maca Njuvs is not enabled for the website. News will not appear in blocks until you enable it under Settings.": [
+        "maca Njuvs är inte aktiverat för webbplatsen. Nyheter visas inte i block förrän du aktiverar det under Inställningar."
+      ],
+      "month(s)": [
+        "månad(er)"
+      ],
+      "until %s": [
+        "till %s"
+      ],
+      "week(s)": [
+        "vecka(er)"
+      ],
+      "“Website” is not checked under Publishing.": [
+        "“Webbplats” är inte ikryssad under Publicering."
+      ]
+    }
+  }
+}

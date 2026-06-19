@@ -1,0 +1,13 @@
+# Release artifacts
+maca-njuvs-*.zip
+
+# Editor / local
+.cursor/
+.vscode/
+
+# Compiled translations (rebuilt by create-zip.ps1)
+languages/*.mo
+
+# OS
+Thumbs.db
+.DS_Store

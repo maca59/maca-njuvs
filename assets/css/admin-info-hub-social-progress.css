@@ -1,0 +1,175 @@
+.maca-info-hub-social-progress-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+.maca-info-hub-social-progress-card {
+    width: min(100%, 420px);
+    padding: 28px 24px 24px;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.22);
+    text-align: center;
+}
+
+.maca-info-hub-social-progress-title {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.maca-info-hub-social-progress-status {
+    margin: 0 0 18px;
+    font-size: 14px;
+    color: #50575e;
+    min-height: 1.4em;
+}
+
+.maca-info-hub-social-progress-bar {
+    position: relative;
+    height: 14px;
+    margin: 0 0 14px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e8edf2;
+}
+
+.maca-info-hub-social-progress-bar-fill {
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #2271b1 0%, #3b82f6 55%, #22c55e 100%);
+    transition: width 0.45s ease;
+}
+
+.maca-info-hub-social-progress-steps {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 0 12px;
+}
+
+.maca-info-hub-social-progress-step {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #d0d7de;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.maca-info-hub-social-progress-step.is-active {
+    background: #2271b1;
+    transform: scale(1.15);
+}
+
+.maca-info-hub-social-progress-step.is-done {
+    background: #00a32a;
+}
+
+.maca-info-hub-social-progress-hint {
+    margin: 0;
+    font-size: 12px;
+    color: #646970;
+}
+
+.maca-info-hub-social-progress-spinner {
+    width: 28px;
+    height: 28px;
+    margin: 0 auto 14px;
+    border: 3px solid #dcdcde;
+    border-top-color: #2271b1;
+    border-radius: 50%;
+    animation: maca-info-hub-social-spin 0.8s linear infinite;
+}
+
+.maca-info-hub-social-progress-overlay.is-complete .maca-info-hub-social-progress-spinner {
+    display: none;
+}
+
+.maca-info-hub-social-progress-overlay.is-error .maca-info-hub-social-progress-bar-fill {
+    background: #d63638;
+}
+
+@keyframes maca-info-hub-social-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.maca-info-hub-social-preview-card {
+    width: min(100%, 560px);
+    text-align: left;
+}
+
+.maca-info-hub-social-preview-intro,
+.maca-info-hub-social-preview-meta {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: #50575e;
+}
+
+.maca-info-hub-social-preview-caption {
+    margin: 0 0 14px;
+    padding: 14px 16px;
+    max-height: 280px;
+    overflow: auto;
+    border-radius: 8px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font: 13px/1.5 Consolas, Monaco, monospace;
+    color: #1d2327;
+}
+
+.maca-info-hub-social-preview-image {
+    display: block;
+    max-width: 100%;
+    max-height: 180px;
+    border-radius: 8px;
+    border: 1px solid #dcdcde;
+}
+
+.maca-info-hub-social-preview-warning {
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fcf9e8;
+    border-left: 4px solid #dba617;
+    color: #646970;
+    font-size: 13px;
+}
+
+.maca-info-hub-social-preview-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.maca-info-hub-social-caption-counter {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.maca-info-hub-social-caption-counter.is-near-limit {
+    color: #996800;
+}
+
+.maca-info-hub-social-caption-counter.is-over-limit {
+    color: #b32d2e;
+}
+
+.maca-info-hub-social-caption-limit-note {
+    margin-top: 0;
+}

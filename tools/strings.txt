@@ -1,0 +1,319 @@
+%1$d / %2$d characters
+%1$s (%2$s)
+%d characters left
+%s (English)
+Active
+Add a test image URL in Social settings to test Instagram.
+Add event
+Add exception
+Add news
+Add the blocks “maca News” and “maca Events” from the maca Njuvs category in the block editor.
+Add this exact URL under Facebook Login → Valid OAuth Redirect URIs in your Meta app.
+All categories
+All day
+Already imported
+App ID
+App Secret
+Archived
+Back to list
+Back to settings
+Blocks
+Book a table
+Building preview…
+Calendar feed
+Calendar navigation
+Cancel
+Cancel or reschedule a single date in a recurring series.
+Cancelled
+Caption
+Category
+Channel
+Channels
+Characters
+Choose Published to show on the website. Draft and scheduled items are hidden until published.
+Choose page…
+Click an event in the calendar to see the full description, price and booking.
+Close
+Connect Facebook & Instagram
+Connect Facebook first.
+Connect Facebook under %s to enable social publishing.
+Connect an Instagram Business account to the Facebook page first.
+Connect page
+Connect your Meta app to publish news and events to your Facebook Page and Instagram account.
+Connection
+Content
+Content type
+Continuous horizontal scroll. Without this, swipe or scroll sideways when there are several news items.
+Copy existing WordPress posts (Inlägg) into maca Njuvs as news items. Original posts are kept — nothing is deleted.
+Copy feed URL
+Could not connect the selected page.
+Could not create news item.
+Could not save event.
+Could not save exception.
+Could not save news item.
+Czech
+Daily
+Danish
+Date
+Delete
+Delete this event?
+Delete this news item?
+Description
+Disconnect
+Disconnect Facebook and Instagram?
+Done!
+Draft
+Dutch
+Edit
+Edit news item
+Enable maca Njuvs
+Enable maca Njuvs to publish the calendar feed.
+Enable maca Njuvs under Settings.
+End
+End must be after start.
+Ends on (optional)
+English
+Enter Meta App ID and App Secret first.
+Event deleted.
+Event details
+Event saved.
+Events
+Every
+Exception removed.
+Exception saved.
+Excerpt
+Expires at
+Expiry date has passed.
+Facebook
+Facebook & Instagram
+Facebook and Instagram publishing is not available for demo users.
+Facebook and Instagram were disconnected.
+Facebook authorization was cancelled.
+Facebook is not connected.
+Facebook page connected.
+Facebook page:
+Facebook test post published.
+Facebook:
+Failed
+Feed URL copied.
+Finnish
+Fixed on the side while scrolling on desktop. Click a news item to read the full text in a popup. On mobile it appears last on the page.
+Fixed panel left
+Fixed panel right
+For recurring events, social posts are sent once for the series (first occurrence only).
+Forbidden
+French
+Fri
+German
+Google Calendar
+Guide
+Guide file not found or could not be read.
+If the feed returns 404, save Permalink settings once under Settings → Permalinks.
+Image
+Import
+Import as news
+Import finished: %1$d imported, %2$d skipped, %3$d failed.
+Import from WordPress
+Import is not available.
+Import selected WordPress posts as maca Njuvs news?
+In page (table/column)
+Instagram
+Instagram is not connected to the selected Facebook page.
+Instagram limits captions to 2,200 characters. The text below is truncated as it will be sent.
+Instagram requires an image on the item.
+Instagram requires an image.
+Instagram test post published.
+Instagram:
+Invalid OAuth state. Try connecting again.
+Invalid exception date.
+Invalid request.
+Italian
+Layout
+Leave blank to keep the current secret.
+List
+Local language
+Location
+Main heading — shown on the website, in the banner, and first in the social post caption.
+Message
+Meta API request failed.
+Meta app credentials
+Meta app settings saved.
+Modified exceptions need new start and end.
+Modified time
+Mon
+Month calendar
+Monthly
+New start / end
+New time
+News
+News deleted.
+News item is missing.
+News saved.
+News settings
+Next
+No
+No Facebook pages found for this account.
+No Instagram Business account is linked to this page.
+No events yet.
+No image selected. Instagram requires an image.
+No news items exist yet. Add one under maca Njuvs → Nyheter.
+No news to show right now.
+No news yet.
+No social posts yet.
+No upcoming events.
+Norwegian
+Note
+Nothing is visible to visitors yet.
+Nothing to publish to social media.
+Number of events
+Number of items
+Number of news in banner
+OAuth redirect URI
+Occurrence date
+Occurrence exceptions
+On Android or desktop: use Google Calendar or copy the feed URL into your calendar app.
+On iPhone/iPad: tap “Subscribe in calendar app”, then open Calendar → Calendars and make sure the subscribed calendar is checked.
+One-time
+Open Social media
+Open settings
+Optional. Leave empty to publish immediately. A future date with status Published becomes Scheduled until then.
+Optional. Only applies to posts, not pages.
+Optional. Shown on the website when set.
+Or after number of occurrences (optional)
+Page
+Pages
+Pending
+Polish
+Portuguese
+Post not found.
+Posts
+Posts found: %1$d. Already imported: %2$d. Remaining: %3$d.
+Preview is only available for news.
+Preview social post
+Previous
+Price
+Public HTTPS image used for Instagram test posts.
+Public feed for calendar apps. Updates when events change.
+Publish
+Publish again to Facebook
+Publish again to Instagram
+Publish at
+Publish date is in the future (%s).
+Publish failed.
+Publish log
+Publish news and events on your website with Gutenberg blocks. Guests can subscribe to the event calendar via iCal.
+Published
+Published news with “Website” checked appears here. Publish date is optional.
+Publishing
+Publishing to Facebook…
+Publishing to Instagram…
+Publishing to social media
+Read full news: %s
+Reconnect
+Recurrence
+Remove
+Remove this exception?
+Republish creates a new post on the channel. Title, excerpt, and content are sent as the caption.
+Sat
+Save App ID and App Secret first, then connect.
+Save Meta settings
+Save and publish
+Save settings
+Saving…
+Scheduled
+Scheduled for %s.
+Scheduled without a publish date.
+Scrolling ticker
+Select Facebook page
+Select image
+Select this block and open “News settings” in the right sidebar to change layout.
+Send test post
+Sending test post to Facebook…
+Sending test post to Instagram…
+Settings
+Settings saved.
+Setup guide: Facebook & Instagram
+Short summary for the banner and list. Included in the social post caption after the title.
+Show book-a-table button on this event
+Show calendar subscription
+Show date
+Show excerpt
+Show image
+Show location
+Show news and events on the website and in blocks
+Show on website
+Show published news from maca Njuvs.
+Show upcoming events from maca Njuvs.
+Skip posts that were imported before
+Skipped
+Social media
+Social preview is not available.
+Social publishing is not available.
+Social status
+Social text
+Something went wrong.
+Spanish
+Start
+Start and end date/time are required.
+Status
+Status is Archived.
+Status is Draft — set to Published and save.
+Status is not published.
+Stays where you place the block — for tables and columns. Scrolls with the page. Click a headline to read more.
+Subscribe
+Subscribe URL
+Subscribe in calendar app
+Subscribe to events
+Sun
+Swedish
+Table booking
+Test image URL
+Test post from %s via maca Njuvs.
+The calendar updates automatically when events change in maca Njuvs.
+The social post text may not exceed 2,200 characters (Instagram limit).
+This can take a little while — please keep this tab open.
+This is the text that will be sent to the selected channels.
+This post has already been imported.
+This post type cannot be imported.
+Thu
+Time
+Title
+Title is required.
+Title, excerpt, and content are combined for social posts. Maximum 2,200 characters (Instagram limit).
+Top banner
+Tue
+Type
+Unknown social channel.
+Update event
+Update news
+Use image
+Use the link button to add hyperlinks. Basic formatting is supported.
+Use webcal:// in Apple Calendar and many other apps.
+Use your own Meta Developer app. Maca does not host OAuth or tokens for you.
+User token expires around %s (refreshed automatically when possible).
+View
+Visible on site
+Web
+Website
+Wed
+Week starts on Monday
+Weekdays
+Weekly
+When
+Yes
+You do not have permission to connect Facebook for this site.
+day(s)
+every %d
+iCal feed URL
+maca Events
+maca News
+maca Njuvs
+maca Njuvs is disabled under Settings — visitors will not see this until it is enabled.
+maca Njuvs is disabled. Enable it under Settings for visitors to see news on the site.
+maca Njuvs is disabled. Enable it under maca Njuvs → Settings.
+maca Njuvs is not enabled for the website. News will not appear in blocks until you enable it under Settings.
+month(s)
+until %s
+week(s)
+“Website” is not checked under Publishing.
+# total: 318

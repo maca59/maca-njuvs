@@ -1,0 +1,35 @@
+.maca-info-hub .maca-info-admin-notice,
+.maca-info-admin-notice {
+    background: #fff8e5;
+    border: 1px solid #f0c36d;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin: 0 0 16px;
+}
+
+.maca-info-admin-notice-list {
+    margin: 8px 0 0 20px;
+}
+
+.maca-njuvs-admin-tabs {
+    margin: 16px 0 24px;
+}
+
+.maca-njuvs-admin-tabs .nav-tab {
+    margin-right: 4px;
+}
+
+.maca-njuvs-block-editor .maca-njuvs-block-controls {
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.maca-njuvs-block-editor-hint {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border-left: 3px solid #2271b1;
+    background: #f0f6fc;
+}

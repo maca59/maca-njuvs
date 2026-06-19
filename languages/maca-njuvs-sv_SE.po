@@ -1,0 +1,966 @@
+# Swedish translations for maca Njuvs.
+# Copyright (C) 2026 Maca Development
+msgid ""
+msgstr ""
+"Project-Id-Version: maca Njuvs\n"
+"Report-Msgid-Bugs-To: https://maca.se/\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: maca-njuvs\n"
+
+msgid "%1$d / %2$d characters"
+msgstr "%1$d / %2$d tecken"
+
+msgid "%1$s (%2$s)"
+msgstr "%1$s (%2$s)"
+
+msgid "%d characters left"
+msgstr "%d tecken kvar"
+
+msgid "%s (English)"
+msgstr "%s (Engelska)"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Add a test image URL in Social settings to test Instagram."
+msgstr "Lägg till en testbild-URL i inställningarna för sociala medier för att testa Instagram."
+
+msgid "Add event"
+msgstr "Lägg till evenemang"
+
+msgid "Add exception"
+msgstr "Lägg till undantag"
+
+msgid "Add news"
+msgstr "Lägg till nyhet"
+
+msgid "Add the blocks “maca News” and “maca Events” from the maca Njuvs category in the block editor."
+msgstr "Lägg till blocken “maca News” och “maca Events” från kategorin maca Njuvs i blockredigeraren."
+
+msgid "Add this exact URL under Facebook Login → Valid OAuth Redirect URIs in your Meta app."
+msgstr "Lägg till denna exakta URL under Facebook Login → Valid OAuth Redirect URIs i din Meta-app."
+
+msgid "All categories"
+msgstr "Alla kategorier"
+
+msgid "All day"
+msgstr "Heldag"
+
+msgid "Already imported"
+msgstr "Redan importerad"
+
+msgid "App ID"
+msgstr "App ID"
+
+msgid "App Secret"
+msgstr "App Secret"
+
+msgid "Archived"
+msgstr "Arkiverad"
+
+msgid "Back to list"
+msgstr "Tillbaka till listan"
+
+msgid "Back to settings"
+msgstr "Tillbaka till inställningar"
+
+msgid "Blocks"
+msgstr "Block"
+
+msgid "Book a table"
+msgstr "Boka bord"
+
+msgid "Building preview…"
+msgstr "Skapar förhandsgranskning…"
+
+msgid "Calendar feed"
+msgstr "Kalenderflöde"
+
+msgid "Calendar navigation"
+msgstr "Kalendernavigering"
+
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgid "Cancel or reschedule a single date in a recurring series."
+msgstr "Avbryt eller omplanera ett enskilt datum i en återkommande serie."
+
+msgid "Cancelled"
+msgstr "Avbruten"
+
+msgid "Caption"
+msgstr "Bildtext"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Channel"
+msgstr "Kanal"
+
+msgid "Channels"
+msgstr "Kanaler"
+
+msgid "Characters"
+msgstr "Tecken"
+
+msgid "Choose Published to show on the website. Draft and scheduled items are hidden until published."
+msgstr "Välj Publicerad för att visa på webbplatsen. Utkast och schemalagda objekt döljs tills de publiceras."
+
+msgid "Choose page…"
+msgstr "Välj sida…"
+
+msgid "Click an event in the calendar to see the full description, price and booking."
+msgstr "Klicka på ett evenemang i kalendern för att se fullständig beskrivning, pris och bokning."
+
+msgid "Close"
+msgstr "Stäng"
+
+msgid "Connect Facebook & Instagram"
+msgstr "Anslut Facebook och Instagram"
+
+msgid "Connect Facebook first."
+msgstr "Anslut Facebook först."
+
+msgid "Connect Facebook under %s to enable social publishing."
+msgstr "Anslut Facebook under %s för att aktivera publicering på sociala medier."
+
+msgid "Connect an Instagram Business account to the Facebook page first."
+msgstr "Anslut ett Instagram Business-konto till Facebook-sidan först."
+
+msgid "Connect page"
+msgstr "Anslut sida"
+
+msgid "Connect your Meta app to publish news and events to your Facebook Page and Instagram account."
+msgstr "Anslut din Meta-app för att publicera nyheter och evenemang på din Facebook-sida och ditt Instagram-konto."
+
+msgid "Connection"
+msgstr "Anslutning"
+
+msgid "Content"
+msgstr "Innehåll"
+
+msgid "Content type"
+msgstr "Innehållstyp"
+
+msgid "Continuous horizontal scroll. Without this, swipe or scroll sideways when there are several news items."
+msgstr "Kontinuerlig horisontell rullning. Utan detta sveper eller scrollar du åt sidan när det finns flera nyheter."
+
+msgid "Copy existing WordPress posts (Inlägg) into maca Njuvs as news items. Original posts are kept — nothing is deleted."
+msgstr "Kopiera befintliga WordPress-inlägg (Inlägg) till maca Njuvs som nyheter. Originalinlagen behålls — inget raderas."
+
+msgid "Copy feed URL"
+msgstr "Kopiera flödes-URL"
+
+msgid "Could not connect the selected page."
+msgstr "Kunde inte ansluta den valda sidan."
+
+msgid "Could not create news item."
+msgstr "Kunde inte skapa nyhet."
+
+msgid "Could not save event."
+msgstr "Kunde inte spara evenemang."
+
+msgid "Could not save exception."
+msgstr "Kunde inte spara undantag."
+
+msgid "Could not save news item."
+msgstr "Kunde inte spara nyhet."
+
+msgid "Czech"
+msgstr "Tjeckiska"
+
+msgid "Daily"
+msgstr "Dagligen"
+
+msgid "Danish"
+msgstr "Danska"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Delete"
+msgstr "Radera"
+
+msgid "Delete this event?"
+msgstr "Radera detta evenemang?"
+
+msgid "Delete this news item?"
+msgstr "Radera denna nyhet?"
+
+msgid "Description"
+msgstr "Beskrivning"
+
+msgid "Disconnect"
+msgstr "Koppla från"
+
+msgid "Disconnect Facebook and Instagram?"
+msgstr "Koppla från Facebook och Instagram?"
+
+msgid "Done!"
+msgstr "Klart!"
+
+msgid "Draft"
+msgstr "Utkast"
+
+msgid "Dutch"
+msgstr "Nederländska"
+
+msgid "Edit"
+msgstr "Redigera"
+
+msgid "Edit news item"
+msgstr "Redigera nyhet"
+
+msgid "Enable maca Njuvs"
+msgstr "Aktivera maca Njuvs"
+
+msgid "Enable maca Njuvs to publish the calendar feed."
+msgstr "Aktivera maca Njuvs för att publicera kalenderflödet."
+
+msgid "Enable maca Njuvs under Settings."
+msgstr "Aktivera maca Njuvs under Inställningar."
+
+msgid "End"
+msgstr "Slut"
+
+msgid "End must be after start."
+msgstr "Slut måste vara efter start."
+
+msgid "Ends on (optional)"
+msgstr "Slutar den (valfritt)"
+
+msgid "English"
+msgstr "Engelska"
+
+msgid "Enter Meta App ID and App Secret first."
+msgstr "Ange Meta App ID och App Secret först."
+
+msgid "Event deleted."
+msgstr "Evenemang raderat."
+
+msgid "Event details"
+msgstr "Evenemangsdetaljer"
+
+msgid "Event saved."
+msgstr "Evenemang sparat."
+
+msgid "Events"
+msgstr "Evenemang"
+
+msgid "Every"
+msgstr "Varje"
+
+msgid "Exception removed."
+msgstr "Undantag borttaget."
+
+msgid "Exception saved."
+msgstr "Undantag sparat."
+
+msgid "Excerpt"
+msgstr "Utdrag"
+
+msgid "Expires at"
+msgstr "Går ut"
+
+msgid "Expiry date has passed."
+msgstr "Utgångsdatum har passerat."
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Facebook & Instagram"
+msgstr "Facebook och Instagram"
+
+msgid "Facebook and Instagram publishing is not available for demo users."
+msgstr "Publicering på Facebook och Instagram är inte tillgänglig för demokonton."
+
+msgid "Facebook and Instagram were disconnected."
+msgstr "Facebook och Instagram har kopplats från."
+
+msgid "Facebook authorization was cancelled."
+msgstr "Facebook-auktorisering avbröts."
+
+msgid "Facebook is not connected."
+msgstr "Facebook är inte anslutet."
+
+msgid "Facebook page connected."
+msgstr "Facebook-sida ansluten."
+
+msgid "Facebook page:"
+msgstr "Facebook-sida:"
+
+msgid "Facebook test post published."
+msgstr "Facebook-testinlägg publicerat."
+
+msgid "Facebook:"
+msgstr "Facebook:"
+
+msgid "Failed"
+msgstr "Misslyckades"
+
+msgid "Feed URL copied."
+msgstr "Flödes-URL kopierad."
+
+msgid "Finnish"
+msgstr "Finska"
+
+msgid "Fixed on the side while scrolling on desktop. Click a news item to read the full text in a popup. On mobile it appears last on the page."
+msgstr "Fast på sidan vid scrollning på dator. Klicka på en nyhet för att läsa hela texten i en popup. På mobil visas den sist på sidan."
+
+msgid "Fixed panel left"
+msgstr "Fast panel vänster"
+
+msgid "Fixed panel right"
+msgstr "Fast panel höger"
+
+msgid "For recurring events, social posts are sent once for the series (first occurrence only)."
+msgstr "För återkommande evenemang skickas inlägg på sociala medier en gång för serien (endast första förekomsten)."
+
+msgid "Forbidden"
+msgstr "Förbjudet"
+
+msgid "French"
+msgstr "Franska"
+
+msgid "Fri"
+msgstr "fre"
+
+msgid "German"
+msgstr "Tyska"
+
+msgid "Google Calendar"
+msgstr "Google Calendar"
+
+msgid "Guide"
+msgstr "Guide"
+
+msgid "Guide file not found or could not be read."
+msgstr "Guidefilen hittades inte eller kunde inte läsas."
+
+msgid "If the feed returns 404, save Permalink settings once under Settings → Permalinks."
+msgstr "Om flödet returnerar 404, spara permalänksinställningarna en gång under Inställningar → Permalänkar."
+
+msgid "Image"
+msgstr "Bild"
+
+msgid "Import"
+msgstr "Importera"
+
+msgid "Import as news"
+msgstr "Importera som nyhet"
+
+msgid "Import finished: %1$d imported, %2$d skipped, %3$d failed."
+msgstr "Import klar: %1$d importerade, %2$d överhoppade, %3$d misslyckade."
+
+msgid "Import from WordPress"
+msgstr "Importera från WordPress"
+
+msgid "Import is not available."
+msgstr "Import är inte tillgänglig."
+
+msgid "Import selected WordPress posts as maca Njuvs news?"
+msgstr "Importera valda WordPress-inlägg som maca Njuvs-nyheter?"
+
+msgid "In page (table/column)"
+msgstr "På sidan (tabell/kolumn)"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Instagram is not connected to the selected Facebook page."
+msgstr "Instagram är inte anslutet till den valda Facebook-sidan."
+
+msgid "Instagram limits captions to 2,200 characters. The text below is truncated as it will be sent."
+msgstr "Instagram begränsar bildtexter till 2 200 tecken. Texten nedan är avkortad som den kommer att skickas."
+
+msgid "Instagram requires an image on the item."
+msgstr "Instagram kräver en bild på objektet."
+
+msgid "Instagram requires an image."
+msgstr "Instagram kräver en bild."
+
+msgid "Instagram test post published."
+msgstr "Instagram-testinlägg publicerat."
+
+msgid "Instagram:"
+msgstr "Instagram:"
+
+msgid "Invalid OAuth state. Try connecting again."
+msgstr "Ogiltigt OAuth-tillstånd. Försök ansluta igen."
+
+msgid "Invalid exception date."
+msgstr "Ogiltigt undantagsdatum."
+
+msgid "Invalid request."
+msgstr "Ogiltig begäran."
+
+msgid "Italian"
+msgstr "Italienska"
+
+msgid "Layout"
+msgstr "Layout"
+
+msgid "Leave blank to keep the current secret."
+msgstr "Lämna tomt för att behålla det nuvarande hemligheten."
+
+msgid "List"
+msgstr "Lista"
+
+msgid "Local language"
+msgstr "Lokalt språk"
+
+msgid "Location"
+msgstr "Plats"
+
+msgid "Main heading — shown on the website, in the banner, and first in the social post caption."
+msgstr "Huvudrubrik — visas på webbplatsen, i bannern och först i bildtexten på sociala medier."
+
+msgid "Message"
+msgstr "Meddelande"
+
+msgid "Meta API request failed."
+msgstr "Meta API-begäran misslyckades."
+
+msgid "Meta app credentials"
+msgstr "Meta-appuppgifter"
+
+msgid "Meta app settings saved."
+msgstr "Meta-appinställningar sparade."
+
+msgid "Modified exceptions need new start and end."
+msgstr "Ändrade undantag behöver ny start och slut."
+
+msgid "Modified time"
+msgstr "Ändringstid"
+
+msgid "Mon"
+msgstr "mån"
+
+msgid "Month calendar"
+msgstr "Månadskalender"
+
+msgid "Monthly"
+msgstr "Månadsvis"
+
+msgid "New start / end"
+msgstr "Ny start / slut"
+
+msgid "New time"
+msgstr "Ny tid"
+
+msgid "News"
+msgstr "Nyheter"
+
+msgid "News deleted."
+msgstr "Nyhet raderad."
+
+msgid "News item is missing."
+msgstr "Nyheten saknas."
+
+msgid "News saved."
+msgstr "Nyhet sparad."
+
+msgid "News settings"
+msgstr "Nyhetsinställningar"
+
+msgid "Next"
+msgstr "Nästa"
+
+msgid "No"
+msgstr "Nej"
+
+msgid "No Facebook pages found for this account."
+msgstr "Inga Facebook-sidor hittades för detta konto."
+
+msgid "No Instagram Business account is linked to this page."
+msgstr "Inget Instagram Business-konto är kopplat till denna sida."
+
+msgid "No events yet."
+msgstr "Inga evenemang ännu."
+
+msgid "No image selected. Instagram requires an image."
+msgstr "Ingen bild vald. Instagram kräver en bild."
+
+msgid "No news items exist yet. Add one under maca Njuvs → Nyheter."
+msgstr "Inga nyheter finns ännu. Lägg till en under maca Njuvs → Nyheter."
+
+msgid "No news to show right now."
+msgstr "Inga nyheter att visa just nu."
+
+msgid "No news yet."
+msgstr "Inga nyheter ännu."
+
+msgid "No social posts yet."
+msgstr "Inga inlägg på sociala medier ännu."
+
+msgid "No upcoming events."
+msgstr "Inga kommande evenemang."
+
+msgid "Norwegian"
+msgstr "Norska"
+
+msgid "Note"
+msgstr "Obs"
+
+msgid "Nothing is visible to visitors yet."
+msgstr "Inget är synligt för besökare ännu."
+
+msgid "Nothing to publish to social media."
+msgstr "Inget att publicera på sociala medier."
+
+msgid "Number of events"
+msgstr "Antal evenemang"
+
+msgid "Number of items"
+msgstr "Antal objekt"
+
+msgid "Number of news in banner"
+msgstr "Antal nyheter i bannern"
+
+msgid "OAuth redirect URI"
+msgstr "OAuth redirect URI"
+
+msgid "Occurrence date"
+msgstr "Förekomstdatum"
+
+msgid "Occurrence exceptions"
+msgstr "Förekomstundantag"
+
+msgid "On Android or desktop: use Google Calendar or copy the feed URL into your calendar app."
+msgstr "På Android eller dator: använd Google Calendar eller kopiera flödes-URL:en till din kalenderapp."
+
+msgid "On iPhone/iPad: tap “Subscribe in calendar app”, then open Calendar → Calendars and make sure the subscribed calendar is checked."
+msgstr "På iPhone/iPad: tryck på “Prenumerera i kalenderapp”, öppna sedan Calendar → Calendars och kontrollera att den prenumererade kalendern är ikryssad."
+
+msgid "One-time"
+msgstr "Engångs"
+
+msgid "Open Social media"
+msgstr "Öppna sociala medier"
+
+msgid "Open settings"
+msgstr "Öppna inställningar"
+
+msgid "Optional. Leave empty to publish immediately. A future date with status Published becomes Scheduled until then."
+msgstr "Valfritt. Lämna tomt för att publicera direkt. Ett framtida datum med status Publicerad blir Schemalagd tills dess."
+
+msgid "Optional. Only applies to posts, not pages."
+msgstr "Valfritt. Gäller endast inlägg, inte sidor."
+
+msgid "Optional. Shown on the website when set."
+msgstr "Valfritt. Visas på webbplatsen när det är angivet."
+
+msgid "Or after number of occurrences (optional)"
+msgstr "Eller efter antal förekomster (valfritt)"
+
+msgid "Page"
+msgstr "Sida"
+
+msgid "Pages"
+msgstr "Sidor"
+
+msgid "Pending"
+msgstr "Väntande"
+
+msgid "Polish"
+msgstr "Polska"
+
+msgid "Portuguese"
+msgstr "Portugisiska"
+
+msgid "Post not found."
+msgstr "Inlägget hittades inte."
+
+msgid "Posts"
+msgstr "Inlägg"
+
+msgid "Posts found: %1$d. Already imported: %2$d. Remaining: %3$d."
+msgstr "Inlägg hittade: %1$d. Redan importerade: %2$d. Återstående: %3$d."
+
+msgid "Preview is only available for news."
+msgstr "Förhandsgranskning är endast tillgänglig för nyheter."
+
+msgid "Preview social post"
+msgstr "Förhandsgranska inlägg på sociala medier"
+
+msgid "Previous"
+msgstr "Föregående"
+
+msgid "Price"
+msgstr "Pris"
+
+msgid "Public HTTPS image used for Instagram test posts."
+msgstr "Offentlig HTTPS-bild som används för Instagram-testinlägg."
+
+msgid "Public feed for calendar apps. Updates when events change."
+msgstr "Offentligt flöde för kalenderappar. Uppdateras när evenemang ändras."
+
+msgid "Publish"
+msgstr "Publicera"
+
+msgid "Publish again to Facebook"
+msgstr "Publicera igen på Facebook"
+
+msgid "Publish again to Instagram"
+msgstr "Publicera igen på Instagram"
+
+msgid "Publish at"
+msgstr "Publiceringstid"
+
+msgid "Publish date is in the future (%s)."
+msgstr "Publiceringsdatum ligger i framtiden (%s)."
+
+msgid "Publish failed."
+msgstr "Publicering misslyckades."
+
+msgid "Publish log"
+msgstr "Publiceringslogg"
+
+msgid "Publish news and events on your website with Gutenberg blocks. Guests can subscribe to the event calendar via iCal."
+msgstr "Publicera nyheter och evenemang på din webbplats med Gutenberg-block. Gäster kan prenumerera på evenemangskalendern via iCal."
+
+msgid "Published"
+msgstr "Publicerad"
+
+msgid "Published news with “Website” checked appears here. Publish date is optional."
+msgstr "Publicerade nyheter med “Webbplats” ikryssad visas här. Publiceringsdatum är valfritt."
+
+msgid "Publishing"
+msgstr "Publicering"
+
+msgid "Publishing to Facebook…"
+msgstr "Publicerar på Facebook…"
+
+msgid "Publishing to Instagram…"
+msgstr "Publicerar på Instagram…"
+
+msgid "Publishing to social media"
+msgstr "Publicering på sociala medier"
+
+msgid "Read full news: %s"
+msgstr "Läs hela nyheten: %s"
+
+msgid "Reconnect"
+msgstr "Återanslut"
+
+msgid "Recurrence"
+msgstr "Återkommande"
+
+msgid "Remove"
+msgstr "Ta bort"
+
+msgid "Remove this exception?"
+msgstr "Ta bort detta undantag?"
+
+msgid "Republish creates a new post on the channel. Title, excerpt, and content are sent as the caption."
+msgstr "Återpublicering skapar ett nytt inlägg på kanalen. Rubrik, utdrag och innehåll skickas som bildtext."
+
+msgid "Sat"
+msgstr "lör"
+
+msgid "Save App ID and App Secret first, then connect."
+msgstr "Spara App ID och App Secret först, anslut sedan."
+
+msgid "Save Meta settings"
+msgstr "Spara Meta-inställningar"
+
+msgid "Save and publish"
+msgstr "Spara och publicera"
+
+msgid "Save settings"
+msgstr "Spara inställningar"
+
+msgid "Saving…"
+msgstr "Sparar…"
+
+msgid "Scheduled"
+msgstr "Schemalagd"
+
+msgid "Scheduled for %s."
+msgstr "Schemalagd till %s."
+
+msgid "Scheduled without a publish date."
+msgstr "Schemalagd utan publiceringsdatum."
+
+msgid "Scrolling ticker"
+msgstr "Rullande tickertext"
+
+msgid "Select Facebook page"
+msgstr "Välj Facebook-sida"
+
+msgid "Select image"
+msgstr "Välj bild"
+
+msgid "Select this block and open “News settings” in the right sidebar to change layout."
+msgstr "Välj detta block och öppna “Nyhetsinställningar” i höger sidopanel för att ändra layout."
+
+msgid "Send test post"
+msgstr "Skicka testinlägg"
+
+msgid "Sending test post to Facebook…"
+msgstr "Skickar testinlägg till Facebook…"
+
+msgid "Sending test post to Instagram…"
+msgstr "Skickar testinlägg till Instagram…"
+
+msgid "Settings"
+msgstr "Inställningar"
+
+msgid "Settings saved."
+msgstr "Inställningar sparade."
+
+msgid "Setup guide: Facebook & Instagram"
+msgstr "Installationsguide: Facebook och Instagram"
+
+msgid "Short summary for the banner and list. Included in the social post caption after the title."
+msgstr "Kort sammanfattning för bannern och listan. Ingår i bildtexten på sociala medier efter rubriken."
+
+msgid "Show book-a-table button on this event"
+msgstr "Visa boka-bord-knapp på detta evenemang"
+
+msgid "Show calendar subscription"
+msgstr "Visa kalenderprenumeration"
+
+msgid "Show date"
+msgstr "Visa datum"
+
+msgid "Show excerpt"
+msgstr "Visa utdrag"
+
+msgid "Show image"
+msgstr "Visa bild"
+
+msgid "Show location"
+msgstr "Visa plats"
+
+msgid "Show news and events on the website and in blocks"
+msgstr "Visa nyheter och evenemang på webbplatsen och i block"
+
+msgid "Show on website"
+msgstr "Visa på webbplatsen"
+
+msgid "Show published news from maca Njuvs."
+msgstr "Visa publicerade nyheter från maca Njuvs."
+
+msgid "Show upcoming events from maca Njuvs."
+msgstr "Visa kommande evenemang från maca Njuvs."
+
+msgid "Skip posts that were imported before"
+msgstr "Hoppa över inlägg som importerats tidigare"
+
+msgid "Skipped"
+msgstr "Överhoppad"
+
+msgid "Social media"
+msgstr "Sociala medier"
+
+msgid "Social preview is not available."
+msgstr "Förhandsgranskning av sociala medier är inte tillgänglig."
+
+msgid "Social publishing is not available."
+msgstr "Publicering på sociala medier är inte tillgänglig."
+
+msgid "Social status"
+msgstr "Status på sociala medier"
+
+msgid "Social text"
+msgstr "Text för sociala medier"
+
+msgid "Something went wrong."
+msgstr "Något gick fel."
+
+msgid "Spanish"
+msgstr "Spanska"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Start and end date/time are required."
+msgstr "Start- och slutdatum/tid krävs."
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Status is Archived."
+msgstr "Statusen är Arkiverad."
+
+msgid "Status is Draft — set to Published and save."
+msgstr "Statusen är Utkast — sätt till Publicerad och spara."
+
+msgid "Status is not published."
+msgstr "Statusen är inte publicerad."
+
+msgid "Stays where you place the block — for tables and columns. Scrolls with the page. Click a headline to read more."
+msgstr "Stannar där du placerar blocket — för tabeller och kolumner. Scrollar med sidan. Klicka på en rubrik för att läsa mer."
+
+msgid "Subscribe"
+msgstr "Prenumerera"
+
+msgid "Subscribe URL"
+msgstr "Prenumerations-URL"
+
+msgid "Subscribe in calendar app"
+msgstr "Prenumerera i kalenderapp"
+
+msgid "Subscribe to events"
+msgstr "Prenumerera på evenemang"
+
+msgid "Sun"
+msgstr "sön"
+
+msgid "Swedish"
+msgstr "Svenska"
+
+msgid "Table booking"
+msgstr "Bordsbokning"
+
+msgid "Test image URL"
+msgstr "Testbild-URL"
+
+msgid "Test post from %s via maca Njuvs."
+msgstr "Testinlägg från %s via maca Njuvs."
+
+msgid "The calendar updates automatically when events change in maca Njuvs."
+msgstr "Kalendern uppdateras automatiskt när evenemang ändras i maca Njuvs."
+
+msgid "The social post text may not exceed 2,200 characters (Instagram limit)."
+msgstr "Texten för sociala medier får inte överstiga 2 200 tecken (Instagram-gräns)."
+
+msgid "This can take a little while — please keep this tab open."
+msgstr "Detta kan ta en stund — håll denna flik öppen."
+
+msgid "This is the text that will be sent to the selected channels."
+msgstr "Detta är texten som kommer att skickas till de valda kanalerna."
+
+msgid "This post has already been imported."
+msgstr "Detta inlägg har redan importerats."
+
+msgid "This post type cannot be imported."
+msgstr "Denna inläggstyp kan inte importeras."
+
+msgid "Thu"
+msgstr "tor"
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Title"
+msgstr "Rubrik"
+
+msgid "Title is required."
+msgstr "Rubrik krävs."
+
+msgid "Title, excerpt, and content are combined for social posts. Maximum 2,200 characters (Instagram limit)."
+msgstr "Rubrik, utdrag och innehåll kombineras för inlägg på sociala medier. Maximalt 2 200 tecken (Instagram-gräns)."
+
+msgid "Top banner"
+msgstr "Toppbanner"
+
+msgid "Tue"
+msgstr "tis"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Unknown social channel."
+msgstr "Okänd social kanal."
+
+msgid "Update event"
+msgstr "Uppdatera evenemang"
+
+msgid "Update news"
+msgstr "Uppdatera nyhet"
+
+msgid "Use image"
+msgstr "Använd bild"
+
+msgid "Use the link button to add hyperlinks. Basic formatting is supported."
+msgstr "Använd länkknappen för att lägga till hyperlänkar. Grundläggande formatering stöds."
+
+msgid "Use webcal:// in Apple Calendar and many other apps."
+msgstr "Använd webcal:// i Apple Calendar och många andra appar."
+
+msgid "Use your own Meta Developer app. Maca does not host OAuth or tokens for you."
+msgstr "Använd din egen Meta Developer-app. Maca lagrar inte OAuth eller tokens åt dig."
+
+msgid "User token expires around %s (refreshed automatically when possible)."
+msgstr "Användartoken går ut runt %s (uppdateras automatiskt när det är möjligt)."
+
+msgid "View"
+msgstr "Visa"
+
+msgid "Visible on site"
+msgstr "Synlig på webbplatsen"
+
+msgid "Web"
+msgstr "Webb"
+
+msgid "Website"
+msgstr "Webbplats"
+
+msgid "Wed"
+msgstr "ons"
+
+msgid "Week starts on Monday"
+msgstr "Veckan börjar på måndag"
+
+msgid "Weekdays"
+msgstr "Vardagar"
+
+msgid "Weekly"
+msgstr "Veckovis"
+
+msgid "When"
+msgstr "När"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "You do not have permission to connect Facebook for this site."
+msgstr "Du har inte behörighet att ansluta Facebook för denna webbplats."
+
+msgid "day(s)"
+msgstr "dag(ar)"
+
+msgid "every %d"
+msgstr "var %d"
+
+msgid "iCal feed URL"
+msgstr "iCal-flödes-URL"
+
+msgid "maca Events"
+msgstr "maca Events"
+
+msgid "maca News"
+msgstr "maca News"
+
+msgid "maca Njuvs"
+msgstr "maca Njuvs"
+
+msgid "maca Njuvs is disabled under Settings — visitors will not see this until it is enabled."
+msgstr "maca Njuvs är inaktiverat under Inställningar — besökare ser inte detta förrän det aktiveras."
+
+msgid "maca Njuvs is disabled. Enable it under Settings for visitors to see news on the site."
+msgstr "maca Njuvs är inaktiverat. Aktivera det under Inställningar för att besökare ska se nyheter på webbplatsen."
+
+msgid "maca Njuvs is disabled. Enable it under maca Njuvs → Settings."
+msgstr "maca Njuvs är inaktiverat. Aktivera det under maca Njuvs → Inställningar."
+
+msgid "maca Njuvs is not enabled for the website. News will not appear in blocks until you enable it under Settings."
+msgstr "maca Njuvs är inte aktiverat för webbplatsen. Nyheter visas inte i block förrän du aktiverar det under Inställningar."
+
+msgid "month(s)"
+msgstr "månad(er)"
+
+msgid "until %s"
+msgstr "till %s"
+
+msgid "week(s)"
+msgstr "vecka(er)"
+
+msgid "“Website” is not checked under Publishing."
+msgstr "“Webbplats” är inte ikryssad under Publicering."

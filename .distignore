@@ -1,0 +1,12 @@
+# Files excluded from release ZIP
+
+# Version control & build
+.git
+.gitignore
+.distignore
+*.ps1
+maca-njuvs-*.zip
+
+# Editor / local
+.cursor
+.vscode
