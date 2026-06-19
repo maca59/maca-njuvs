@@ -3,12 +3,12 @@
  * Plugin Name: maca Njuvs
  * Plugin URI: https://github.com/maca59/maca-njuvs
  * Description: Publicera nyheter och evenemang på webbplatsen med Gutenberg-block, iCal-kalender och valfri delning till Facebook och Instagram.
- * Version: 1.0.18
+ * Version: 1.0.19
  * Requires at least: 5.9
  * Requires PHP: 7.4
  * Tested up to: 7.0
  * Author: Maca Development
- * Author URI: https://github.com/maca59
+ * Author URI: https://maca.se
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: maca-njuvs
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('MACA_NJUVS_VERSION', '1.0.18');
+define('MACA_NJUVS_VERSION', '1.0.19');
 define('MACA_NJUVS_PLUGIN_FILE', __FILE__);
 define('MACA_NJUVS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('MACA_NJUVS_PLUGIN_URL', plugin_dir_url(__FILE__));
