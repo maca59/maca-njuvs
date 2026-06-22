@@ -2,7 +2,7 @@
 # Copyright (C) 2026 Maca Development
 msgid ""
 msgstr ""
-"Project-Id-Version: maca Njuvs\n"
+"Project-Id-Version: maca Njuvs 1.0.31\n"
 "Report-Msgid-Bugs-To: https://maca.se/\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -70,9 +70,6 @@ msgstr "Tillbaka till inställningar"
 
 msgid "Blocks"
 msgstr "Block"
-
-msgid "Book a table"
-msgstr "Boka bord"
 
 msgid "Building preview…"
 msgstr "Skapar förhandsgranskning…"
@@ -719,9 +716,6 @@ msgstr "Installationsguide: Facebook och Instagram"
 msgid "Short summary for the banner and list. Included in the social post caption after the title."
 msgstr "Kort sammanfattning för bannern och listan. Ingår i bildtexten på sociala medier efter rubriken."
 
-msgid "Show book-a-table button on this event"
-msgstr "Visa boka-bord-knapp på detta evenemang"
-
 msgid "Show calendar subscription"
 msgstr "Visa kalenderprenumeration"
 
@@ -815,9 +809,6 @@ msgstr "sön"
 msgid "Swedish"
 msgstr "Svenska"
 
-msgid "Table booking"
-msgstr "Bordsbokning"
-
 msgid "Test image URL"
 msgstr "Testbild-URL"
 
@@ -832,6 +823,9 @@ msgstr "Texten för sociala medier får inte överstiga 2 200 tecken (Instagram
 
 msgid "This can take a little while — please keep this tab open."
 msgstr "Detta kan ta en stund — håll denna flik öppen."
+
+msgid "This image is large (%1$s). Compress it or choose a smaller file (under %2$s) — very large images can cause errors when saving."
+msgstr "Bilden är stor (%1$s). Komprimera den eller välj en mindre fil (under %2$s) — mycket stora bilder kan ge fel vid sparning."
 
 msgid "This is the text that will be sent to the selected channels."
 msgstr "Detta är texten som kommer att skickas till de valda kanalerna."
@@ -878,8 +872,11 @@ msgstr "Uppdatera nyhet"
 msgid "Use image"
 msgstr "Använd bild"
 
-msgid "Use the link button to add hyperlinks. Basic formatting is supported."
-msgstr "Använd länkknappen för att lägga till hyperlänkar. Grundläggande formatering stöds."
+msgid "Use the link button to add hyperlinks. Basic formatting is supported. Add images via the Image field — do not paste images into the text."
+msgstr "Använd länkknappen för att lägga till hyperlänkar. Grundläggande formatering stöds. Lägg till bilder via fältet Bild — klistra inte in bilder i texten."
+
+msgid "Use the toolbar buttons for basic formatting and links."
+msgstr "Använd verktygsradens knappar för enkel formatering och länkar."
 
 msgid "Use webcal:// in Apple Calendar and many other apps."
 msgstr "Använd webcal:// i Apple Calendar och många andra appar."

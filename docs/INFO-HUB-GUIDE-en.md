@@ -44,6 +44,11 @@ Under *maca Njuvs → News* you create and edit news shown on your website.
 - **Published** — shown on the website (when the module is enabled)
 - **Archived** — hidden from the website but kept in admin
 
+### Image tips
+
+- Use **Select image** — do not paste images into excerpt or content fields.
+- Compress large images (preferably under 500 KB). The plugin warns when an image is large; very large files can trigger *Please reduce the amount of data* when saving.
+
 ---
 
 ## Events
@@ -63,7 +68,6 @@ Under *maca Njuvs → Events* you manage upcoming and recurring events.
 | **Start / End** | Date and time |
 | **Recurrence** | None, Daily, Weekly, or Monthly with interval, weekdays, and end date or occurrence count |
 | **Active** | Show on website |
-| **Table booking** | Show book-a-table button (when maca Menulist booking is available on the site) |
 | **Publishing** | Website, Facebook, and Instagram |
 
 ### Exceptions in recurring series
@@ -193,7 +197,6 @@ Original posts are not deleted — import creates new news items in maca Njuvs.
 - **Expiry dates** — news can be hidden automatically
 - **Recurring events** — daily, weekly, and monthly series with exceptions
 - **Social publishing** — optional sharing to Facebook Page and Instagram Business on save (requires Meta app)
-- **Table booking** — events can show a book-a-table button when maca Menulist is installed
 
 ---
 

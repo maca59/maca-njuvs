@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  *
  * @return string
  */
-function maca_menulist_db_info_news_table() {
+function maca_njuvs_db_info_news_table() {
     global $wpdb;
 
     return $wpdb->prefix . 'maca_njuvs_news';
@@ -25,7 +25,7 @@ function maca_menulist_db_info_news_table() {
  *
  * @return string
  */
-function maca_menulist_db_info_events_table() {
+function maca_njuvs_db_info_events_table() {
     global $wpdb;
 
     return $wpdb->prefix . 'maca_njuvs_events';
@@ -36,7 +36,7 @@ function maca_menulist_db_info_events_table() {
  *
  * @return string
  */
-function maca_menulist_db_info_event_exceptions_table() {
+function maca_njuvs_db_info_event_exceptions_table() {
     global $wpdb;
 
     return $wpdb->prefix . 'maca_njuvs_event_exceptions';
@@ -49,7 +49,7 @@ function maca_menulist_db_info_event_exceptions_table() {
  *
  * @return void
  */
-function maca_menulist_db_create_info_hub_tables() {
+function maca_njuvs_db_create_info_hub_tables() {
     global $wpdb;
 
     if (!isset($wpdb) || empty($wpdb)) {
@@ -57,9 +57,9 @@ function maca_menulist_db_create_info_hub_tables() {
     }
 
     $charset_collate = $wpdb->get_charset_collate();
-    $news_table = maca_menulist_db_info_news_table();
-    $events_table = maca_menulist_db_info_events_table();
-    $exceptions_table = maca_menulist_db_info_event_exceptions_table();
+    $news_table = maca_njuvs_db_info_news_table();
+    $events_table = maca_njuvs_db_info_events_table();
+    $exceptions_table = maca_njuvs_db_info_event_exceptions_table();
 
     $sql_news = "CREATE TABLE $news_table (
         id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -151,7 +151,7 @@ function maca_menulist_db_create_info_hub_tables() {
  *
  * @return void
  */
-function maca_menulist_db_ensure_info_hub_tables() {
+function maca_njuvs_db_ensure_info_hub_tables() {
     static $ensured = false;
 
     if ($ensured) {
@@ -160,14 +160,14 @@ function maca_menulist_db_ensure_info_hub_tables() {
 
     global $wpdb;
 
-    $news_table = maca_menulist_db_info_news_table();
+    $news_table = maca_njuvs_db_info_news_table();
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $news_table));
 
     if ($exists !== $news_table) {
-        maca_menulist_db_create_info_hub_tables();
+        maca_njuvs_db_create_info_hub_tables();
     } else {
-        maca_menulist_db_migrate_info_hub_event_columns();
+        maca_njuvs_db_migrate_info_hub_event_columns();
     }
 
     $ensured = true;
@@ -178,10 +178,10 @@ function maca_menulist_db_ensure_info_hub_tables() {
  *
  * @return void
  */
-function maca_menulist_db_migrate_info_hub_event_columns() {
+function maca_njuvs_db_migrate_info_hub_event_columns() {
     global $wpdb;
 
-    $table = maca_menulist_db_info_events_table();
+    $table = maca_njuvs_db_info_events_table();
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     if ($wpdb->get_var("SHOW TABLES LIKE '$table'") !== $table) {
         return;
@@ -205,14 +205,14 @@ function maca_menulist_db_migrate_info_hub_event_columns() {
  *
  * @return void
  */
-function maca_menulist_db_drop_info_hub_tables() {
+function maca_njuvs_db_drop_info_hub_tables() {
     global $wpdb;
 
     foreach (
         array(
-            maca_menulist_db_info_event_exceptions_table(),
-            maca_menulist_db_info_events_table(),
-            maca_menulist_db_info_news_table(),
+            maca_njuvs_db_info_event_exceptions_table(),
+            maca_njuvs_db_info_events_table(),
+            maca_njuvs_db_info_news_table(),
         ) as $table
     ) {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
@@ -223,10 +223,10 @@ function maca_menulist_db_drop_info_hub_tables() {
 /**
  * @return array<int, object>
  */
-function maca_menulist_db_get_info_news_items($status = '') {
+function maca_njuvs_db_get_info_news_items($status = '') {
     global $wpdb;
 
-    $table = maca_menulist_db_info_news_table();
+    $table = maca_njuvs_db_info_news_table();
     $where = '';
     $params = array();
 
@@ -250,10 +250,10 @@ function maca_menulist_db_get_info_news_items($status = '') {
  * @param int $news_id News ID.
  * @return object|null
  */
-function maca_menulist_db_get_info_news($news_id) {
+function maca_njuvs_db_get_info_news($news_id) {
     global $wpdb;
 
-    $table = maca_menulist_db_info_news_table();
+    $table = maca_njuvs_db_info_news_table();
 
     // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table name is plugin-controlled.
     $sql = 'SELECT * FROM `' . $table . '` WHERE id = %d';
@@ -266,18 +266,18 @@ function maca_menulist_db_get_info_news($news_id) {
  * @param array<string, mixed> $data Row data.
  * @return int|false
  */
-function maca_menulist_db_insert_info_news($data) {
+function maca_njuvs_db_insert_info_news($data) {
     global $wpdb;
 
-    list($row, $formats) = maca_menulist_db_prepare_info_news_write($data);
+    list($row, $formats) = maca_njuvs_db_prepare_info_news_write($data);
 
     if (empty($row)) {
         return false;
     }
 
-    maca_menulist_db_stamp_row_timestamps($row, $formats, true);
+    maca_njuvs_db_stamp_row_timestamps($row, $formats, true);
 
-    return $wpdb->insert(maca_menulist_db_info_news_table(), $row, $formats);
+    return $wpdb->insert(maca_njuvs_db_info_news_table(), $row, $formats);
 }
 
 /**
@@ -285,19 +285,19 @@ function maca_menulist_db_insert_info_news($data) {
  * @param array<string, mixed> $data    Row data.
  * @return int|false
  */
-function maca_menulist_db_update_info_news($news_id, $data) {
+function maca_njuvs_db_update_info_news($news_id, $data) {
     global $wpdb;
 
-    list($row, $formats) = maca_menulist_db_prepare_info_news_write($data);
+    list($row, $formats) = maca_njuvs_db_prepare_info_news_write($data);
 
     if (empty($row)) {
         return false;
     }
 
-    maca_menulist_db_stamp_row_timestamps($row, $formats, false);
+    maca_njuvs_db_stamp_row_timestamps($row, $formats, false);
 
     return $wpdb->update(
-        maca_menulist_db_info_news_table(),
+        maca_njuvs_db_info_news_table(),
         $row,
         array('id' => intval($news_id)),
         $formats,
@@ -309,7 +309,7 @@ function maca_menulist_db_update_info_news($news_id, $data) {
  * @param array<string, mixed> $data Row data.
  * @return array{0: array<string, mixed>, 1: array<int, string>}
  */
-function maca_menulist_db_prepare_info_news_write($data) {
+function maca_njuvs_db_prepare_info_news_write($data) {
     $schema = array(
         'title' => '%s',
         'title_en' => '%s',
@@ -348,11 +348,11 @@ function maca_menulist_db_prepare_info_news_write($data) {
  * @param int $news_id News ID.
  * @return int|false
  */
-function maca_menulist_db_delete_info_news($news_id) {
+function maca_njuvs_db_delete_info_news($news_id) {
     global $wpdb;
 
     return $wpdb->delete(
-        maca_menulist_db_info_news_table(),
+        maca_njuvs_db_info_news_table(),
         array('id' => intval($news_id)),
         array('%d')
     );
@@ -361,10 +361,10 @@ function maca_menulist_db_delete_info_news($news_id) {
 /**
  * @return array<int, object>
  */
-function maca_menulist_db_get_info_events($active_only = false) {
+function maca_njuvs_db_get_info_events($active_only = false) {
     global $wpdb;
 
-    $table = maca_menulist_db_info_events_table();
+    $table = maca_njuvs_db_info_events_table();
     $where = $active_only ? 'WHERE is_active = 1' : '';
 
     return $wpdb->get_results(
@@ -376,10 +376,10 @@ function maca_menulist_db_get_info_events($active_only = false) {
  * @param int $event_id Event ID.
  * @return object|null
  */
-function maca_menulist_db_get_info_event($event_id) {
+function maca_njuvs_db_get_info_event($event_id) {
     global $wpdb;
 
-    $table = maca_menulist_db_info_events_table();
+    $table = maca_njuvs_db_info_events_table();
 
     // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table name is plugin-controlled.
     $sql = 'SELECT * FROM `' . $table . '` WHERE id = %d';
@@ -392,18 +392,18 @@ function maca_menulist_db_get_info_event($event_id) {
  * @param array<string, mixed> $data Row data.
  * @return int|false
  */
-function maca_menulist_db_insert_info_event($data) {
+function maca_njuvs_db_insert_info_event($data) {
     global $wpdb;
 
-    list($row, $formats) = maca_menulist_db_prepare_info_event_write($data);
+    list($row, $formats) = maca_njuvs_db_prepare_info_event_write($data);
 
     if (empty($row)) {
         return false;
     }
 
-    maca_menulist_db_stamp_row_timestamps($row, $formats, true);
+    maca_njuvs_db_stamp_row_timestamps($row, $formats, true);
 
-    return $wpdb->insert(maca_menulist_db_info_events_table(), $row, $formats);
+    return $wpdb->insert(maca_njuvs_db_info_events_table(), $row, $formats);
 }
 
 /**
@@ -411,19 +411,19 @@ function maca_menulist_db_insert_info_event($data) {
  * @param array<string, mixed> $data     Row data.
  * @return int|false
  */
-function maca_menulist_db_update_info_event($event_id, $data) {
+function maca_njuvs_db_update_info_event($event_id, $data) {
     global $wpdb;
 
-    list($row, $formats) = maca_menulist_db_prepare_info_event_write($data);
+    list($row, $formats) = maca_njuvs_db_prepare_info_event_write($data);
 
     if (empty($row)) {
         return false;
     }
 
-    maca_menulist_db_stamp_row_timestamps($row, $formats, false);
+    maca_njuvs_db_stamp_row_timestamps($row, $formats, false);
 
     return $wpdb->update(
-        maca_menulist_db_info_events_table(),
+        maca_njuvs_db_info_events_table(),
         $row,
         array('id' => intval($event_id)),
         $formats,
@@ -435,7 +435,7 @@ function maca_menulist_db_update_info_event($event_id, $data) {
  * @param array<string, mixed> $data Row data.
  * @return array{0: array<string, mixed>, 1: array<int, string>}
  */
-function maca_menulist_db_prepare_info_event_write($data) {
+function maca_njuvs_db_prepare_info_event_write($data) {
     $schema = array(
         'title' => '%s',
         'title_en' => '%s',
@@ -482,19 +482,19 @@ function maca_menulist_db_prepare_info_event_write($data) {
  * @param int $event_id Event ID.
  * @return int|false
  */
-function maca_menulist_db_delete_info_event($event_id) {
+function maca_njuvs_db_delete_info_event($event_id) {
     global $wpdb;
 
     $event_id = intval($event_id);
 
     $wpdb->delete(
-        maca_menulist_db_info_event_exceptions_table(),
+        maca_njuvs_db_info_event_exceptions_table(),
         array('event_id' => $event_id),
         array('%d')
     );
 
     return $wpdb->delete(
-        maca_menulist_db_info_events_table(),
+        maca_njuvs_db_info_events_table(),
         array('id' => $event_id),
         array('%d')
     );
@@ -504,10 +504,10 @@ function maca_menulist_db_delete_info_event($event_id) {
  * @param int $event_id Event ID.
  * @return array<int, object>
  */
-function maca_menulist_db_get_info_event_exceptions($event_id) {
+function maca_njuvs_db_get_info_event_exceptions($event_id) {
     global $wpdb;
 
-    $table = maca_menulist_db_info_event_exceptions_table();
+    $table = maca_njuvs_db_info_event_exceptions_table();
 
     // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table name is plugin-controlled.
     $sql = 'SELECT * FROM `' . $table . '` WHERE event_id = %d ORDER BY occurrence_date ASC';
@@ -520,7 +520,7 @@ function maca_menulist_db_get_info_event_exceptions($event_id) {
  * @param array<string, mixed> $data Row data.
  * @return int|false
  */
-function maca_menulist_db_insert_info_event_exception($data) {
+function maca_njuvs_db_insert_info_event_exception($data) {
     global $wpdb;
 
     $row = array(
@@ -537,7 +537,7 @@ function maca_menulist_db_insert_info_event_exception($data) {
     }
 
     return $wpdb->replace(
-        maca_menulist_db_info_event_exceptions_table(),
+        maca_njuvs_db_info_event_exceptions_table(),
         $row,
         array('%d', '%s', '%s', '%s', '%s', '%s')
     );
@@ -547,11 +547,11 @@ function maca_menulist_db_insert_info_event_exception($data) {
  * @param int $exception_id Exception ID.
  * @return int|false
  */
-function maca_menulist_db_delete_info_event_exception($exception_id) {
+function maca_njuvs_db_delete_info_event_exception($exception_id) {
     global $wpdb;
 
     return $wpdb->delete(
-        maca_menulist_db_info_event_exceptions_table(),
+        maca_njuvs_db_info_event_exceptions_table(),
         array('id' => intval($exception_id)),
         array('%d')
     );

@@ -9,8 +9,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!defined('MACA_MENULIST_INFO_HUB_META_GRAPH_VERSION')) {
-    define('MACA_MENULIST_INFO_HUB_META_GRAPH_VERSION', 'v21.0');
+if (!defined('MACA_NJUVS_META_GRAPH_VERSION')) {
+    define('MACA_NJUVS_META_GRAPH_VERSION', 'v21.0');
 }
 
 if (!defined('MACA_NJUVS_SOCIAL_CRON_HOOK')) {
@@ -22,7 +22,7 @@ if (!defined('MACA_NJUVS_SOCIAL_CRON_HOOK')) {
  *
  * @return string
  */
-function maca_menulist_info_hub_meta_oauth_scopes() {
+function maca_njuvs_info_hub_meta_oauth_scopes() {
     return implode(
         ',',
         array(
@@ -40,7 +40,7 @@ function maca_menulist_info_hub_meta_oauth_scopes() {
  * @param string $option Option suffix.
  * @return string
  */
-function maca_menulist_info_hub_meta_option_name($option) {
+function maca_njuvs_info_hub_meta_option_name($option) {
     return 'maca_njuvs_meta_' . $option;
 }
 
@@ -49,8 +49,8 @@ function maca_menulist_info_hub_meta_option_name($option) {
  * @param mixed  $default Default value.
  * @return mixed
  */
-function maca_menulist_info_hub_meta_get($key, $default = '') {
-    return get_option(maca_menulist_info_hub_meta_option_name($key), $default);
+function maca_njuvs_info_hub_meta_get($key, $default = '') {
+    return get_option(maca_njuvs_info_hub_meta_option_name($key), $default);
 }
 
 /**
@@ -58,36 +58,36 @@ function maca_menulist_info_hub_meta_get($key, $default = '') {
  * @param mixed  $value Value.
  * @return void
  */
-function maca_menulist_info_hub_meta_set($key, $value) {
-    update_option(maca_menulist_info_hub_meta_option_name($key), $value, false);
+function maca_njuvs_info_hub_meta_set($key, $value) {
+    update_option(maca_njuvs_info_hub_meta_option_name($key), $value, false);
 }
 
 /**
  * @return string
  */
-function maca_menulist_info_hub_meta_get_app_id() {
-    return (string) maca_menulist_info_hub_meta_get('app_id', '');
+function maca_njuvs_info_hub_meta_get_app_id() {
+    return (string) maca_njuvs_info_hub_meta_get('app_id', '');
 }
 
 /**
  * @return string
  */
-function maca_menulist_info_hub_meta_get_app_secret() {
-    return maca_menulist_info_hub_decrypt_secret((string) maca_menulist_info_hub_meta_get('app_secret', ''));
+function maca_njuvs_info_hub_meta_get_app_secret() {
+    return maca_njuvs_info_hub_decrypt_secret((string) maca_njuvs_info_hub_meta_get('app_secret', ''));
 }
 
 /**
  * @return string
  */
-function maca_menulist_info_hub_meta_get_page_token() {
-    return maca_menulist_info_hub_decrypt_secret((string) maca_menulist_info_hub_meta_get('page_token', ''));
+function maca_njuvs_info_hub_meta_get_page_token() {
+    return maca_njuvs_info_hub_decrypt_secret((string) maca_njuvs_info_hub_meta_get('page_token', ''));
 }
 
 /**
  * @return string
  */
-function maca_menulist_info_hub_meta_get_user_token() {
-    return maca_menulist_info_hub_decrypt_secret((string) maca_menulist_info_hub_meta_get('user_token', ''));
+function maca_njuvs_info_hub_meta_get_user_token() {
+    return maca_njuvs_info_hub_decrypt_secret((string) maca_njuvs_info_hub_meta_get('user_token', ''));
 }
 
 /**
@@ -95,8 +95,8 @@ function maca_menulist_info_hub_meta_get_user_token() {
  *
  * @return bool
  */
-function maca_menulist_info_hub_meta_has_app_credentials() {
-    return maca_menulist_info_hub_meta_get_app_id() !== '' && maca_menulist_info_hub_meta_get_app_secret() !== '';
+function maca_njuvs_info_hub_meta_has_app_credentials() {
+    return maca_njuvs_info_hub_meta_get_app_id() !== '' && maca_njuvs_info_hub_meta_get_app_secret() !== '';
 }
 
 /**
@@ -104,9 +104,9 @@ function maca_menulist_info_hub_meta_has_app_credentials() {
  *
  * @return bool
  */
-function maca_menulist_info_hub_meta_is_connected() {
-    return maca_menulist_info_hub_meta_get('page_id', '') !== ''
-        && maca_menulist_info_hub_meta_get_page_token() !== '';
+function maca_njuvs_info_hub_meta_is_connected() {
+    return maca_njuvs_info_hub_meta_get('page_id', '') !== ''
+        && maca_njuvs_info_hub_meta_get_page_token() !== '';
 }
 
 /**
@@ -114,8 +114,8 @@ function maca_menulist_info_hub_meta_is_connected() {
  *
  * @return bool
  */
-function maca_menulist_info_hub_meta_has_instagram() {
-    return maca_menulist_info_hub_meta_get('ig_user_id', '') !== '';
+function maca_njuvs_info_hub_meta_has_instagram() {
+    return maca_njuvs_info_hub_meta_get('ig_user_id', '') !== '';
 }
 
 /**
@@ -123,7 +123,7 @@ function maca_menulist_info_hub_meta_has_instagram() {
  *
  * @return string
  */
-function maca_menulist_info_hub_meta_oauth_redirect_uri() {
+function maca_njuvs_info_hub_meta_oauth_redirect_uri() {
     return rest_url('maca-njuvs/v1/info-hub/meta-oauth/callback');
 }
 
@@ -134,9 +134,9 @@ function maca_menulist_info_hub_meta_oauth_redirect_uri() {
  * @param string $token  Access token.
  * @return array{ok: bool, code: int, body: array<string, mixed>|null, error: string}
  */
-function maca_menulist_info_hub_meta_graph_request($path, $params = array(), $method = 'GET', $token = '') {
+function maca_njuvs_info_hub_meta_graph_request($path, $params = array(), $method = 'GET', $token = '') {
     $path = ltrim((string) $path, '/');
-    $url = 'https://graph.facebook.com/' . MACA_MENULIST_INFO_HUB_META_GRAPH_VERSION . '/' . $path;
+    $url = 'https://graph.facebook.com/' . MACA_NJUVS_META_GRAPH_VERSION . '/' . $path;
 
     $args = array(
         'timeout' => 30,
@@ -202,9 +202,9 @@ function maca_menulist_info_hub_meta_graph_request($path, $params = array(), $me
  * @param string $message     Log message.
  * @return void
  */
-function maca_menulist_info_hub_social_log($object_type, $object_id, $channel, $status, $external_id = '', $message = '') {
-    if (function_exists('maca_menulist_db_insert_info_social_log')) {
-        maca_menulist_db_insert_info_social_log(
+function maca_njuvs_info_hub_social_log($object_type, $object_id, $channel, $status, $external_id = '', $message = '') {
+    if (function_exists('maca_njuvs_db_insert_info_social_log')) {
+        maca_njuvs_db_insert_info_social_log(
             array(
                 'object_type' => $object_type,
                 'object_id' => $object_id,
@@ -227,7 +227,7 @@ function maca_menulist_info_hub_social_log($object_type, $object_id, $channel, $
  * @param string $external_id Remote post ID.
  * @return void
  */
-function maca_menulist_info_hub_update_social_status($object_type, $object_id, $channel, $status, $external_id = '') {
+function maca_njuvs_info_hub_update_social_status($object_type, $object_id, $channel, $status, $external_id = '') {
     $object_id = intval($object_id);
     $status = sanitize_key($status);
     $field_status = $channel === 'instagram' ? 'social_ig_status' : 'social_fb_status';
@@ -241,9 +241,9 @@ function maca_menulist_info_hub_update_social_status($object_type, $object_id, $
     }
 
     if ($object_type === 'news') {
-        maca_menulist_db_update_info_news($object_id, $row);
+        maca_njuvs_db_update_info_news($object_id, $row);
     } elseif ($object_type === 'event') {
-        maca_menulist_db_update_info_event($object_id, $row);
+        maca_njuvs_db_update_info_event($object_id, $row);
     }
 }
 
@@ -253,12 +253,12 @@ function maca_menulist_info_hub_update_social_status($object_type, $object_id, $
  * @param object $news News row.
  * @return string
  */
-function maca_menulist_info_hub_social_news_caption($news, $apply_channel_limits = true) {
-    $title = trim(maca_menulist_info_hub_get_news_title($news));
-    $excerpt_plain = maca_menulist_info_hub_rich_text_to_plain(
-        maca_menulist_get_object_bilingual_field($news, 'excerpt', 'excerpt_en')
+function maca_njuvs_info_hub_social_news_caption($news, $apply_channel_limits = true) {
+    $title = trim(maca_njuvs_info_hub_get_news_title($news));
+    $excerpt_plain = maca_njuvs_info_hub_rich_text_to_plain(
+        maca_njuvs_get_object_bilingual_field($news, 'excerpt', 'excerpt_en')
     );
-    $content_plain = maca_menulist_info_hub_get_news_content_plain($news);
+    $content_plain = maca_njuvs_info_hub_get_news_content_plain($news);
     $parts = array();
 
     if ($title !== '') {
@@ -283,7 +283,7 @@ function maca_menulist_info_hub_social_news_caption($news, $apply_channel_limits
         return $caption;
     }
 
-    return maca_menulist_info_hub_social_apply_instagram_caption_limit($caption);
+    return maca_njuvs_info_hub_social_apply_instagram_caption_limit($caption);
 }
 
 /**
@@ -292,7 +292,7 @@ function maca_menulist_info_hub_social_news_caption($news, $apply_channel_limits
  * @param array<string, string> $fields title, excerpt, content.
  * @return object
  */
-function maca_menulist_info_hub_social_news_row_from_fields($fields) {
+function maca_njuvs_info_hub_social_news_row_from_fields($fields) {
     return (object) array(
         'title' => isset($fields['title']) ? (string) $fields['title'] : '',
         'title_en' => '',
@@ -308,7 +308,7 @@ function maca_menulist_info_hub_social_news_row_from_fields($fields) {
  *
  * @return int
  */
-function maca_menulist_info_hub_social_instagram_caption_limit() {
+function maca_njuvs_info_hub_social_instagram_caption_limit() {
     return 2200;
 }
 
@@ -318,7 +318,7 @@ function maca_menulist_info_hub_social_instagram_caption_limit() {
  * @param string $caption Caption text.
  * @return int
  */
-function maca_menulist_info_hub_social_caption_length($caption) {
+function maca_njuvs_info_hub_social_caption_length($caption) {
     return function_exists('mb_strlen')
         ? (int) mb_strlen($caption)
         : (int) strlen($caption);
@@ -330,15 +330,15 @@ function maca_menulist_info_hub_social_caption_length($caption) {
  * @param array<string, string> $fields title, excerpt, content.
  * @return int
  */
-function maca_menulist_info_hub_social_news_caption_length($fields) {
-    if (!function_exists('maca_menulist_info_hub_social_news_row_from_fields')) {
+function maca_njuvs_info_hub_social_news_caption_length($fields) {
+    if (!function_exists('maca_njuvs_info_hub_social_news_row_from_fields')) {
         return 0;
     }
 
-    $row = maca_menulist_info_hub_social_news_row_from_fields($fields);
-    $caption = maca_menulist_info_hub_social_news_caption($row, false);
+    $row = maca_njuvs_info_hub_social_news_row_from_fields($fields);
+    $caption = maca_njuvs_info_hub_social_news_caption($row, false);
 
-    return maca_menulist_info_hub_social_caption_length($caption);
+    return maca_njuvs_info_hub_social_caption_length($caption);
 }
 
 /**
@@ -347,8 +347,8 @@ function maca_menulist_info_hub_social_news_caption_length($fields) {
  * @param string $caption Caption text.
  * @return string
  */
-function maca_menulist_info_hub_social_apply_instagram_caption_limit($caption) {
-    $limit = maca_menulist_info_hub_social_instagram_caption_limit();
+function maca_njuvs_info_hub_social_apply_instagram_caption_limit($caption) {
+    $limit = maca_njuvs_info_hub_social_instagram_caption_limit();
 
     if (function_exists('mb_strlen') && mb_strlen($caption) > $limit) {
         return mb_substr($caption, 0, $limit - 3) . '…';
@@ -367,8 +367,8 @@ function maca_menulist_info_hub_social_apply_instagram_caption_limit($caption) {
  * @param string $caption Full caption.
  * @return array{caption: string, sent_caption: string, length: int, sent_length: int, instagram_limit: int, instagram_truncated: bool}
  */
-function maca_menulist_info_hub_social_caption_preview_meta($caption) {
-    $sent = maca_menulist_info_hub_social_apply_instagram_caption_limit($caption);
+function maca_njuvs_info_hub_social_caption_preview_meta($caption) {
+    $sent = maca_njuvs_info_hub_social_apply_instagram_caption_limit($caption);
     $length = function_exists('mb_strlen') ? mb_strlen($caption) : strlen($caption);
     $sent_length = function_exists('mb_strlen') ? mb_strlen($sent) : strlen($sent);
 
@@ -377,7 +377,7 @@ function maca_menulist_info_hub_social_caption_preview_meta($caption) {
         'sent_caption' => $sent,
         'length' => (int) $length,
         'sent_length' => (int) $sent_length,
-        'instagram_limit' => maca_menulist_info_hub_social_instagram_caption_limit(),
+        'instagram_limit' => maca_njuvs_info_hub_social_instagram_caption_limit(),
         'instagram_truncated' => $sent !== $caption,
     );
 }
@@ -388,11 +388,11 @@ function maca_menulist_info_hub_social_caption_preview_meta($caption) {
  * @param object $event Event row.
  * @return string
  */
-function maca_menulist_info_hub_social_event_caption($event) {
-    $title = maca_menulist_info_hub_get_event_title($event);
-    $when = maca_menulist_info_hub_format_event_datetime($event);
-    $location = maca_menulist_info_hub_get_event_location($event);
-    $description = maca_menulist_info_hub_get_event_description($event);
+function maca_njuvs_info_hub_social_event_caption($event) {
+    $title = maca_njuvs_info_hub_get_event_title($event);
+    $when = maca_njuvs_info_hub_format_event_datetime($event);
+    $location = maca_njuvs_info_hub_get_event_location($event);
+    $description = maca_njuvs_info_hub_get_event_description($event);
     $parts = array($title);
 
     if ($when !== '') {
@@ -414,7 +414,7 @@ function maca_menulist_info_hub_social_event_caption($event) {
  * @param object $row News or event row.
  * @return string
  */
-function maca_menulist_info_hub_social_image_url($row) {
+function maca_njuvs_info_hub_social_image_url($row) {
     return !empty($row->image_url) ? esc_url_raw((string) $row->image_url) : '';
 }
 
@@ -425,7 +425,7 @@ function maca_menulist_info_hub_social_image_url($row) {
  * @param string $channel facebook|instagram.
  * @return bool
  */
-function maca_menulist_info_hub_should_publish_social($row, $channel) {
+function maca_njuvs_info_hub_should_publish_social($row, $channel) {
     $share_key = $channel === 'instagram' ? 'share_instagram' : 'share_facebook';
     $status_key = $channel === 'instagram' ? 'social_ig_status' : 'social_fb_status';
 
@@ -444,7 +444,7 @@ function maca_menulist_info_hub_should_publish_social($row, $channel) {
  * @param object $news News row.
  * @return bool
  */
-function maca_menulist_info_hub_news_ready_to_publish($news) {
+function maca_njuvs_info_hub_news_ready_to_publish($news) {
     if (!$news) {
         return false;
     }
@@ -456,7 +456,7 @@ function maca_menulist_info_hub_news_ready_to_publish($news) {
     }
 
     if ($status === 'scheduled') {
-        $now = function_exists('maca_menulist_wp_now_mysql') ? maca_menulist_wp_now_mysql() : current_time('mysql');
+        $now = function_exists('maca_njuvs_wp_now_mysql') ? maca_njuvs_wp_now_mysql() : current_time('mysql');
         $publish_at = (string) ($news->publish_at ?? '');
 
         return $publish_at !== '' && $publish_at <= $now;
@@ -472,16 +472,16 @@ function maca_menulist_info_hub_news_ready_to_publish($news) {
  * @param string $image_url Optional image URL.
  * @return array{ok: bool, id: string, error: string}
  */
-function maca_menulist_info_hub_publish_facebook($caption, $image_url = '') {
-    $page_id = (string) maca_menulist_info_hub_meta_get('page_id', '');
-    $token = maca_menulist_info_hub_meta_get_page_token();
+function maca_njuvs_info_hub_publish_facebook($caption, $image_url = '') {
+    $page_id = (string) maca_njuvs_info_hub_meta_get('page_id', '');
+    $token = maca_njuvs_info_hub_meta_get_page_token();
 
     if ($page_id === '' || $token === '') {
         return array('ok' => false, 'id' => '', 'error' => __('Facebook is not connected.', 'maca-njuvs'));
     }
 
     if ($image_url !== '') {
-        $result = maca_menulist_info_hub_meta_graph_request(
+        $result = maca_njuvs_info_hub_meta_graph_request(
             $page_id . '/photos',
             array(
                 'url' => $image_url,
@@ -492,7 +492,7 @@ function maca_menulist_info_hub_publish_facebook($caption, $image_url = '') {
             $token
         );
     } else {
-        $result = maca_menulist_info_hub_meta_graph_request(
+        $result = maca_njuvs_info_hub_meta_graph_request(
             $page_id . '/feed',
             array(
                 'message' => $caption,
@@ -521,9 +521,9 @@ function maca_menulist_info_hub_publish_facebook($caption, $image_url = '') {
  * @param string $image_url Public image URL.
  * @return array{ok: bool, id: string, error: string}
  */
-function maca_menulist_info_hub_publish_instagram($caption, $image_url) {
-    $ig_user_id = (string) maca_menulist_info_hub_meta_get('ig_user_id', '');
-    $token = maca_menulist_info_hub_meta_get_page_token();
+function maca_njuvs_info_hub_publish_instagram($caption, $image_url) {
+    $ig_user_id = (string) maca_njuvs_info_hub_meta_get('ig_user_id', '');
+    $token = maca_njuvs_info_hub_meta_get_page_token();
 
     if ($ig_user_id === '' || $token === '') {
         return array('ok' => false, 'id' => '', 'error' => __('Instagram is not connected to the selected Facebook page.', 'maca-njuvs'));
@@ -533,7 +533,7 @@ function maca_menulist_info_hub_publish_instagram($caption, $image_url) {
         return array('ok' => false, 'id' => '', 'error' => __('Instagram requires an image.', 'maca-njuvs'));
     }
 
-    $create = maca_menulist_info_hub_meta_graph_request(
+    $create = maca_njuvs_info_hub_meta_graph_request(
         $ig_user_id . '/media',
         array(
             'image_url' => $image_url,
@@ -548,7 +548,7 @@ function maca_menulist_info_hub_publish_instagram($caption, $image_url) {
     }
 
     $creation_id = (string) $create['body']['id'];
-    $publish = maca_menulist_info_hub_meta_graph_request(
+    $publish = maca_njuvs_info_hub_meta_graph_request(
         $ig_user_id . '/media_publish',
         array(
             'creation_id' => $creation_id,
@@ -573,13 +573,13 @@ function maca_menulist_info_hub_publish_instagram($caption, $image_url) {
  * @param int    $object_id   Object ID.
  * @return object|null
  */
-function maca_menulist_info_hub_get_social_publish_row($object_type, $object_id) {
+function maca_njuvs_info_hub_get_social_publish_row($object_type, $object_id) {
     $object_id = (int) $object_id;
 
     if ($object_type === 'news') {
-        $row = maca_menulist_db_get_info_news($object_id);
+        $row = maca_njuvs_db_get_info_news($object_id);
 
-        if (!$row || !maca_menulist_info_hub_news_ready_to_publish($row)) {
+        if (!$row || !maca_njuvs_info_hub_news_ready_to_publish($row)) {
             return null;
         }
 
@@ -587,7 +587,7 @@ function maca_menulist_info_hub_get_social_publish_row($object_type, $object_id)
     }
 
     if ($object_type === 'event') {
-        $row = maca_menulist_db_get_info_event($object_id);
+        $row = maca_njuvs_db_get_info_event($object_id);
 
         if (!$row || empty($row->is_active)) {
             return null;
@@ -606,8 +606,8 @@ function maca_menulist_info_hub_get_social_publish_row($object_type, $object_id)
  * @param int    $object_id   Object ID.
  * @return array<int, string>
  */
-function maca_menulist_info_hub_get_social_publish_channels($object_type, $object_id) {
-    $row = maca_menulist_info_hub_get_social_publish_row($object_type, $object_id);
+function maca_njuvs_info_hub_get_social_publish_channels($object_type, $object_id) {
+    $row = maca_njuvs_info_hub_get_social_publish_row($object_type, $object_id);
 
     if (!$row) {
         return array();
@@ -616,7 +616,7 @@ function maca_menulist_info_hub_get_social_publish_channels($object_type, $objec
     $channels = array();
 
     foreach (array('facebook', 'instagram') as $channel) {
-        if (maca_menulist_info_hub_should_publish_social($row, $channel)) {
+        if (maca_njuvs_info_hub_should_publish_social($row, $channel)) {
             $channels[] = $channel;
         }
     }
@@ -632,7 +632,7 @@ function maca_menulist_info_hub_get_social_publish_channels($object_type, $objec
  * @param string $channel     facebook|instagram.
  * @return array{ok: bool, channel: string, status: string, message: string, external_id: string}
  */
-function maca_menulist_info_hub_publish_social_channel($object_type, $object_id, $channel) {
+function maca_njuvs_info_hub_publish_social_channel($object_type, $object_id, $channel) {
     $channel = sanitize_key($channel);
 
     if (!in_array($channel, array('facebook', 'instagram'), true)) {
@@ -645,7 +645,7 @@ function maca_menulist_info_hub_publish_social_channel($object_type, $object_id,
         );
     }
 
-    if (function_exists('maca_menulist_user_can_manage_info_hub_social') && !maca_menulist_user_can_manage_info_hub_social()) {
+    if (function_exists('maca_njuvs_user_can_manage_info_hub_social') && !maca_njuvs_user_can_manage_info_hub_social()) {
         return array(
             'ok' => false,
             'channel' => $channel,
@@ -655,7 +655,7 @@ function maca_menulist_info_hub_publish_social_channel($object_type, $object_id,
         );
     }
 
-    if (!maca_menulist_info_hub_meta_is_connected()) {
+    if (!maca_njuvs_info_hub_meta_is_connected()) {
         return array(
             'ok' => false,
             'channel' => $channel,
@@ -666,7 +666,7 @@ function maca_menulist_info_hub_publish_social_channel($object_type, $object_id,
     }
 
     $object_id = (int) $object_id;
-    $row = maca_menulist_info_hub_get_social_publish_row($object_type, $object_id);
+    $row = maca_njuvs_info_hub_get_social_publish_row($object_type, $object_id);
 
     if (!$row) {
         return array(
@@ -678,7 +678,7 @@ function maca_menulist_info_hub_publish_social_channel($object_type, $object_id,
         );
     }
 
-    if (!maca_menulist_info_hub_should_publish_social($row, $channel)) {
+    if (!maca_njuvs_info_hub_should_publish_social($row, $channel)) {
         return array(
             'ok' => true,
             'channel' => $channel,
@@ -689,21 +689,21 @@ function maca_menulist_info_hub_publish_social_channel($object_type, $object_id,
     }
 
     $caption = $object_type === 'news'
-        ? maca_menulist_info_hub_social_news_caption($row)
-        : maca_menulist_info_hub_social_event_caption($row);
-    $image_url = maca_menulist_info_hub_social_image_url($row);
+        ? maca_njuvs_info_hub_social_news_caption($row)
+        : maca_njuvs_info_hub_social_event_caption($row);
+    $image_url = maca_njuvs_info_hub_social_image_url($row);
 
-    maca_menulist_info_hub_update_social_status($object_type, $object_id, $channel, 'pending');
+    maca_njuvs_info_hub_update_social_status($object_type, $object_id, $channel, 'pending');
 
     if ($channel === 'facebook') {
-        $result = maca_menulist_info_hub_publish_facebook($caption, $image_url);
+        $result = maca_njuvs_info_hub_publish_facebook($caption, $image_url);
     } else {
-        $result = maca_menulist_info_hub_publish_instagram($caption, $image_url);
+        $result = maca_njuvs_info_hub_publish_instagram($caption, $image_url);
     }
 
     if (!empty($result['ok'])) {
-        maca_menulist_info_hub_update_social_status($object_type, $object_id, $channel, 'published', $result['id']);
-        maca_menulist_info_hub_social_log($object_type, $object_id, $channel, 'published', $result['id'], '');
+        maca_njuvs_info_hub_update_social_status($object_type, $object_id, $channel, 'published', $result['id']);
+        maca_njuvs_info_hub_social_log($object_type, $object_id, $channel, 'published', $result['id'], '');
 
         return array(
             'ok' => true,
@@ -715,8 +715,8 @@ function maca_menulist_info_hub_publish_social_channel($object_type, $object_id,
     }
 
     $error = isset($result['error']) ? (string) $result['error'] : __('Publish failed.', 'maca-njuvs');
-    maca_menulist_info_hub_update_social_status($object_type, $object_id, $channel, 'failed');
-    maca_menulist_info_hub_social_log($object_type, $object_id, $channel, 'failed', '', $error);
+    maca_njuvs_info_hub_update_social_status($object_type, $object_id, $channel, 'failed');
+    maca_njuvs_info_hub_social_log($object_type, $object_id, $channel, 'failed', '', $error);
 
     return array(
         'ok' => false,
@@ -735,7 +735,7 @@ function maca_menulist_info_hub_publish_social_channel($object_type, $object_id,
  * @param array<int, string> $channels    Channels to publish.
  * @return void
  */
-function maca_menulist_info_hub_queue_deferred_social_publish($object_type, $object_id, $channels) {
+function maca_njuvs_info_hub_queue_deferred_social_publish($object_type, $object_id, $channels) {
     $user_id = get_current_user_id();
 
     if ($user_id <= 0 || empty($channels)) {
@@ -758,7 +758,7 @@ function maca_menulist_info_hub_queue_deferred_social_publish($object_type, $obj
  *
  * @return array<string, mixed>|null
  */
-function maca_menulist_info_hub_consume_pending_social_publish() {
+function maca_njuvs_info_hub_consume_pending_social_publish() {
     $user_id = get_current_user_id();
 
     if ($user_id <= 0) {
@@ -784,17 +784,17 @@ function maca_menulist_info_hub_consume_pending_social_publish() {
  * @param int    $object_id   Object ID.
  * @return void
  */
-function maca_menulist_info_hub_publish_social_for_object($object_type, $object_id) {
-    if (function_exists('maca_menulist_user_can_manage_info_hub_social') && !maca_menulist_user_can_manage_info_hub_social()) {
+function maca_njuvs_info_hub_publish_social_for_object($object_type, $object_id) {
+    if (function_exists('maca_njuvs_user_can_manage_info_hub_social') && !maca_njuvs_user_can_manage_info_hub_social()) {
         return;
     }
 
-    if (!maca_menulist_info_hub_meta_is_connected()) {
+    if (!maca_njuvs_info_hub_meta_is_connected()) {
         return;
     }
 
-    foreach (maca_menulist_info_hub_get_social_publish_channels($object_type, (int) $object_id) as $channel) {
-        maca_menulist_info_hub_publish_social_channel($object_type, (int) $object_id, $channel);
+    foreach (maca_njuvs_info_hub_get_social_publish_channels($object_type, (int) $object_id) as $channel) {
+        maca_njuvs_info_hub_publish_social_channel($object_type, (int) $object_id, $channel);
     }
 }
 
@@ -805,12 +805,12 @@ function maca_menulist_info_hub_publish_social_for_object($object_type, $object_
  * @param int    $object_id   Object ID.
  * @return void
  */
-function maca_menulist_info_hub_maybe_publish_social($object_type, $object_id) {
+function maca_njuvs_info_hub_maybe_publish_social($object_type, $object_id) {
     if (!maca_njuvs_enabled()) {
         return;
     }
 
-    maca_menulist_info_hub_publish_social_for_object($object_type, $object_id);
+    maca_njuvs_info_hub_publish_social_for_object($object_type, $object_id);
 }
 
 /**
@@ -818,15 +818,15 @@ function maca_menulist_info_hub_maybe_publish_social($object_type, $object_id) {
  *
  * @return void
  */
-function maca_menulist_info_hub_social_process_scheduled_news() {
-    if (!maca_njuvs_enabled() || !maca_menulist_info_hub_meta_is_connected()) {
+function maca_njuvs_info_hub_social_process_scheduled_news() {
+    if (!maca_njuvs_enabled() || !maca_njuvs_info_hub_meta_is_connected()) {
         return;
     }
 
     global $wpdb;
 
-    $table = maca_menulist_db_info_news_table();
-    $now = function_exists('maca_menulist_wp_now_mysql') ? maca_menulist_wp_now_mysql() : current_time('mysql');
+    $table = maca_njuvs_db_info_news_table();
+    $now = function_exists('maca_njuvs_wp_now_mysql') ? maca_njuvs_wp_now_mysql() : current_time('mysql');
 
     // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table name is plugin-controlled.
     $sql = 'SELECT * FROM `' . $table . '`
@@ -844,11 +844,11 @@ function maca_menulist_info_hub_social_process_scheduled_news() {
     }
 
     foreach ($rows as $row) {
-        if (!maca_menulist_info_hub_news_ready_to_publish($row)) {
+        if (!maca_njuvs_info_hub_news_ready_to_publish($row)) {
             continue;
         }
 
-        maca_menulist_info_hub_publish_social_for_object('news', (int) $row->id);
+        maca_njuvs_info_hub_publish_social_for_object('news', (int) $row->id);
     }
 }
 
@@ -857,13 +857,13 @@ function maca_menulist_info_hub_social_process_scheduled_news() {
  *
  * @return void
  */
-function maca_menulist_info_hub_meta_maybe_refresh_token() {
-    if (!maca_menulist_info_hub_meta_has_app_credentials()) {
+function maca_njuvs_info_hub_meta_maybe_refresh_token() {
+    if (!maca_njuvs_info_hub_meta_has_app_credentials()) {
         return;
     }
 
-    $expires = (int) maca_menulist_info_hub_meta_get('token_expires', 0);
-    $user_token = maca_menulist_info_hub_meta_get_user_token();
+    $expires = (int) maca_njuvs_info_hub_meta_get('token_expires', 0);
+    $user_token = maca_njuvs_info_hub_meta_get_user_token();
 
     if ($user_token === '') {
         return;
@@ -873,9 +873,9 @@ function maca_menulist_info_hub_meta_maybe_refresh_token() {
         return;
     }
 
-    $app_id = maca_menulist_info_hub_meta_get_app_id();
-    $app_secret = maca_menulist_info_hub_meta_get_app_secret();
-    $result = maca_menulist_info_hub_meta_graph_request(
+    $app_id = maca_njuvs_info_hub_meta_get_app_id();
+    $app_secret = maca_njuvs_info_hub_meta_get_app_secret();
+    $result = maca_njuvs_info_hub_meta_graph_request(
         'oauth/access_token',
         array(
             'grant_type' => 'fb_exchange_token',
@@ -893,14 +893,14 @@ function maca_menulist_info_hub_meta_maybe_refresh_token() {
     $new_token = (string) $result['body']['access_token'];
     $expires_in = isset($result['body']['expires_in']) ? (int) $result['body']['expires_in'] : 0;
 
-    maca_menulist_info_hub_meta_set('user_token', maca_menulist_info_hub_encrypt_secret($new_token));
+    maca_njuvs_info_hub_meta_set('user_token', maca_njuvs_info_hub_encrypt_secret($new_token));
 
     if ($expires_in > 0) {
-        maca_menulist_info_hub_meta_set('token_expires', time() + $expires_in);
+        maca_njuvs_info_hub_meta_set('token_expires', time() + $expires_in);
     }
 
-    if (function_exists('maca_menulist_info_hub_meta_refresh_page_token')) {
-        maca_menulist_info_hub_meta_refresh_page_token();
+    if (function_exists('maca_njuvs_info_hub_meta_refresh_page_token')) {
+        maca_njuvs_info_hub_meta_refresh_page_token();
     }
 }
 
@@ -909,8 +909,8 @@ function maca_menulist_info_hub_meta_maybe_refresh_token() {
  *
  * @return void
  */
-function maca_menulist_info_hub_social_maybe_schedule_cron() {
-    if (!maca_menulist_info_hub_feature_available()) {
+function maca_njuvs_info_hub_social_maybe_schedule_cron() {
+    if (!maca_njuvs_info_hub_feature_available()) {
         return;
     }
 
@@ -924,22 +924,22 @@ function maca_menulist_info_hub_social_maybe_schedule_cron() {
  *
  * @return void
  */
-function maca_menulist_info_hub_social_run_cron() {
-    maca_menulist_info_hub_meta_maybe_refresh_token();
-    maca_menulist_info_hub_social_process_scheduled_news();
+function maca_njuvs_info_hub_social_run_cron() {
+    maca_njuvs_info_hub_meta_maybe_refresh_token();
+    maca_njuvs_info_hub_social_process_scheduled_news();
 }
 
-add_action(MACA_NJUVS_SOCIAL_CRON_HOOK, 'maca_menulist_info_hub_social_run_cron');
-add_action('init', 'maca_menulist_info_hub_social_maybe_schedule_cron', 25);
+add_action(MACA_NJUVS_SOCIAL_CRON_HOOK, 'maca_njuvs_info_hub_social_run_cron');
+add_action('init', 'maca_njuvs_info_hub_social_maybe_schedule_cron', 25);
 
 /**
  * Disconnect Meta account data.
  *
  * @return void
  */
-function maca_menulist_info_hub_meta_disconnect() {
+function maca_njuvs_info_hub_meta_disconnect() {
     foreach (array('page_id', 'page_name', 'page_token', 'user_token', 'token_expires', 'ig_user_id', 'ig_username') as $key) {
-        delete_option(maca_menulist_info_hub_meta_option_name($key));
+        delete_option(maca_njuvs_info_hub_meta_option_name($key));
     }
 }
 
@@ -949,7 +949,7 @@ function maca_menulist_info_hub_meta_disconnect() {
  * @param string $status Status key.
  * @return string
  */
-function maca_menulist_info_hub_social_status_label($status) {
+function maca_njuvs_info_hub_social_status_label($status) {
     $labels = array(
         'skipped' => __('Skipped', 'maca-njuvs'),
         'pending' => __('Pending', 'maca-njuvs'),
@@ -965,8 +965,8 @@ function maca_menulist_info_hub_social_status_label($status) {
  *
  * @return string
  */
-function maca_menulist_info_hub_social_guide_file() {
-    return maca_menulist_get_localized_doc_file('INFO-HUB-SOCIAL-GUIDE', 'en');
+function maca_njuvs_info_hub_social_guide_file() {
+    return maca_njuvs_get_localized_doc_file('INFO-HUB-SOCIAL-GUIDE', 'en');
 }
 
 /**
@@ -974,25 +974,25 @@ function maca_menulist_info_hub_social_guide_file() {
  *
  * @return string
  */
-function maca_menulist_info_hub_render_social_guide_html() {
-    if (!function_exists('maca_menulist_render_markdown_file')) {
-        require_once MACA_MENULIST_PLUGIN_DIR . 'includes/markdown.php';
+function maca_njuvs_info_hub_render_social_guide_html() {
+    if (!function_exists('maca_njuvs_render_markdown_file')) {
+        require_once MACA_NJUVS_PLUGIN_DIR . 'includes/markdown.php';
     }
 
-    $guide_file = maca_menulist_info_hub_social_guide_file();
+    $guide_file = maca_njuvs_info_hub_social_guide_file();
 
     if (!file_exists($guide_file)) {
         return '';
     }
 
-    $html = maca_menulist_render_markdown_file($guide_file);
+    $html = maca_njuvs_render_markdown_file($guide_file);
 
     if ($html === '') {
         return '';
     }
 
-    $redirect_uri = function_exists('maca_menulist_info_hub_meta_oauth_redirect_uri')
-        ? maca_menulist_info_hub_meta_oauth_redirect_uri()
+    $redirect_uri = function_exists('maca_njuvs_info_hub_meta_oauth_redirect_uri')
+        ? maca_njuvs_info_hub_meta_oauth_redirect_uri()
         : '';
     $site_host = wp_parse_url(home_url(), PHP_URL_HOST);
     $site_host = is_string($site_host) ? $site_host : '';

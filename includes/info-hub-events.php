@@ -14,10 +14,10 @@ if (!defined('ABSPATH')) {
  *
  * @return array<int, object>
  */
-function maca_menulist_info_hub_db_get_expandable_events() {
+function maca_njuvs_info_hub_db_get_expandable_events() {
     global $wpdb;
 
-    $table = maca_menulist_db_info_events_table();
+    $table = maca_njuvs_db_info_events_table();
 
     // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table name is plugin-controlled.
     $sql = 'SELECT * FROM `' . $table . '`
@@ -33,7 +33,7 @@ function maca_menulist_info_hub_db_get_expandable_events() {
  * @param array<int, int> $event_ids Event IDs.
  * @return array<int, array<string, object>>
  */
-function maca_menulist_info_hub_get_exceptions_map($event_ids) {
+function maca_njuvs_info_hub_get_exceptions_map($event_ids) {
     $event_ids = array_values(array_filter(array_map('intval', $event_ids)));
 
     if (empty($event_ids)) {
@@ -42,7 +42,7 @@ function maca_menulist_info_hub_get_exceptions_map($event_ids) {
 
     global $wpdb;
 
-    $table = maca_menulist_db_info_event_exceptions_table();
+    $table = maca_njuvs_db_info_event_exceptions_table();
     $placeholders = implode(',', array_fill(0, count($event_ids), '%d'));
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, PluginCheck.Security.DirectDB.UnescapedDBParameter
@@ -71,7 +71,7 @@ function maca_menulist_info_hub_get_exceptions_map($event_ids) {
  * @param string $date  Y-m-d.
  * @return array{0: string, 1: string}
  */
-function maca_menulist_info_hub_occurrence_bounds($event, $date) {
+function maca_njuvs_info_hub_occurrence_bounds($event, $date) {
     $start_at = (string) $event->start_at;
     $end_at = (string) $event->end_at;
     $start_time = strlen($start_at) >= 19 ? substr($start_at, 11, 8) : '00:00:00';
@@ -85,7 +85,7 @@ function maca_menulist_info_hub_occurrence_bounds($event, $date) {
     $occ_end = $date . ' ' . $end_time;
 
     if ($occ_end < $occ_start) {
-        $start_ts = maca_menulist_wp_mysql_to_timestamp($occ_start);
+        $start_ts = maca_njuvs_wp_mysql_to_timestamp($occ_start);
         if ($start_ts !== false) {
             $end_date = wp_date('Y-m-d', $start_ts + DAY_IN_SECONDS);
             $occ_end = $end_date . ' ' . $end_time;
@@ -105,7 +105,7 @@ function maca_menulist_info_hub_occurrence_bounds($event, $date) {
  * @param object|null $exception  Exception row if any.
  * @return object|null
  */
-function maca_menulist_info_hub_make_occurrence($event, $occurrence_date, $start_at, $end_at, $exception = null) {
+function maca_njuvs_info_hub_make_occurrence($event, $occurrence_date, $start_at, $end_at, $exception = null) {
     if ($exception && (string) $exception->exception_type === 'cancelled') {
         return null;
     }
@@ -136,7 +136,7 @@ function maca_menulist_info_hub_make_occurrence($event, $occurrence_date, $start
  * @param object $event Event row.
  * @return string|null Y-m-d
  */
-function maca_menulist_info_hub_series_end_date($event) {
+function maca_njuvs_info_hub_series_end_date($event) {
     if (!empty($event->recurrence_until)) {
         return (string) $event->recurrence_until;
     }
@@ -151,7 +151,7 @@ function maca_menulist_info_hub_series_end_date($event) {
  * @param int    $index     Zero-based occurrence index in series.
  * @return bool
  */
-function maca_menulist_info_hub_series_allows_index($event, $index) {
+function maca_njuvs_info_hub_series_allows_index($event, $index) {
     if ($index < 0) {
         return false;
     }
@@ -172,10 +172,10 @@ function maca_menulist_info_hub_series_allows_index($event, $index) {
  * @param array<string, object>               $exceptions Keyed by occurrence_date.
  * @return array<int, object>
  */
-function maca_menulist_info_hub_expand_event($event, $range_start, $range_end, $exceptions = array()) {
+function maca_njuvs_info_hub_expand_event($event, $range_start, $range_end, $exceptions = array()) {
     $recurrence = isset($event->recurrence_type) ? (string) $event->recurrence_type : 'none';
     $series_start = substr((string) $event->start_at, 0, 10);
-    $series_end = maca_menulist_info_hub_series_end_date($event);
+    $series_end = maca_njuvs_info_hub_series_end_date($event);
 
     if ($series_start === '') {
         return array();
@@ -202,9 +202,9 @@ function maca_menulist_info_hub_expand_event($event, $range_start, $range_end, $
     if ($recurrence === 'none') {
         $date = $series_start;
         if ($date >= $expand_from && $date <= $expand_to) {
-            list($start_at, $end_at) = maca_menulist_info_hub_occurrence_bounds($event, $date);
+            list($start_at, $end_at) = maca_njuvs_info_hub_occurrence_bounds($event, $date);
             $exception = isset($exceptions[ $date ]) ? $exceptions[ $date ] : null;
-            $occ = maca_menulist_info_hub_make_occurrence($event, $date, $start_at, $end_at, $exception);
+            $occ = maca_njuvs_info_hub_make_occurrence($event, $date, $start_at, $end_at, $exception);
 
             if ($occ) {
                 $occurrences[] = $occ;
@@ -225,7 +225,7 @@ function maca_menulist_info_hub_expand_event($event, $range_start, $range_end, $
         return array();
     }
 
-    $allowed_days = maca_menulist_parse_days_of_week($event->days_of_week ?? '');
+    $allowed_days = maca_njuvs_parse_days_of_week($event->days_of_week ?? '');
 
     if ($recurrence === 'weekly' && empty($allowed_days)) {
         $allowed_days = array((int) wp_date('w', $anchor_ts));
@@ -251,14 +251,14 @@ function maca_menulist_info_hub_expand_event($event, $range_start, $range_end, $
         }
 
         if ($matches && $date >= $series_start) {
-            if (!maca_menulist_info_hub_series_allows_index($event, $series_index)) {
+            if (!maca_njuvs_info_hub_series_allows_index($event, $series_index)) {
                 break;
             }
 
             if ($date >= $expand_from && $date <= $expand_to) {
-                list($start_at, $end_at) = maca_menulist_info_hub_occurrence_bounds($event, $date);
+                list($start_at, $end_at) = maca_njuvs_info_hub_occurrence_bounds($event, $date);
                 $exception = isset($exceptions[ $date ]) ? $exceptions[ $date ] : null;
-                $occ = maca_menulist_info_hub_make_occurrence($event, $date, $start_at, $end_at, $exception);
+                $occ = maca_njuvs_info_hub_make_occurrence($event, $date, $start_at, $end_at, $exception);
 
                 if ($occ) {
                     $occurrences[] = $occ;
@@ -267,7 +267,7 @@ function maca_menulist_info_hub_expand_event($event, $range_start, $range_end, $
 
             ++$series_index;
 
-            if (!maca_menulist_info_hub_series_allows_index($event, $series_index)) {
+            if (!maca_njuvs_info_hub_series_allows_index($event, $series_index)) {
                 break;
             }
         }
@@ -284,15 +284,15 @@ function maca_menulist_info_hub_expand_event($event, $range_start, $range_end, $
  * @param array<string, mixed> $args Query args.
  * @return array<int, object>
  */
-function maca_menulist_info_hub_get_occurrences($args = array()) {
+function maca_njuvs_info_hub_get_occurrences($args = array()) {
     if (!maca_njuvs_enabled()) {
         return array();
     }
 
     $defaults = array(
         'range_start' => wp_date('Y-m-d'),
-        'range_end' => function_exists('maca_menulist_wp_now_modify')
-            ? maca_menulist_wp_now_modify('+3 months', 'Y-m-d')
+        'range_end' => function_exists('maca_njuvs_wp_now_modify')
+            ? maca_njuvs_wp_now_modify('+3 months', 'Y-m-d')
             : wp_date('Y-m-d', strtotime('+3 months')),
         'limit' => 50,
         'offset' => 0,
@@ -303,15 +303,15 @@ function maca_menulist_info_hub_get_occurrences($args = array()) {
     $range_start = preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $args['range_start']) ? (string) $args['range_start'] : wp_date('Y-m-d');
     $range_end = preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $args['range_end'])
         ? (string) $args['range_end']
-        : (function_exists('maca_menulist_wp_now_modify')
-            ? maca_menulist_wp_now_modify('+3 months', 'Y-m-d')
+        : (function_exists('maca_njuvs_wp_now_modify')
+            ? maca_njuvs_wp_now_modify('+3 months', 'Y-m-d')
             : wp_date('Y-m-d', strtotime('+3 months')));
 
     if ($range_end < $range_start) {
         $range_end = $range_start;
     }
 
-    $events = maca_menulist_info_hub_db_get_expandable_events();
+    $events = maca_njuvs_info_hub_db_get_expandable_events();
 
     if (empty($events)) {
         return array();
@@ -323,13 +323,13 @@ function maca_menulist_info_hub_get_occurrences($args = array()) {
         },
         $events
     );
-    $exceptions_map = maca_menulist_info_hub_get_exceptions_map($event_ids);
+    $exceptions_map = maca_njuvs_info_hub_get_exceptions_map($event_ids);
     $all = array();
 
     foreach ($events as $event) {
         $event_id = (int) $event->id;
         $exceptions = isset($exceptions_map[ $event_id ]) ? $exceptions_map[ $event_id ] : array();
-        $expanded = maca_menulist_info_hub_expand_event($event, $range_start, $range_end, $exceptions);
+        $expanded = maca_njuvs_info_hub_expand_event($event, $range_start, $range_end, $exceptions);
         $all = array_merge($all, $expanded);
     }
 
@@ -347,8 +347,8 @@ function maca_menulist_info_hub_get_occurrences($args = array()) {
     );
 
     if (!empty($args['upcoming_only'])) {
-        $now = function_exists('maca_menulist_wp_now_mysql')
-            ? maca_menulist_wp_now_mysql()
+        $now = function_exists('maca_njuvs_wp_now_mysql')
+            ? maca_njuvs_wp_now_mysql()
             : current_time('mysql');
 
         $all = array_values(
@@ -373,7 +373,7 @@ function maca_menulist_info_hub_get_occurrences($args = array()) {
  * @param string $type Recurrence type.
  * @return string
  */
-function maca_menulist_info_hub_recurrence_label($type) {
+function maca_njuvs_info_hub_recurrence_label($type) {
     $labels = array(
         'none' => __('One-time', 'maca-njuvs'),
         'daily' => __('Daily', 'maca-njuvs'),
@@ -390,15 +390,15 @@ function maca_menulist_info_hub_recurrence_label($type) {
  * @param object $event Event row.
  * @return string
  */
-function maca_menulist_info_hub_recurrence_summary($event) {
+function maca_njuvs_info_hub_recurrence_summary($event) {
     $type = isset($event->recurrence_type) ? (string) $event->recurrence_type : 'none';
 
     if ($type === 'none') {
-        return maca_menulist_info_hub_recurrence_label('none');
+        return maca_njuvs_info_hub_recurrence_label('none');
     }
 
     $interval = max(1, (int) ($event->recurrence_interval ?? 1));
-    $parts = array(maca_menulist_info_hub_recurrence_label($type));
+    $parts = array(maca_njuvs_info_hub_recurrence_label($type));
 
     if ($interval > 1) {
         /* translators: %d: interval number */
@@ -406,13 +406,13 @@ function maca_menulist_info_hub_recurrence_summary($event) {
     }
 
     if ($type === 'weekly') {
-        $days = maca_menulist_parse_days_of_week($event->days_of_week ?? '');
+        $days = maca_njuvs_parse_days_of_week($event->days_of_week ?? '');
 
         if (!empty($days)) {
-            $names = maca_menulist_weekday_short_labels_ordered();
+            $names = maca_njuvs_weekday_short_labels_ordered();
             $day_labels = array();
 
-            foreach (maca_menulist_sort_weekdays_for_display($days) as $day) {
+            foreach (maca_njuvs_sort_weekdays_for_display($days) as $day) {
                 if (isset($names[ $day ])) {
                     $day_labels[] = $names[ $day ];
                 }
@@ -447,14 +447,14 @@ function maca_menulist_info_hub_recurrence_summary($event) {
  * @param object $occurrence Occurrence object.
  * @return string
  */
-function maca_menulist_info_hub_format_occurrence_datetime($occurrence) {
+function maca_njuvs_info_hub_format_occurrence_datetime($occurrence) {
     $pseudo = (object) array(
         'start_at' => $occurrence->start_at,
         'end_at' => $occurrence->end_at,
         'is_all_day' => !empty($occurrence->event->is_all_day),
     );
 
-    return maca_menulist_info_hub_format_event_datetime($pseudo);
+    return maca_njuvs_info_hub_format_event_datetime($pseudo);
 }
 
 /**
@@ -463,12 +463,12 @@ function maca_menulist_info_hub_format_occurrence_datetime($occurrence) {
  * @param object $occurrence Occurrence object.
  * @return string
  */
-function maca_menulist_info_hub_format_occurrence_time_short($occurrence) {
+function maca_njuvs_info_hub_format_occurrence_time_short($occurrence) {
     if (!empty($occurrence->event->is_all_day)) {
         return '';
     }
 
-    $ts = maca_menulist_wp_mysql_to_timestamp((string) $occurrence->start_at);
+    $ts = maca_njuvs_wp_mysql_to_timestamp((string) $occurrence->start_at);
 
     if ($ts === false) {
         return '';
@@ -483,7 +483,7 @@ function maca_menulist_info_hub_format_occurrence_time_short($occurrence) {
  * @param string $fallback Fallback month.
  * @return string
  */
-function maca_menulist_info_hub_resolve_calendar_month($fallback = '') {
+function maca_njuvs_info_hub_resolve_calendar_month($fallback = '') {
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     $month = isset($_GET['maca_cal_month']) ? sanitize_text_field(wp_unslash($_GET['maca_cal_month'])) : '';
 
@@ -504,7 +504,7 @@ function maca_menulist_info_hub_resolve_calendar_month($fallback = '') {
  * @param string $month Y-m.
  * @return array{0: string, 1: string}|null
  */
-function maca_menulist_info_hub_month_bounds($month) {
+function maca_njuvs_info_hub_month_bounds($month) {
     if (!preg_match('/^(\d{4})-(\d{2})$/', $month, $matches)) {
         return null;
     }
@@ -512,7 +512,7 @@ function maca_menulist_info_hub_month_bounds($month) {
     $year = (int) $matches[1];
     $mon = (int) $matches[2];
     $start = sprintf('%04d-%02d-01', $year, $mon);
-    $start_ts = maca_menulist_wp_mysql_to_timestamp($start . ' 12:00:00');
+    $start_ts = maca_njuvs_wp_mysql_to_timestamp($start . ' 12:00:00');
 
     if ($start_ts === false) {
         return null;
@@ -533,7 +533,7 @@ function maca_menulist_info_hub_month_bounds($month) {
  * @param string $month Y-m target month.
  * @return string
  */
-function maca_menulist_info_hub_calendar_month_url($month) {
+function maca_njuvs_info_hub_calendar_month_url($month) {
     global $wp;
 
     $base = home_url(add_query_arg(array(), $wp->request));
@@ -543,4 +543,53 @@ function maca_menulist_info_hub_calendar_month_url($month) {
     }
 
     return add_query_arg('maca_cal_month', $month, $base);
+}
+
+/**
+ * Parse days_of_week DB value to int array.
+ *
+ * @param mixed $days_of_week Stored comma-separated day indexes.
+ * @return array<int, int>
+ */
+function maca_njuvs_parse_days_of_week($days_of_week) {
+    if ($days_of_week === null || $days_of_week === '') {
+        return array();
+    }
+
+    $days = array_map('intval', explode(',', (string) $days_of_week));
+    $days = array_filter(
+        $days,
+        function ($day) {
+            return $day >= 0 && $day <= 6;
+        }
+    );
+
+    return array_values(array_unique($days));
+}
+
+/**
+ * Format weekday indexes for storage.
+ *
+ * @param mixed $days Selected weekday indexes.
+ * @return string|null
+ */
+function maca_njuvs_format_days_of_week($days) {
+    if (empty($days) || !is_array($days)) {
+        return null;
+    }
+
+    $days = array_map('intval', $days);
+    $days = array_filter(
+        $days,
+        function ($day) {
+            return $day >= 0 && $day <= 6;
+        }
+    );
+    sort($days);
+
+    if ($days === array()) {
+        return null;
+    }
+
+    return implode(',', $days);
 }

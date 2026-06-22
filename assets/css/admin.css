@@ -33,3 +33,12 @@
     border-left: 3px solid #2271b1;
     background: #f0f6fc;
 }
+
+.maca-info-hub-image-size-warning {
+    margin: 8px 0 0;
+    max-width: 640px;
+}
+
+.maca-info-hub-image-size-warning.hidden {
+    display: none;
+}

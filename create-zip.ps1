@@ -248,5 +248,6 @@ Write-Host "Files included: $fileCount" -ForegroundColor Green
 Write-Host "Plugin header: OK ($zipFolderName/$bootstrapEntry)" -ForegroundColor Green
 Write-Host ""
 Write-Host "Upload to WordPress:" -ForegroundColor Cyan
-Write-Host "  Plugins -> Add New -> Upload Plugin -> choose maca-njuvs-$version.zip" -ForegroundColor White
+Write-Host "  WordPress.org SVN: see docs/WORDPRESS-ORG-SVN.md" -ForegroundColor White
+Write-Host "  Manual ZIP: Plugins -> Add New -> Upload Plugin -> choose maca-njuvs-$version.zip" -ForegroundColor White
 Write-Host "  Or unzip to wp-content/plugins/maca-njuvs/" -ForegroundColor White

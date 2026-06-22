@@ -44,6 +44,11 @@ En *maca Njuvs → News* crea y edita noticias que se muestran en su sitio web.
 - **Published** — visible en el sitio web (si el módulo está activado)
 - **Archived** — oculto del sitio web pero guardado en administración
 
+### Consejos sobre imágenes
+
+- Use **Select image** — no pegue imágenes en los campos de extracto o contenido.
+- Comprima imágenes grandes (preferiblemente menos de 500 KB). El complemento avisa si la imagen es grande; archivos muy grandes pueden provocar *Please reduce the amount of data* al guardar.
+
 ---
 
 ## Eventos
@@ -63,7 +68,6 @@ En *maca Njuvs → Events* gestiona eventos próximos y recurrentes.
 | **Start / End** | Fecha y hora |
 | **Recurrence** | Ninguna, Diaria, Semanal o Mensual con intervalo, días de la semana y fecha final o número de repeticiones |
 | **Active** | Mostrar en el sitio web |
-| **Table booking** | Mostrar botón de reserva de mesa (si maca Menulist está disponible) |
 | **Publishing** | Sitio web, Facebook e Instagram |
 
 ### Excepciones en series recurrentes
@@ -193,7 +197,6 @@ Las entradas originales no se eliminan — la importación crea nuevas noticias 
 - **Fecha de caducidad** — las noticias pueden ocultarse automáticamente
 - **Eventos recurrentes** — series diarias, semanales y mensuales con excepciones
 - **Publicación social** — uso opcional en Facebook Page e Instagram Business al guardar (requiere aplicación Meta)
-- **Reserva de mesa** — los eventos pueden mostrar un botón de reserva si maca Menulist está instalado
 
 ---
 

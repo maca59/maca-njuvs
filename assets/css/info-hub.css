@@ -33,33 +33,6 @@
     font-weight: 600;
 }
 
-.maca-info-events-booking {
-    margin: 0.75rem 0 0;
-}
-
-.maca-info-events-booking-shell {
-    position: static;
-    width: auto;
-    height: auto;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-    clip: auto;
-    border: 0;
-}
-
-.maca-info-events-booking-shell .maca-table-booking-trigger {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
 .maca-info-news-item:last-child,
 .maca-info-events-item:last-child {
     border-bottom: 0;

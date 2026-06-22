@@ -34,8 +34,8 @@ class Maca_Njuvs_Admin_Info_Hub {
         add_menu_page(
             __('maca Njuvs', 'maca-njuvs'),
             __('maca Njuvs', 'maca-njuvs'),
-            maca_menulist_admin_required_cap(),
-            maca_menulist_info_hub_admin_page(),
+            maca_njuvs_admin_required_cap(),
+            maca_njuvs_info_hub_admin_page(),
             array($this, 'render_page'),
             maca_njuvs_get_admin_menu_icon(),
             58
@@ -52,7 +52,7 @@ class Maca_Njuvs_Admin_Info_Hub {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
 
-        if ($page !== maca_menulist_info_hub_admin_page()) {
+        if ($page !== maca_njuvs_info_hub_admin_page()) {
             return;
         }
 
@@ -65,6 +65,35 @@ class Maca_Njuvs_Admin_Info_Hub {
 
         if (in_array($tab, array('news', 'events'), true) && in_array($action, array('add', 'edit'), true)) {
             wp_enqueue_editor();
+
+            wp_enqueue_script(
+                'maca-njuvs-admin-info-hub-form',
+                MACA_NJUVS_PLUGIN_URL . 'assets/js/admin-info-hub-form.js',
+                array('jquery'),
+                MACA_NJUVS_VERSION,
+                true
+            );
+
+            wp_localize_script(
+                'maca-njuvs-admin-info-hub-form',
+                'macaNjuvsAdminForm',
+                array(
+                    'labels' => array(
+                        'dayUnit' => __('day(s)', 'maca-njuvs'),
+                        'weekUnit' => __('week(s)', 'maca-njuvs'),
+                        'monthUnit' => __('month(s)', 'maca-njuvs'),
+                        'selectImage' => __('Select image', 'maca-njuvs'),
+                        'useImage' => __('Use image', 'maca-njuvs'),
+                        /* translators: 1: human-readable file size, 2: recommended maximum file size */
+                        'imageLargeWarning' => __(
+                            'This image is large (%1$s). Compress it or choose a smaller file (under %2$s) — very large images can cause errors when saving.',
+                            'maca-njuvs'
+                        ),
+                        'imageSizeThreshold' => $this->large_image_warning_threshold_bytes(),
+                        'imageSizeThresholdLabel' => size_format($this->large_image_warning_threshold_bytes()),
+                    ),
+                )
+            );
         }
 
         if (
@@ -72,28 +101,28 @@ class Maca_Njuvs_Admin_Info_Hub {
             || (in_array($tab, array('news', 'events'), true) && in_array($action, array('add', 'edit'), true))
         ) {
             wp_enqueue_style(
-                'maca-menulist-admin-info-hub-social-progress',
-                MACA_MENULIST_PLUGIN_URL . 'assets/css/admin-info-hub-social-progress.css',
+                'maca-njuvs-admin-info-hub-social-progress',
+                MACA_NJUVS_PLUGIN_URL . 'assets/css/admin-info-hub-social-progress.css',
                 array(),
-                MACA_MENULIST_VERSION
+                MACA_NJUVS_VERSION
             );
 
             wp_enqueue_script(
-                'maca-menulist-admin-info-hub-social-progress',
-                MACA_MENULIST_PLUGIN_URL . 'assets/js/admin-info-hub-social-progress.js',
+                'maca-njuvs-admin-info-hub-social-progress',
+                MACA_NJUVS_PLUGIN_URL . 'assets/js/admin-info-hub-social-progress.js',
                 array('jquery'),
-                MACA_MENULIST_VERSION,
+                MACA_NJUVS_VERSION,
                 true
             );
 
             wp_localize_script(
-                'maca-menulist-admin-info-hub-social-progress',
+                'maca-njuvs-admin-info-hub-social-progress',
                 'macaInfoHubSocialProgress',
                 array(
                     'ajaxUrl' => admin_url('admin-ajax.php'),
                     'nonce' => wp_create_nonce('maca_njuvs_social_progress'),
-                    'pending' => function_exists('maca_menulist_info_hub_consume_pending_social_publish')
-                        ? maca_menulist_info_hub_consume_pending_social_publish()
+                    'pending' => function_exists('maca_njuvs_info_hub_consume_pending_social_publish')
+                        ? maca_njuvs_info_hub_consume_pending_social_publish()
                         : null,
                     'labels' => array(
                         'title' => __('Publishing to social media', 'maca-njuvs'),
@@ -119,8 +148,8 @@ class Maca_Njuvs_Admin_Info_Hub {
                         'done' => __('Done!', 'maca-njuvs'),
                         'failed' => __('Something went wrong.', 'maca-njuvs'),
                         'wait' => __('This can take a little while — please keep this tab open.', 'maca-njuvs'),
-                        'captionLimit' => function_exists('maca_menulist_info_hub_social_instagram_caption_limit')
-                            ? maca_menulist_info_hub_social_instagram_caption_limit()
+                        'captionLimit' => function_exists('maca_njuvs_info_hub_social_instagram_caption_limit')
+                            ? maca_njuvs_info_hub_social_instagram_caption_limit()
                             : 2200,
                         /* translators: 1: current caption length, 2: maximum caption length */
                         'captionCounter' => __('%1$d / %2$d characters', 'maca-njuvs'),
@@ -141,7 +170,7 @@ class Maca_Njuvs_Admin_Info_Hub {
     public function ajax_publish_social_channel() {
         check_ajax_referer('maca_njuvs_social_progress', 'nonce');
 
-        if (!maca_menulist_user_can_manage_plugin() || !$this->user_can_manage_social()) {
+        if (!maca_njuvs_user_can_manage_plugin() || !$this->user_can_manage_social()) {
             wp_send_json_error(array('message' => __('Forbidden', 'maca-njuvs')), 403);
         }
 
@@ -153,11 +182,11 @@ class Maca_Njuvs_Admin_Info_Hub {
             wp_send_json_error(array('message' => __('Invalid request.', 'maca-njuvs')), 400);
         }
 
-        if (!function_exists('maca_menulist_info_hub_publish_social_channel')) {
+        if (!function_exists('maca_njuvs_info_hub_publish_social_channel')) {
             wp_send_json_error(array('message' => __('Social publishing is not available.', 'maca-njuvs')), 500);
         }
 
-        $result = maca_menulist_info_hub_publish_social_channel($object_type, $object_id, $channel);
+        $result = maca_njuvs_info_hub_publish_social_channel($object_type, $object_id, $channel);
 
         if (!empty($result['ok'])) {
             wp_send_json_success($result);
@@ -174,7 +203,7 @@ class Maca_Njuvs_Admin_Info_Hub {
     public function ajax_preview_social_caption() {
         check_ajax_referer('maca_njuvs_social_progress', 'nonce');
 
-        if (!maca_menulist_user_can_manage_plugin() || !$this->user_can_manage_social()) {
+        if (!maca_njuvs_user_can_manage_plugin() || !$this->user_can_manage_social()) {
             wp_send_json_error(array('message' => __('Forbidden', 'maca-njuvs')), 403);
         }
 
@@ -182,10 +211,10 @@ class Maca_Njuvs_Admin_Info_Hub {
         $object_type = isset($_POST['object_type']) ? sanitize_key(wp_unslash($_POST['object_type'])) : 'news';
         $title = isset($_POST['title']) ? sanitize_text_field(wp_unslash($_POST['title'])) : '';
         $excerpt = isset($_POST['excerpt'])
-            ? maca_menulist_info_hub_sanitize_rich_text(wp_unslash($_POST['excerpt']))
+            ? maca_njuvs_info_hub_sanitize_rich_text(wp_unslash($_POST['excerpt']))
             : '';
         $content = isset($_POST['content'])
-            ? maca_menulist_info_hub_sanitize_rich_text(wp_unslash($_POST['content']))
+            ? maca_njuvs_info_hub_sanitize_rich_text(wp_unslash($_POST['content']))
             : '';
         $image_url = isset($_POST['image_url'])
             ? esc_url_raw(wp_unslash($_POST['image_url']))
@@ -200,19 +229,19 @@ class Maca_Njuvs_Admin_Info_Hub {
             wp_send_json_error(array('message' => __('Preview is only available for news.', 'maca-njuvs')), 400);
         }
 
-        if (!function_exists('maca_menulist_info_hub_social_news_row_from_fields')) {
+        if (!function_exists('maca_njuvs_info_hub_social_news_row_from_fields')) {
             wp_send_json_error(array('message' => __('Social preview is not available.', 'maca-njuvs')), 500);
         }
 
-        $row = maca_menulist_info_hub_social_news_row_from_fields(
+        $row = maca_njuvs_info_hub_social_news_row_from_fields(
             array(
                 'title' => $title,
                 'excerpt' => $excerpt,
                 'content' => $content,
             )
         );
-        $full_caption = maca_menulist_info_hub_social_news_caption($row, false);
-        $meta = maca_menulist_info_hub_social_caption_preview_meta($full_caption);
+        $full_caption = maca_njuvs_info_hub_social_news_caption($row, false);
+        $meta = maca_njuvs_info_hub_social_caption_preview_meta($full_caption);
 
         $channels = array();
         if ($share_facebook || $republish_facebook) {
@@ -252,23 +281,23 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function handle_social_publish_after_save($object_type, $object_id) {
-        if ($object_id <= 0 || !$this->user_can_manage_social() || !function_exists('maca_menulist_info_hub_get_social_publish_channels')) {
+        if ($object_id <= 0 || !$this->user_can_manage_social() || !function_exists('maca_njuvs_info_hub_get_social_publish_channels')) {
             return;
         }
 
-        $channels = maca_menulist_info_hub_get_social_publish_channels($object_type, $object_id);
+        $channels = maca_njuvs_info_hub_get_social_publish_channels($object_type, $object_id);
 
         if ($channels === array()) {
             return;
         }
 
         if ($this->should_defer_social_publish()) {
-            maca_menulist_info_hub_queue_deferred_social_publish($object_type, $object_id, $channels);
+            maca_njuvs_info_hub_queue_deferred_social_publish($object_type, $object_id, $channels);
             return;
         }
 
-        if (function_exists('maca_menulist_info_hub_maybe_publish_social')) {
-            maca_menulist_info_hub_maybe_publish_social($object_type, $object_id);
+        if (function_exists('maca_njuvs_info_hub_maybe_publish_social')) {
+            maca_njuvs_info_hub_maybe_publish_social($object_type, $object_id);
         }
     }
 
@@ -286,7 +315,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             return;
         }
 
-        if (!maca_menulist_user_can_manage_plugin() || !maca_menulist_info_hub_feature_available()) {
+        if (!maca_njuvs_user_can_manage_plugin() || !maca_njuvs_info_hub_feature_available()) {
             return;
         }
 
@@ -348,8 +377,8 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return bool
      */
     private function user_can_manage_social() {
-        return function_exists('maca_menulist_user_can_manage_info_hub_social')
-            && maca_menulist_user_can_manage_info_hub_social();
+        return function_exists('maca_njuvs_user_can_manage_info_hub_social')
+            && maca_njuvs_user_can_manage_info_hub_social();
     }
 
     /**
@@ -364,8 +393,8 @@ class Maca_Njuvs_Admin_Info_Hub {
 
         update_option('maca_njuvs_enabled', $enabled, false);
 
-        if ($enabled === '1' && function_exists('maca_menulist_schedule_rewrite_flush')) {
-            maca_menulist_schedule_rewrite_flush();
+        if ($enabled === '1') {
+            maca_njuvs_schedule_rewrite_flush();
         }
 
         add_settings_error(
@@ -439,13 +468,13 @@ class Maca_Njuvs_Admin_Info_Hub {
         $test_image = esc_url_raw(wp_unslash($_POST['meta_test_image_url'] ?? ''));
         // phpcs:enable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
-        maca_menulist_info_hub_meta_set('app_id', $app_id);
+        maca_njuvs_info_hub_meta_set('app_id', $app_id);
 
-        if (maca_menulist_admin_secret_should_update($app_secret)) {
-            maca_menulist_info_hub_meta_set('app_secret', maca_menulist_info_hub_encrypt_secret($app_secret));
+        if (maca_njuvs_admin_secret_should_update($app_secret)) {
+            maca_njuvs_info_hub_meta_set('app_secret', maca_njuvs_info_hub_encrypt_secret($app_secret));
         }
 
-        maca_menulist_info_hub_meta_set('test_image_url', $test_image);
+        maca_njuvs_info_hub_meta_set('test_image_url', $test_image);
 
         add_settings_error('maca_njuvs', 'meta_saved', __('Meta app settings saved.', 'maca-njuvs'), 'updated');
     }
@@ -456,7 +485,7 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function disconnect_meta() {
-        maca_menulist_info_hub_meta_disconnect();
+        maca_njuvs_info_hub_meta_disconnect();
         add_settings_error('maca_njuvs', 'meta_disconnected', __('Facebook and Instagram were disconnected.', 'maca-njuvs'), 'updated');
     }
 
@@ -470,13 +499,13 @@ class Maca_Njuvs_Admin_Info_Hub {
         $page_id = sanitize_text_field(wp_unslash($_POST['meta_page_id'] ?? ''));
         // phpcs:enable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
-        if ($page_id === '' || !maca_menulist_info_hub_meta_select_page($page_id)) {
+        if ($page_id === '' || !maca_njuvs_info_hub_meta_select_page($page_id)) {
             add_settings_error('maca_njuvs', 'meta_page_error', __('Could not connect the selected page.', 'maca-njuvs'));
             return;
         }
 
         add_settings_error('maca_njuvs', 'meta_connected', __('Facebook page connected.', 'maca-njuvs'), 'updated');
-        wp_safe_redirect(maca_menulist_info_hub_admin_url('social'));
+        wp_safe_redirect(maca_njuvs_info_hub_admin_url('social'));
         exit;
     }
 
@@ -486,12 +515,12 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function test_meta_publish() {
-        if (!maca_menulist_info_hub_meta_is_connected()) {
+        if (!maca_njuvs_info_hub_meta_is_connected()) {
             add_settings_error('maca_njuvs', 'meta_test_error', __('Connect Facebook first.', 'maca-njuvs'));
             return;
         }
 
-        $results = maca_menulist_info_hub_meta_test_publish();
+        $results = maca_njuvs_info_hub_meta_test_publish();
         $message = trim($results['facebook'] . ' ' . $results['instagram']);
         add_settings_error('maca_njuvs', 'meta_test', $message, 'updated');
     }
@@ -542,34 +571,117 @@ class Maca_Njuvs_Admin_Info_Hub {
     /**
      * Render a rich text field with link support (WordPress editor).
      *
-     * @param string $editor_id  Unique editor DOM id.
-     * @param string $field_name POST field name.
-     * @param string $content    Current HTML content.
-     * @param int    $rows       Approximate textarea height.
+     * @param string $editor_id    Unique editor DOM id.
+     * @param string $field_name   POST field name.
+     * @param string $content      Current HTML content.
+     * @param int    $rows         Approximate textarea height.
+     * @param bool   $use_tinymce  Use visual editor (false = quicktags only, smaller POST).
      * @return void
      */
-    private function render_rich_text_editor($editor_id, $field_name, $content, $rows = 10) {
-        wp_editor(
-            $content,
-            $editor_id,
-            array(
-                'textarea_name' => $field_name,
-                'textarea_rows' => $rows,
-                'media_buttons' => false,
-                'teeny' => false,
-                'quicktags' => array(
-                    'buttons' => 'strong,em,link,ul,ol,li,close',
-                ),
-                'tinymce' => array(
-                    'toolbar1' => 'bold,italic,link,bullist,numlist,undo,redo',
-                    'toolbar2' => '',
-                    'wp_autoresize_on' => true,
-                ),
-            )
+    private function render_rich_text_editor($editor_id, $field_name, $content, $rows = 10, $use_tinymce = true) {
+        $settings = array(
+            'textarea_name' => $field_name,
+            'textarea_rows' => $rows,
+            'media_buttons' => false,
+            'quicktags' => array(
+                'buttons' => 'strong,em,link,ul,ol,li,close',
+            ),
         );
+
+        if ($use_tinymce) {
+            $settings['teeny'] = true;
+            $settings['tinymce'] = array(
+                'toolbar1' => 'bold,italic,link,bullist,numlist,undo,redo',
+                'toolbar2' => '',
+                'wp_autoresize_on' => true,
+                'plugins' => 'lists,link,paste,wordpress,wplink',
+            );
+        } else {
+            $settings['tinymce'] = false;
+        }
+
+        wp_editor($content, $editor_id, $settings);
         echo '<p class="description">';
-        esc_html_e('Use the link button to add hyperlinks. Basic formatting is supported.', 'maca-njuvs');
+        if ($use_tinymce) {
+            esc_html_e('Use the link button to add hyperlinks. Basic formatting is supported. Add images via the Image field — do not paste images into the text.', 'maca-njuvs');
+        } else {
+            esc_html_e('Use the toolbar buttons for basic formatting and links.', 'maca-njuvs');
+        }
         echo '</p>';
+    }
+
+    /**
+     * Byte size above which the admin shows a large-image warning.
+     *
+     * @return int
+     */
+    private function large_image_warning_threshold_bytes() {
+        return 512000;
+    }
+
+    /**
+     * Resolve on-disk file size for a media library URL (0 if unknown).
+     *
+     * @param string $url Attachment URL.
+     * @return int
+     */
+    private function get_local_image_file_size($url) {
+        $url = trim((string) $url);
+
+        if ($url === '') {
+            return 0;
+        }
+
+        $attachment_id = attachment_url_to_postid($url);
+
+        if ($attachment_id <= 0) {
+            return 0;
+        }
+
+        $path = get_attached_file($attachment_id);
+
+        if (!$path || !is_readable($path)) {
+            return 0;
+        }
+
+        return (int) filesize($path);
+    }
+
+    /**
+     * Human-readable large-image warning for admin UI.
+     *
+     * @param int $bytes File size in bytes.
+     * @return string
+     */
+    private function format_large_image_warning($bytes) {
+        return sprintf(
+            /* translators: 1: human-readable file size, 2: recommended maximum file size */
+            __(
+                'This image is large (%1$s). Compress it or choose a smaller file (under %2$s) — very large images can cause errors when saving.',
+                'maca-njuvs'
+            ),
+            size_format($bytes),
+            size_format($this->large_image_warning_threshold_bytes())
+        );
+    }
+
+    /**
+     * Warning notice below an image URL field when the file exceeds the threshold.
+     *
+     * @param string $input_id  Input element id (without #).
+     * @param string $image_url Current image URL.
+     * @return void
+     */
+    private function render_image_size_warning($input_id, $image_url) {
+        $size = $this->get_local_image_file_size($image_url);
+        $visible = $size >= $this->large_image_warning_threshold_bytes();
+        ?>
+        <p
+            id="<?php echo esc_attr($input_id); ?>_size_warning"
+            class="maca-info-hub-image-size-warning notice notice-warning inline<?php echo $visible ? '' : ' hidden'; ?>"
+            data-threshold="<?php echo esc_attr((string) $this->large_image_warning_threshold_bytes()); ?>"
+        ><?php echo $visible ? esc_html($this->format_large_image_warning($size)) : ''; ?></p>
+        <?php
     }
 
     /**
@@ -581,16 +693,14 @@ class Maca_Njuvs_Admin_Info_Hub {
         // phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $news_id = isset($_POST['news_id']) ? absint(wp_unslash($_POST['news_id'])) : 0;
         $title = sanitize_text_field(wp_unslash($_POST['news_title'] ?? ''));
-        $excerpt = maca_menulist_info_hub_sanitize_rich_text(wp_unslash($_POST['news_excerpt'] ?? ''));
-        $content = maca_menulist_info_hub_sanitize_rich_text(wp_unslash($_POST['news_content'] ?? ''));
-        $image_url = function_exists('maca_menulist_normalize_url')
-            ? maca_menulist_normalize_url(esc_url_raw(wp_unslash($_POST['news_image_url'] ?? '')))
-            : esc_url_raw(wp_unslash($_POST['news_image_url'] ?? ''));
+        $excerpt = maca_njuvs_info_hub_sanitize_rich_text(wp_unslash($_POST['news_excerpt'] ?? ''));
+        $content = maca_njuvs_info_hub_sanitize_rich_text(wp_unslash($_POST['news_content'] ?? ''));
+        $image_url = maca_njuvs_normalize_url(esc_url_raw(wp_unslash($_POST['news_image_url'] ?? '')));
         $status = sanitize_key(wp_unslash($_POST['news_status'] ?? 'draft'));
-        $publish_at = maca_menulist_info_hub_parse_datetime_input(
+        $publish_at = maca_njuvs_info_hub_parse_datetime_input(
             sanitize_text_field(wp_unslash($_POST['news_publish_at'] ?? ''))
         );
-        $expires_at = maca_menulist_info_hub_parse_datetime_input(
+        $expires_at = maca_njuvs_info_hub_parse_datetime_input(
             sanitize_text_field(wp_unslash($_POST['news_expires_at'] ?? ''))
         );
         $share_web = isset($_POST['news_share_web']) ? 1 : 0;
@@ -619,17 +729,17 @@ class Maca_Njuvs_Admin_Info_Hub {
         $publishing_social = $share_facebook || $share_instagram || $republish_facebook || $republish_instagram;
         if (
             $publishing_social
-            && function_exists('maca_menulist_info_hub_social_news_caption_length')
-            && function_exists('maca_menulist_info_hub_social_instagram_caption_limit')
+            && function_exists('maca_njuvs_info_hub_social_news_caption_length')
+            && function_exists('maca_njuvs_info_hub_social_instagram_caption_limit')
         ) {
-            $caption_length = maca_menulist_info_hub_social_news_caption_length(
+            $caption_length = maca_njuvs_info_hub_social_news_caption_length(
                 array(
                     'title' => $title,
                     'excerpt' => $excerpt,
                     'content' => $content,
                 )
             );
-            $caption_limit = maca_menulist_info_hub_social_instagram_caption_limit();
+            $caption_limit = maca_njuvs_info_hub_social_instagram_caption_limit();
 
             if ($caption_length > $caption_limit) {
                 add_settings_error(
@@ -641,8 +751,8 @@ class Maca_Njuvs_Admin_Info_Hub {
             }
         }
 
-        $existing_news = $news_id > 0 ? maca_menulist_db_get_info_news($news_id) : null;
-        $resolved_status = maca_menulist_info_hub_resolve_news_status($status, $publish_at ?: '');
+        $existing_news = $news_id > 0 ? maca_njuvs_db_get_info_news($news_id) : null;
+        $resolved_status = maca_njuvs_info_hub_resolve_news_status($status, $publish_at ?: '');
 
         if (in_array($resolved_status, array('published', 'scheduled'), true)) {
             $share_web = 1;
@@ -667,10 +777,10 @@ class Maca_Njuvs_Admin_Info_Hub {
         );
 
         if ($news_id > 0) {
-            $result = maca_menulist_db_update_info_news($news_id, $row);
+            $result = maca_njuvs_db_update_info_news($news_id, $row);
             $saved_news_id = $news_id;
         } else {
-            $result = maca_menulist_db_insert_info_news($row);
+            $result = maca_njuvs_db_insert_info_news($row);
             global $wpdb;
             $saved_news_id = (int) $wpdb->insert_id;
         }
@@ -684,12 +794,8 @@ class Maca_Njuvs_Admin_Info_Hub {
             $this->handle_social_publish_after_save('news', $saved_news_id);
         }
 
-        if (in_array($resolved_status, array('published', 'scheduled'), true) && $share_web) {
-            update_option('maca_njuvs_enabled', '1', false);
-        }
-
         add_settings_error('maca_njuvs', 'news_saved', __('News saved.', 'maca-njuvs'), 'updated');
-        do_action('maca_menulist_site_chat_content_changed');
+        do_action('maca_njuvs_content_changed');
     }
 
     /**
@@ -706,9 +812,9 @@ class Maca_Njuvs_Admin_Info_Hub {
             return;
         }
 
-        maca_menulist_db_delete_info_news($news_id);
+        maca_njuvs_db_delete_info_news($news_id);
         add_settings_error('maca_njuvs', 'news_deleted', __('News deleted.', 'maca-njuvs'), 'updated');
-        do_action('maca_menulist_site_chat_content_changed');
+        do_action('maca_njuvs_content_changed');
     }
 
     /**
@@ -720,17 +826,15 @@ class Maca_Njuvs_Admin_Info_Hub {
         // phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $event_id = isset($_POST['event_id']) ? absint(wp_unslash($_POST['event_id'])) : 0;
         $title = sanitize_text_field(wp_unslash($_POST['event_title'] ?? ''));
-        $description = maca_menulist_info_hub_sanitize_rich_text(wp_unslash($_POST['event_description'] ?? ''));
+        $description = maca_njuvs_info_hub_sanitize_rich_text(wp_unslash($_POST['event_description'] ?? ''));
         $location = sanitize_text_field(wp_unslash($_POST['event_location'] ?? ''));
-        $image_url = function_exists('maca_menulist_normalize_url')
-            ? maca_menulist_normalize_url(esc_url_raw(wp_unslash($_POST['event_image_url'] ?? '')))
-            : esc_url_raw(wp_unslash($_POST['event_image_url'] ?? ''));
+        $image_url = maca_njuvs_normalize_url(esc_url_raw(wp_unslash($_POST['event_image_url'] ?? '')));
         $is_all_day = isset($_POST['event_is_all_day']) ? 1 : 0;
-        $start_at = maca_menulist_info_hub_parse_datetime_input(
+        $start_at = maca_njuvs_info_hub_parse_datetime_input(
             sanitize_text_field(wp_unslash($_POST['event_start_at'] ?? '')),
             (bool) $is_all_day
         );
-        $end_at = maca_menulist_info_hub_parse_datetime_input(
+        $end_at = maca_njuvs_info_hub_parse_datetime_input(
             sanitize_text_field(wp_unslash($_POST['event_end_at'] ?? '')),
             (bool) $is_all_day
         );
@@ -742,7 +846,6 @@ class Maca_Njuvs_Admin_Info_Hub {
         if ($price !== null && $price <= 0) {
             $price = null;
         }
-        $show_booking_button = isset($_POST['event_show_booking_button']) ? 1 : 0;
         $is_active = isset($_POST['event_is_active']) ? 1 : 0;
         $share_web = isset($_POST['event_share_web']) ? 1 : 0;
         $share_facebook = isset($_POST['event_share_facebook']) ? 1 : 0;
@@ -767,7 +870,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             $recurrence_type = 'none';
         }
 
-        $days_of_week = maca_menulist_format_days_of_week(is_array($days_raw) ? $days_raw : array());
+        $days_of_week = maca_njuvs_format_days_of_week(is_array($days_raw) ? $days_raw : array());
         $recurrence_until = preg_match('/^\d{4}-\d{2}-\d{2}$/', $recurrence_until_raw) ? $recurrence_until_raw : null;
         $recurrence_count = $recurrence_count_raw !== '' ? max(1, absint($recurrence_count_raw)) : null;
 
@@ -797,7 +900,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             return;
         }
 
-        $existing_event = $event_id > 0 ? maca_menulist_db_get_info_event($event_id) : null;
+        $existing_event = $event_id > 0 ? maca_njuvs_db_get_info_event($event_id) : null;
 
         $row = array(
             'title' => $title,
@@ -818,7 +921,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             'recurrence_until' => $recurrence_until,
             'recurrence_count' => $recurrence_count,
             'is_active' => $is_active,
-            'show_booking_button' => $show_booking_button,
+            'show_booking_button' => 0,
             'share_web' => $share_web,
             'share_facebook' => $share_facebook,
             'share_instagram' => $share_instagram,
@@ -827,10 +930,10 @@ class Maca_Njuvs_Admin_Info_Hub {
         );
 
         if ($event_id > 0) {
-            $result = maca_menulist_db_update_info_event($event_id, $row);
+            $result = maca_njuvs_db_update_info_event($event_id, $row);
             $saved_event_id = $event_id;
         } else {
-            $result = maca_menulist_db_insert_info_event($row);
+            $result = maca_njuvs_db_insert_info_event($row);
             global $wpdb;
             $saved_event_id = (int) $wpdb->insert_id;
         }
@@ -845,11 +948,11 @@ class Maca_Njuvs_Admin_Info_Hub {
         }
 
         add_settings_error('maca_njuvs', 'event_saved', __('Event saved.', 'maca-njuvs'), 'updated');
-        do_action('maca_menulist_site_chat_content_changed');
+        do_action('maca_njuvs_content_changed');
 
         if ($saved_event_id > 0) {
             wp_safe_redirect(
-                maca_menulist_info_hub_admin_url(
+                maca_njuvs_info_hub_admin_url(
                     'events',
                     array(
                         'action' => 'edit',
@@ -875,9 +978,9 @@ class Maca_Njuvs_Admin_Info_Hub {
             return;
         }
 
-        maca_menulist_db_delete_info_event($event_id);
+        maca_njuvs_db_delete_info_event($event_id);
         add_settings_error('maca_njuvs', 'event_deleted', __('Event deleted.', 'maca-njuvs'), 'updated');
-        do_action('maca_menulist_site_chat_content_changed');
+        do_action('maca_njuvs_content_changed');
     }
 
     /**
@@ -890,10 +993,10 @@ class Maca_Njuvs_Admin_Info_Hub {
         $event_id = isset($_POST['event_id']) ? absint(wp_unslash($_POST['event_id'])) : 0;
         $occurrence_date = sanitize_text_field(wp_unslash($_POST['exception_occurrence_date'] ?? ''));
         $exception_type = sanitize_key(wp_unslash($_POST['exception_type'] ?? 'cancelled'));
-        $new_start_at = maca_menulist_info_hub_parse_datetime_input(
+        $new_start_at = maca_njuvs_info_hub_parse_datetime_input(
             sanitize_text_field(wp_unslash($_POST['exception_new_start_at'] ?? ''))
         );
-        $new_end_at = maca_menulist_info_hub_parse_datetime_input(
+        $new_end_at = maca_njuvs_info_hub_parse_datetime_input(
             sanitize_text_field(wp_unslash($_POST['exception_new_end_at'] ?? ''))
         );
         $note = sanitize_text_field(wp_unslash($_POST['exception_note'] ?? ''));
@@ -913,7 +1016,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             return;
         }
 
-        $result = maca_menulist_db_insert_info_event_exception(
+        $result = maca_njuvs_db_insert_info_event_exception(
             array(
                 'event_id' => $event_id,
                 'occurrence_date' => $occurrence_date,
@@ -930,7 +1033,7 @@ class Maca_Njuvs_Admin_Info_Hub {
         }
 
         add_settings_error('maca_njuvs', 'exception_saved', __('Exception saved.', 'maca-njuvs'), 'updated');
-        do_action('maca_menulist_site_chat_content_changed');
+        do_action('maca_njuvs_content_changed');
     }
 
     /**
@@ -947,9 +1050,9 @@ class Maca_Njuvs_Admin_Info_Hub {
             return;
         }
 
-        maca_menulist_db_delete_info_event_exception($exception_id);
+        maca_njuvs_db_delete_info_event_exception($exception_id);
         add_settings_error('maca_njuvs', 'exception_deleted', __('Exception removed.', 'maca-njuvs'), 'updated');
-        do_action('maca_menulist_site_chat_content_changed');
+        do_action('maca_njuvs_content_changed');
     }
 
     /**
@@ -964,7 +1067,7 @@ class Maca_Njuvs_Admin_Info_Hub {
         $item_id = isset($_GET['id']) ? absint(wp_unslash($_GET['id'])) : 0;
         // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-        $tabs = maca_menulist_info_hub_admin_tabs();
+        $tabs = maca_njuvs_info_hub_admin_tabs();
         $allowed_tabs = array_merge(array_keys($tabs), array('social-guide'));
         if (!in_array($tab, $allowed_tabs, true)) {
             $tab = 'news';
@@ -983,7 +1086,7 @@ class Maca_Njuvs_Admin_Info_Hub {
 
             <nav class="nav-tab-wrapper">
                 <?php foreach ($tabs as $tab_id => $tab_def) : ?>
-                    <a href="<?php echo esc_url(maca_menulist_info_hub_admin_url($tab_id)); ?>"
+                    <a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url($tab_id)); ?>"
                         class="nav-tab <?php echo $tab === $tab_id ? 'nav-tab-active' : ''; ?>">
                         <?php echo esc_html($tab_def['label']); ?>
                     </a>
@@ -1039,11 +1142,11 @@ class Maca_Njuvs_Admin_Info_Hub {
         // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
         $pages = get_transient('maca_njuvs_meta_pages_' . get_current_user_id());
-        $app_id = maca_menulist_info_hub_meta_get_app_id();
-        $connected = maca_menulist_info_hub_meta_is_connected();
-        $redirect_uri = maca_menulist_info_hub_meta_oauth_redirect_uri();
-        $test_image = (string) maca_menulist_info_hub_meta_get('test_image_url', '');
-        $has_app_secret = (string) maca_menulist_info_hub_meta_get('app_secret', '') !== '';
+        $app_id = maca_njuvs_info_hub_meta_get_app_id();
+        $connected = maca_njuvs_info_hub_meta_is_connected();
+        $redirect_uri = maca_njuvs_info_hub_meta_oauth_redirect_uri();
+        $test_image = (string) maca_njuvs_info_hub_meta_get('test_image_url', '');
+        $has_app_secret = (string) maca_njuvs_info_hub_meta_get('app_secret', '') !== '';
 
         if ($oauth_step === 'select_page' && is_array($pages) && !empty($pages)) :
             ?>
@@ -1079,7 +1182,7 @@ class Maca_Njuvs_Admin_Info_Hub {
         endif;
         ?>
         <p>
-            <a href="<?php echo esc_url(maca_menulist_info_hub_admin_url('social-guide')); ?>"><?php esc_html_e('Setup guide: Facebook & Instagram', 'maca-njuvs'); ?></a>
+            <a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('social-guide')); ?>"><?php esc_html_e('Setup guide: Facebook & Instagram', 'maca-njuvs'); ?></a>
         </p>
         <p class="description"><?php esc_html_e('Use your own Meta Developer app. Maca does not host OAuth or tokens for you.', 'maca-njuvs'); ?></p>
 
@@ -1096,7 +1199,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                     <th scope="row"><label for="meta_app_secret"><?php esc_html_e('App Secret', 'maca-njuvs'); ?></label></th>
                     <td>
                         <?php
-                        $meta_secret_attrs = maca_menulist_admin_secret_input_attrs(
+                        $meta_secret_attrs = maca_njuvs_admin_secret_input_attrs(
                             $has_app_secret,
                             array(
                                 'id' => 'meta_app_secret',
@@ -1104,7 +1207,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                             )
                         );
                         ?>
-                        <input <?php echo maca_menulist_admin_secret_field_attr_string($meta_secret_attrs); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+                        <input <?php echo wp_kses(maca_njuvs_admin_secret_field_attr_string($meta_secret_attrs), array()); ?>>
                         <?php if ($has_app_secret) : ?>
                             <p class="description"><?php esc_html_e('Leave blank to keep the current secret.', 'maca-njuvs'); ?></p>
                         <?php endif; ?>
@@ -1132,18 +1235,18 @@ class Maca_Njuvs_Admin_Info_Hub {
         <?php if ($connected) : ?>
             <p>
                 <strong><?php esc_html_e('Facebook page:', 'maca-njuvs'); ?></strong>
-                <?php echo esc_html((string) maca_menulist_info_hub_meta_get('page_name', '')); ?>
+                <?php echo esc_html((string) maca_njuvs_info_hub_meta_get('page_name', '')); ?>
             </p>
-            <?php if (maca_menulist_info_hub_meta_has_instagram()) : ?>
+            <?php if (maca_njuvs_info_hub_meta_has_instagram()) : ?>
                 <p>
                     <strong><?php esc_html_e('Instagram:', 'maca-njuvs'); ?></strong>
-                    @<?php echo esc_html((string) maca_menulist_info_hub_meta_get('ig_username', '')); ?>
+                    @<?php echo esc_html((string) maca_njuvs_info_hub_meta_get('ig_username', '')); ?>
                 </p>
             <?php else : ?>
                 <p class="description"><?php esc_html_e('No Instagram Business account is linked to this page.', 'maca-njuvs'); ?></p>
             <?php endif; ?>
             <?php
-            $expires = (int) maca_menulist_info_hub_meta_get('token_expires', 0);
+            $expires = (int) maca_njuvs_info_hub_meta_get('token_expires', 0);
             if ($expires > 0) :
                 ?>
                 <p class="description">
@@ -1157,7 +1260,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                 </p>
             <?php endif; ?>
             <p>
-                <a class="button button-primary" href="<?php echo esc_url(maca_menulist_info_hub_admin_url('social', array('maca_meta_oauth' => 'start'))); ?>">
+                <a class="button button-primary" href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('social', array('maca_meta_oauth' => 'start'))); ?>">
                     <?php esc_html_e('Reconnect', 'maca-njuvs'); ?>
                 </a>
             </p>
@@ -1171,15 +1274,15 @@ class Maca_Njuvs_Admin_Info_Hub {
                 <input type="hidden" name="maca_njuvs_action" value="disconnect_meta">
                 <?php submit_button(__('Disconnect', 'maca-njuvs'), 'delete', 'submit', false); ?>
             </form>
-        <?php elseif (maca_menulist_info_hub_meta_has_app_credentials()) : ?>
-            <p><a class="button button-primary" href="<?php echo esc_url(maca_menulist_info_hub_admin_url('social', array('maca_meta_oauth' => 'start'))); ?>"><?php esc_html_e('Connect Facebook & Instagram', 'maca-njuvs'); ?></a></p>
+        <?php elseif (maca_njuvs_info_hub_meta_has_app_credentials()) : ?>
+            <p><a class="button button-primary" href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('social', array('maca_meta_oauth' => 'start'))); ?>"><?php esc_html_e('Connect Facebook & Instagram', 'maca-njuvs'); ?></a></p>
         <?php else : ?>
             <p class="description"><?php esc_html_e('Save App ID and App Secret first, then connect.', 'maca-njuvs'); ?></p>
         <?php endif; ?>
 
         <h2><?php esc_html_e('Publish log', 'maca-njuvs'); ?></h2>
         <?php
-        $logs = function_exists('maca_menulist_db_get_info_social_log') ? maca_menulist_db_get_info_social_log(30) : array();
+        $logs = function_exists('maca_njuvs_db_get_info_social_log') ? maca_njuvs_db_get_info_social_log(30) : array();
         ?>
         <table class="widefat striped">
             <thead>
@@ -1200,7 +1303,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                             <td><?php echo esc_html((string) $log->created_at); ?></td>
                             <td><?php echo esc_html((string) $log->object_type . ' #' . (int) $log->object_id); ?></td>
                             <td><?php echo esc_html((string) $log->channel); ?></td>
-                            <td><?php echo esc_html(maca_menulist_info_hub_social_status_label((string) $log->status)); ?></td>
+                            <td><?php echo esc_html(maca_njuvs_info_hub_social_status_label((string) $log->status)); ?></td>
                             <td><?php echo esc_html($log->message ?: ($log->external_id ?: '—')); ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -1222,8 +1325,8 @@ class Maca_Njuvs_Admin_Info_Hub {
      */
     private function render_social_publish_fields($prefix, $share_web, $share_facebook, $share_instagram, $row) {
         $can_social = $this->user_can_manage_social();
-        $connected = maca_menulist_info_hub_meta_is_connected();
-        $has_ig = maca_menulist_info_hub_meta_has_instagram();
+        $connected = maca_njuvs_info_hub_meta_is_connected();
+        $has_ig = maca_njuvs_info_hub_meta_has_instagram();
         ?>
         <label><input type="checkbox" name="<?php echo esc_attr($prefix); ?>_share_web" value="1" <?php checked($share_web); ?>> <?php esc_html_e('Website', 'maca-njuvs'); ?></label><br>
         <?php if ($can_social && $connected) : ?>
@@ -1246,7 +1349,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                     esc_html__('Social media', 'maca-njuvs')
                 );
                 ?>
-                <a href="<?php echo esc_url(maca_menulist_info_hub_admin_url('social')); ?>"><?php esc_html_e('Open Social media', 'maca-njuvs'); ?></a>
+                <a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('social')); ?>"><?php esc_html_e('Open Social media', 'maca-njuvs'); ?></a>
             </p>
         <?php else : ?>
             <p class="description"><?php esc_html_e('Facebook and Instagram publishing is not available for demo users.', 'maca-njuvs'); ?></p>
@@ -1283,10 +1386,10 @@ class Maca_Njuvs_Admin_Info_Hub {
             <h2><?php esc_html_e('Facebook & Instagram', 'maca-njuvs'); ?></h2>
             <p><?php esc_html_e('Connect your Meta app to publish news and events to your Facebook Page and Instagram account.', 'maca-njuvs'); ?></p>
             <p>
-                <a class="button button-primary" href="<?php echo esc_url(maca_menulist_info_hub_admin_url('social-guide')); ?>">
+                <a class="button button-primary" href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('social-guide')); ?>">
                     <?php esc_html_e('Setup guide: Facebook & Instagram', 'maca-njuvs'); ?>
                 </a>
-                <a class="button" href="<?php echo esc_url(maca_menulist_info_hub_admin_url('social')); ?>">
+                <a class="button" href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('social')); ?>">
                     <?php esc_html_e('Open Social media', 'maca-njuvs'); ?>
                 </a>
             </p>
@@ -1298,19 +1401,19 @@ class Maca_Njuvs_Admin_Info_Hub {
         <p><?php esc_html_e('Add the blocks “maca News” and “maca Events” from the maca Njuvs category in the block editor.', 'maca-njuvs'); ?></p>
 
         <h2><?php esc_html_e('Calendar feed', 'maca-njuvs'); ?></h2>
-        <?php if ($enabled && function_exists('maca_menulist_get_info_events_ics_url')) : ?>
+        <?php if ($enabled && function_exists('maca_njuvs_get_info_events_ics_url')) : ?>
             <table class="form-table" role="presentation">
                 <tr>
                     <th scope="row"><?php esc_html_e('iCal feed URL', 'maca-njuvs'); ?></th>
                     <td>
-                        <code><?php echo esc_html(maca_menulist_get_info_events_ics_url()); ?></code>
+                        <code><?php echo esc_html(maca_njuvs_get_info_events_ics_url()); ?></code>
                         <p class="description"><?php esc_html_e('Public feed for calendar apps. Updates when events change.', 'maca-njuvs'); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><?php esc_html_e('Subscribe URL', 'maca-njuvs'); ?></th>
                     <td>
-                        <code><?php echo esc_html(maca_menulist_get_info_events_webcal_url()); ?></code>
+                        <code><?php echo esc_html(maca_njuvs_get_info_events_webcal_url()); ?></code>
                         <p class="description"><?php esc_html_e('Use webcal:// in Apple Calendar and many other apps.', 'maca-njuvs'); ?></p>
                     </td>
                 </tr>
@@ -1351,7 +1454,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             );
             ?>
         </p>
-        <form method="post" action="<?php echo esc_url(maca_menulist_info_hub_admin_url('import')); ?>" onsubmit="return confirm('<?php echo esc_js(__('Import selected WordPress posts as maca Njuvs news?', 'maca-njuvs')); ?>');">
+        <form method="post" action="<?php echo esc_url(maca_njuvs_info_hub_admin_url('import')); ?>" onsubmit="return confirm('<?php echo esc_js(__('Import selected WordPress posts as maca Njuvs news?', 'maca-njuvs')); ?>');">
             <?php wp_nonce_field('maca_njuvs_save', 'maca_nonce'); ?>
             <input type="hidden" name="maca_njuvs_action" value="import_wp_posts">
             <table class="form-table" role="presentation">
@@ -1402,8 +1505,8 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function render_guide_tab() {
-        $guide_html = function_exists('maca_menulist_info_hub_render_guide_html')
-            ? maca_menulist_info_hub_render_guide_html()
+        $guide_html = function_exists('maca_njuvs_info_hub_render_guide_html')
+            ? maca_njuvs_info_hub_render_guide_html()
             : '';
         ?>
         <div class="maca-info-hub-guide maca-guide-content">
@@ -1411,7 +1514,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             if ($guide_html === '') {
                 echo '<p>' . esc_html__('Guide file not found or could not be read.', 'maca-njuvs') . '</p>';
             } else {
-                echo $guide_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Sanitized in maca_menulist_info_hub_render_guide_html().
+                echo wp_kses($guide_html, maca_njuvs_get_markdown_allowed_html());
             }
             ?>
         </div>
@@ -1424,20 +1527,20 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function render_social_guide_tab() {
-        $guide_html = function_exists('maca_menulist_info_hub_render_social_guide_html')
-            ? maca_menulist_info_hub_render_social_guide_html()
+        $guide_html = function_exists('maca_njuvs_info_hub_render_social_guide_html')
+            ? maca_njuvs_info_hub_render_social_guide_html()
             : '';
         ?>
         <p>
-            <a class="button" href="<?php echo esc_url(maca_menulist_info_hub_admin_url('settings')); ?>">&larr; <?php esc_html_e('Back to settings', 'maca-njuvs'); ?></a>
-            <a class="button" href="<?php echo esc_url(maca_menulist_info_hub_admin_url('social')); ?>"><?php esc_html_e('Open Social media', 'maca-njuvs'); ?></a>
+            <a class="button" href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('settings')); ?>">&larr; <?php esc_html_e('Back to settings', 'maca-njuvs'); ?></a>
+            <a class="button" href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('social')); ?>"><?php esc_html_e('Open Social media', 'maca-njuvs'); ?></a>
         </p>
         <div class="maca-info-hub-guide maca-guide-content">
             <?php
             if ($guide_html === '') {
                 echo '<p>' . esc_html__('Guide file not found or could not be read.', 'maca-njuvs') . '</p>';
             } else {
-                echo $guide_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Sanitized in maca_menulist_info_hub_render_social_guide_html().
+                echo wp_kses($guide_html, maca_njuvs_get_markdown_allowed_html());
             }
             ?>
         </div>
@@ -1450,19 +1553,19 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function render_news_list() {
-        $items = maca_menulist_db_get_info_news_items();
+        $items = maca_njuvs_db_get_info_news_items();
         $hub_enabled = maca_njuvs_enabled();
         ?>
         <?php if (!$hub_enabled) : ?>
             <div class="notice notice-warning inline">
                 <p>
                     <?php esc_html_e('maca Njuvs is not enabled for the website. News will not appear in blocks until you enable it under Settings.', 'maca-njuvs'); ?>
-                    <a href="<?php echo esc_url(maca_menulist_info_hub_admin_url('settings')); ?>"><?php esc_html_e('Open settings', 'maca-njuvs'); ?></a>
+                    <a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('settings')); ?>"><?php esc_html_e('Open settings', 'maca-njuvs'); ?></a>
                 </p>
             </div>
         <?php endif; ?>
         <p>
-            <a href="<?php echo esc_url(maca_menulist_info_hub_admin_url('news', array('action' => 'add'))); ?>" class="button button-primary">
+            <a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('news', array('action' => 'add'))); ?>" class="button button-primary">
                 <?php esc_html_e('Add news', 'maca-njuvs'); ?>
             </a>
         </p>
@@ -1483,13 +1586,13 @@ class Maca_Njuvs_Admin_Info_Hub {
                 <?php else : ?>
                     <?php foreach ($items as $item) : ?>
                         <tr>
-                            <td><?php echo esc_html(maca_menulist_info_hub_get_news_title($item)); ?></td>
-                            <td><?php echo esc_html(maca_menulist_info_hub_news_status_label((string) $item->status)); ?></td>
+                            <td><?php echo esc_html(maca_njuvs_info_hub_get_news_title($item)); ?></td>
+                            <td><?php echo esc_html(maca_njuvs_info_hub_news_status_label((string) $item->status)); ?></td>
                             <td><?php echo esc_html($item->publish_at ? wp_date(get_option('date_format') . ' ' . get_option('time_format'), strtotime((string) $item->publish_at)) : '—'); ?></td>
                             <td><?php echo !empty($item->share_web) ? '✓' : '—'; ?></td>
                             <td>
                                 <?php
-                                $blockers = maca_menulist_info_hub_get_news_visibility_blockers($item);
+                                $blockers = maca_njuvs_info_hub_get_news_visibility_blockers($item);
                                 if ($blockers === array()) {
                                     echo esc_html__('Yes', 'maca-njuvs');
                                 } else {
@@ -1499,7 +1602,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                                 ?>
                             </td>
                             <td>
-                                <a class="button button-small" href="<?php echo esc_url(maca_menulist_info_hub_admin_url('news', array('action' => 'edit', 'id' => (int) $item->id))); ?>">
+                                <a class="button button-small" href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('news', array('action' => 'edit', 'id' => (int) $item->id))); ?>">
                                     <?php esc_html_e('Edit', 'maca-njuvs'); ?>
                                 </a>
                             </td>
@@ -1518,7 +1621,7 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function render_news_form($news_id) {
-        $news = $news_id > 0 ? maca_menulist_db_get_info_news($news_id) : null;
+        $news = $news_id > 0 ? maca_njuvs_db_get_info_news($news_id) : null;
 
         $title = $news ? $this->primary_content_field($news->title, $news->title_en) : '';
         $excerpt = $news ? $this->primary_content_field($news->excerpt, $news->excerpt_en) : '';
@@ -1538,7 +1641,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             $expires_at = str_replace(' ', 'T', $expires_at);
         }
         ?>
-        <p><a href="<?php echo esc_url(maca_menulist_info_hub_admin_url('news')); ?>">&larr; <?php esc_html_e('Back to list', 'maca-njuvs'); ?></a></p>
+        <p><a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('news')); ?>">&larr; <?php esc_html_e('Back to list', 'maca-njuvs'); ?></a></p>
 
         <form method="post" action="" class="maca-info-hub-social-save-form" data-object-type="news">
             <?php wp_nonce_field('maca_njuvs_save', 'maca_nonce'); ?>
@@ -1556,7 +1659,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                 <tr>
                     <th><label for="news_excerpt"><?php esc_html_e('Excerpt', 'maca-njuvs'); ?></label></th>
                     <td>
-                        <?php $this->render_rich_text_editor('news_excerpt', 'news_excerpt', $excerpt, 3); ?>
+                        <?php $this->render_rich_text_editor('news_excerpt', 'news_excerpt', $excerpt, 3, false); ?>
                         <p class="description"><?php esc_html_e('Short summary for the banner and list. Included in the social post caption after the title.', 'maca-njuvs'); ?></p>
                     </td>
                 </tr>
@@ -1566,7 +1669,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                         <?php $this->render_rich_text_editor('news_content', 'news_content', $content, 10); ?>
                     </td>
                 </tr>
-                <?php if ($this->user_can_manage_social() && maca_menulist_info_hub_meta_is_connected()) : ?>
+                <?php if ($this->user_can_manage_social() && maca_njuvs_info_hub_meta_is_connected()) : ?>
                 <tr class="maca-info-hub-social-caption-limit-row">
                     <th><?php esc_html_e('Social text', 'maca-njuvs'); ?></th>
                     <td>
@@ -1574,7 +1677,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                             id="maca-info-hub-social-caption-counter"
                             class="maca-info-hub-social-caption-counter"
                             aria-live="polite"
-                            data-limit="<?php echo esc_attr((string) (function_exists('maca_menulist_info_hub_social_instagram_caption_limit') ? maca_menulist_info_hub_social_instagram_caption_limit() : 2200)); ?>"
+                            data-limit="<?php echo esc_attr((string) (function_exists('maca_njuvs_info_hub_social_instagram_caption_limit') ? maca_njuvs_info_hub_social_instagram_caption_limit() : 2200)); ?>"
                         ></p>
                         <p class="description maca-info-hub-social-caption-limit-note">
                             <?php esc_html_e('Title, excerpt, and content are combined for social posts. Maximum 2,200 characters (Instagram limit).', 'maca-njuvs'); ?>
@@ -1590,6 +1693,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                         <?php if ($image_url !== '') : ?>
                             <p><img src="<?php echo esc_url($image_url); ?>" alt="" style="max-width:160px;margin-top:8px;"></p>
                         <?php endif; ?>
+                        <?php $this->render_image_size_warning('news_image_url', $image_url); ?>
                     </td>
                 </tr>
                 <tr>
@@ -1598,7 +1702,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                         <select id="news_status" name="news_status">
                             <?php foreach (array('draft', 'scheduled', 'published', 'archived') as $status_key) : ?>
                                 <option value="<?php echo esc_attr($status_key); ?>" <?php selected($status, $status_key); ?>>
-                                    <?php echo esc_html(maca_menulist_info_hub_news_status_label($status_key)); ?>
+                                    <?php echo esc_html(maca_njuvs_info_hub_news_status_label($status_key)); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -1627,13 +1731,13 @@ class Maca_Njuvs_Admin_Info_Hub {
                     <th><?php esc_html_e('Social status', 'maca-njuvs'); ?></th>
                     <td>
                         <?php if ($share_facebook) : ?>
-                            <p><?php echo esc_html__('Facebook:', 'maca-njuvs') . ' ' . esc_html(maca_menulist_info_hub_social_status_label((string) ($news->social_fb_status ?? 'skipped'))); ?></p>
+                            <p><?php echo esc_html__('Facebook:', 'maca-njuvs') . ' ' . esc_html(maca_njuvs_info_hub_social_status_label((string) ($news->social_fb_status ?? 'skipped'))); ?></p>
                             <?php if (in_array((string) ($news->social_fb_status ?? ''), array('published', 'failed'), true)) : ?>
                                 <p><label><input type="checkbox" name="news_republish_facebook" value="1"> <?php esc_html_e('Publish again to Facebook', 'maca-njuvs'); ?></label></p>
                             <?php endif; ?>
                         <?php endif; ?>
                         <?php if ($share_instagram) : ?>
-                            <p><?php echo esc_html__('Instagram:', 'maca-njuvs') . ' ' . esc_html(maca_menulist_info_hub_social_status_label((string) ($news->social_ig_status ?? 'skipped'))); ?></p>
+                            <p><?php echo esc_html__('Instagram:', 'maca-njuvs') . ' ' . esc_html(maca_njuvs_info_hub_social_status_label((string) ($news->social_ig_status ?? 'skipped'))); ?></p>
                             <?php if (in_array((string) ($news->social_ig_status ?? ''), array('published', 'failed'), true)) : ?>
                                 <p><label><input type="checkbox" name="news_republish_instagram" value="1"> <?php esc_html_e('Publish again to Instagram', 'maca-njuvs'); ?></label></p>
                             <?php endif; ?>
@@ -1647,7 +1751,7 @@ class Maca_Njuvs_Admin_Info_Hub {
             <p class="submit" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                 <?php
                 submit_button($news_id > 0 ? __('Update news', 'maca-njuvs') : __('Add news', 'maca-njuvs'), 'primary', 'submit', false);
-                if ($this->user_can_manage_social() && maca_menulist_info_hub_meta_is_connected()) {
+                if ($this->user_can_manage_social() && maca_njuvs_info_hub_meta_is_connected()) {
                     echo '<button type="button" class="button maca-info-hub-social-preview-btn" id="maca-info-hub-social-preview-btn">';
                     esc_html_e('Preview social post', 'maca-njuvs');
                     echo '</button>';
@@ -1664,8 +1768,6 @@ class Maca_Njuvs_Admin_Info_Hub {
                 <?php submit_button(__('Delete', 'maca-njuvs'), 'delete'); ?>
             </form>
         <?php endif; ?>
-
-        <?php $this->render_media_uploader_script(); ?>
         <?php
     }
 
@@ -1675,10 +1777,10 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function render_events_list() {
-        $items = maca_menulist_db_get_info_events();
+        $items = maca_njuvs_db_get_info_events();
         ?>
         <p>
-            <a href="<?php echo esc_url(maca_menulist_info_hub_admin_url('events', array('action' => 'add'))); ?>" class="button button-primary">
+            <a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('events', array('action' => 'add'))); ?>" class="button button-primary">
                 <?php esc_html_e('Add event', 'maca-njuvs'); ?>
             </a>
         </p>
@@ -1700,14 +1802,14 @@ class Maca_Njuvs_Admin_Info_Hub {
                 <?php else : ?>
                     <?php foreach ($items as $item) : ?>
                         <tr>
-                            <td><?php echo esc_html(maca_menulist_info_hub_get_event_title($item)); ?></td>
-                            <td><?php echo esc_html(maca_menulist_info_hub_format_event_datetime($item)); ?></td>
-                            <td><?php echo esc_html(maca_menulist_info_hub_get_event_price_label($item) ?: '—'); ?></td>
-                            <td><?php echo esc_html(maca_menulist_info_hub_recurrence_summary($item)); ?></td>
+                            <td><?php echo esc_html(maca_njuvs_info_hub_get_event_title($item)); ?></td>
+                            <td><?php echo esc_html(maca_njuvs_info_hub_format_event_datetime($item)); ?></td>
+                            <td><?php echo esc_html(maca_njuvs_info_hub_get_event_price_label($item) ?: '—'); ?></td>
+                            <td><?php echo esc_html(maca_njuvs_info_hub_recurrence_summary($item)); ?></td>
                             <td><?php echo !empty($item->is_active) ? '✓' : '—'; ?></td>
                             <td><?php echo !empty($item->share_web) ? '✓' : '—'; ?></td>
                             <td>
-                                <a class="button button-small" href="<?php echo esc_url(maca_menulist_info_hub_admin_url('events', array('action' => 'edit', 'id' => (int) $item->id))); ?>">
+                                <a class="button button-small" href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('events', array('action' => 'edit', 'id' => (int) $item->id))); ?>">
                                     <?php esc_html_e('Edit', 'maca-njuvs'); ?>
                                 </a>
                             </td>
@@ -1726,7 +1828,7 @@ class Maca_Njuvs_Admin_Info_Hub {
      * @return void
      */
     private function render_event_form($event_id) {
-        $event = $event_id > 0 ? maca_menulist_db_get_info_event($event_id) : null;
+        $event = $event_id > 0 ? maca_njuvs_db_get_info_event($event_id) : null;
 
         $title = $event ? $this->primary_content_field($event->title, $event->title_en) : '';
         $description = $event ? $this->primary_content_field($event->description, $event->description_en) : '';
@@ -1736,27 +1838,24 @@ class Maca_Njuvs_Admin_Info_Hub {
             ? (string) $event->price
             : '';
         $is_all_day = $event && !empty($event->is_all_day);
-        $start_at = ($event && $event->start_at && function_exists('maca_menulist_wp_mysql_to_datetime_local'))
-            ? maca_menulist_wp_mysql_to_datetime_local((string) $event->start_at)
+        $start_at = ($event && $event->start_at && function_exists('maca_njuvs_wp_mysql_to_datetime_local'))
+            ? maca_njuvs_wp_mysql_to_datetime_local((string) $event->start_at)
             : ($event && $event->start_at ? str_replace(' ', 'T', substr((string) $event->start_at, 0, 16)) : '');
-        $end_at = ($event && $event->end_at && function_exists('maca_menulist_wp_mysql_to_datetime_local'))
-            ? maca_menulist_wp_mysql_to_datetime_local((string) $event->end_at)
+        $end_at = ($event && $event->end_at && function_exists('maca_njuvs_wp_mysql_to_datetime_local'))
+            ? maca_njuvs_wp_mysql_to_datetime_local((string) $event->end_at)
             : ($event && $event->end_at ? str_replace(' ', 'T', substr((string) $event->end_at, 0, 16)) : '');
         $is_active = !$event || !empty($event->is_active);
-        $show_booking_button = $event && !empty($event->show_booking_button);
         $share_web = !$event || !empty($event->share_web);
         $share_facebook = $event && !empty($event->share_facebook);
         $share_instagram = $event && !empty($event->share_instagram);
         $recurrence_type = $event ? (string) $event->recurrence_type : 'none';
         $recurrence_interval = $event ? max(1, (int) $event->recurrence_interval) : 1;
-        $recurrence_days = $event ? maca_menulist_parse_days_of_week($event->days_of_week ?? '') : array();
+        $recurrence_days = $event ? maca_njuvs_parse_days_of_week($event->days_of_week ?? '') : array();
         $recurrence_until = $event && !empty($event->recurrence_until) ? (string) $event->recurrence_until : '';
         $recurrence_count = $event && !empty($event->recurrence_count) ? (int) $event->recurrence_count : '';
-        $exceptions = $event_id > 0 ? maca_menulist_db_get_info_event_exceptions($event_id) : array();
-        $can_show_booking = function_exists('maca_menulist_info_hub_can_show_booking_buttons')
-            && maca_menulist_info_hub_can_show_booking_buttons();
+        $exceptions = $event_id > 0 ? maca_njuvs_db_get_info_event_exceptions($event_id) : array();
         ?>
-        <p><a href="<?php echo esc_url(maca_menulist_info_hub_admin_url('events')); ?>">&larr; <?php esc_html_e('Back to list', 'maca-njuvs'); ?></a></p>
+        <p><a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('events')); ?>">&larr; <?php esc_html_e('Back to list', 'maca-njuvs'); ?></a></p>
 
         <form method="post" action="" class="maca-info-hub-social-save-form" data-object-type="event">
             <?php wp_nonce_field('maca_njuvs_save', 'maca_nonce'); ?>
@@ -1783,6 +1882,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                     <td>
                         <input type="text" id="event_image_url" name="event_image_url" class="regular-text" value="<?php echo esc_attr($image_url); ?>">
                         <button type="button" class="button maca-info-hub-upload" data-target="#event_image_url"><?php esc_html_e('Select image', 'maca-njuvs'); ?></button>
+                        <?php $this->render_image_size_warning('event_image_url', $image_url); ?>
                     </td>
                 </tr>
                 <tr>
@@ -1812,7 +1912,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                         <select id="event_recurrence_type" name="event_recurrence_type">
                             <?php foreach (array('none', 'daily', 'weekly', 'monthly') as $type_key) : ?>
                                 <option value="<?php echo esc_attr($type_key); ?>" <?php selected($recurrence_type, $type_key); ?>>
-                                    <?php echo esc_html(maca_menulist_info_hub_recurrence_label($type_key)); ?>
+                                    <?php echo esc_html(maca_njuvs_info_hub_recurrence_label($type_key)); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -1825,7 +1925,7 @@ class Maca_Njuvs_Admin_Info_Hub {
                             <fieldset id="maca-info-recurrence-weekdays" style="border:0;padding:0;margin:0 0 12px;">
                                 <legend class="screen-reader-text"><?php esc_html_e('Weekdays', 'maca-njuvs'); ?></legend>
                                 <?php
-                                $weekday_labels = maca_menulist_weekday_short_labels_ordered();
+                                $weekday_labels = maca_njuvs_weekday_short_labels_ordered();
                                 foreach ($weekday_labels as $day => $label) :
                                     ?>
                                     <label style="margin-right:10px;">
@@ -1849,14 +1949,6 @@ class Maca_Njuvs_Admin_Info_Hub {
                     <th><?php esc_html_e('Active', 'maca-njuvs'); ?></th>
                     <td><label><input type="checkbox" name="event_is_active" value="1" <?php checked($is_active); ?>> <?php esc_html_e('Show on website', 'maca-njuvs'); ?></label></td>
                 </tr>
-                <?php if ($can_show_booking) : ?>
-                <tr>
-                    <th><?php esc_html_e('Table booking', 'maca-njuvs'); ?></th>
-                    <td>
-                        <label><input type="checkbox" name="event_show_booking_button" value="1" <?php checked($show_booking_button); ?>> <?php esc_html_e('Show book-a-table button on this event', 'maca-njuvs'); ?></label>
-                    </td>
-                </tr>
-                <?php endif; ?>
                 <tr>
                     <th><?php esc_html_e('Publishing', 'maca-njuvs'); ?></th>
                     <td>
@@ -1869,10 +1961,10 @@ class Maca_Njuvs_Admin_Info_Hub {
                     <th><?php esc_html_e('Social status', 'maca-njuvs'); ?></th>
                     <td>
                         <?php if ($share_facebook) : ?>
-                            <p><?php echo esc_html__('Facebook:', 'maca-njuvs') . ' ' . esc_html(maca_menulist_info_hub_social_status_label((string) ($event->social_fb_status ?? 'skipped'))); ?></p>
+                            <p><?php echo esc_html__('Facebook:', 'maca-njuvs') . ' ' . esc_html(maca_njuvs_info_hub_social_status_label((string) ($event->social_fb_status ?? 'skipped'))); ?></p>
                         <?php endif; ?>
                         <?php if ($share_instagram) : ?>
-                            <p><?php echo esc_html__('Instagram:', 'maca-njuvs') . ' ' . esc_html(maca_menulist_info_hub_social_status_label((string) ($event->social_ig_status ?? 'skipped'))); ?></p>
+                            <p><?php echo esc_html__('Instagram:', 'maca-njuvs') . ' ' . esc_html(maca_njuvs_info_hub_social_status_label((string) ($event->social_ig_status ?? 'skipped'))); ?></p>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -1969,83 +2061,6 @@ class Maca_Njuvs_Admin_Info_Hub {
             </form>
         <?php endif; ?>
 
-        <?php $this->render_media_uploader_script(); ?>
-        <?php $this->render_recurrence_form_script(); ?>
-        <?php
-    }
-
-    /**
-     * Toggle recurrence admin fields.
-     *
-     * @return void
-     */
-    private function render_recurrence_form_script() {
-        ?>
-        <script>
-        jQuery(function($) {
-            function syncRecurrenceFields() {
-                var type = $('#event_recurrence_type').val() || 'none';
-                var $wrap = $('#maca-info-recurrence-fields');
-                var $weekdays = $('#maca-info-recurrence-weekdays');
-                var $unit = $('#maca-info-recurrence-unit');
-
-                if (type === 'none') {
-                    $wrap.hide();
-                    return;
-                }
-
-                $wrap.show();
-                $weekdays.toggle(type === 'weekly');
-
-                if (type === 'daily') {
-                    $unit.text(<?php echo wp_json_encode(__('day(s)', 'maca-njuvs')); ?>);
-                } else if (type === 'weekly') {
-                    $unit.text(<?php echo wp_json_encode(__('week(s)', 'maca-njuvs')); ?>);
-                } else {
-                    $unit.text(<?php echo wp_json_encode(__('month(s)', 'maca-njuvs')); ?>);
-                }
-            }
-
-            $('#event_recurrence_type').on('change', syncRecurrenceFields);
-            syncRecurrenceFields();
-
-            function syncExceptionFields() {
-                var type = $('#exception_type').val() || 'cancelled';
-                $('.maca-info-exception-modified').toggle(type === 'modified');
-            }
-
-            $('#exception_type').on('change', syncExceptionFields);
-            syncExceptionFields();
-        });
-        </script>
-        <?php
-    }
-
-    /**
-     * Inline media uploader script.
-     *
-     * @return void
-     */
-    private function render_media_uploader_script() {
-        ?>
-        <script>
-        jQuery(function($) {
-            $('.maca-info-hub-upload').on('click', function(e) {
-                e.preventDefault();
-                var target = $(this).data('target');
-                var frame = wp.media({
-                    title: <?php echo wp_json_encode(__('Select image', 'maca-njuvs')); ?>,
-                    button: { text: <?php echo wp_json_encode(__('Use image', 'maca-njuvs')); ?> },
-                    multiple: false
-                });
-                frame.on('select', function() {
-                    var attachment = frame.state().get('selection').first().toJSON();
-                    $(target).val(attachment.url);
-                });
-                frame.open();
-            });
-        });
-        </script>
         <?php
     }
 }

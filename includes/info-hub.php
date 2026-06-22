@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  *
  * @return string
  */
-function maca_menulist_info_hub_admin_page() {
+function maca_njuvs_info_hub_admin_page() {
     return 'maca-njuvs';
 }
 
@@ -23,7 +23,7 @@ function maca_menulist_info_hub_admin_page() {
  *
  * @return array<string, array{label: string}>
  */
-function maca_menulist_info_hub_admin_tabs() {
+function maca_njuvs_info_hub_admin_tabs() {
     $tabs = array(
         'news' => array(
             'label' => __('News', 'maca-njuvs'),
@@ -45,7 +45,7 @@ function maca_menulist_info_hub_admin_tabs() {
         ),
     );
 
-    if (function_exists('maca_menulist_user_can_manage_info_hub_social') && !maca_menulist_user_can_manage_info_hub_social()) {
+    if (function_exists('maca_njuvs_user_can_manage_info_hub_social') && !maca_njuvs_user_can_manage_info_hub_social()) {
         unset($tabs['social']);
     }
 
@@ -59,10 +59,10 @@ function maca_menulist_info_hub_admin_tabs() {
  * @param array<string, string|int> $args Extra query args.
  * @return string
  */
-function maca_menulist_info_hub_admin_url($tab = 'news', $args = array()) {
+function maca_njuvs_info_hub_admin_url($tab = 'news', $args = array()) {
     $params = array_merge(
         array(
-            'page' => maca_menulist_info_hub_admin_page(),
+            'page' => maca_njuvs_info_hub_admin_page(),
             'tab' => sanitize_key($tab),
         ),
         $args
@@ -76,8 +76,8 @@ function maca_menulist_info_hub_admin_url($tab = 'news', $args = array()) {
  *
  * @return string
  */
-function maca_menulist_info_hub_guide_file() {
-    return maca_menulist_get_localized_doc_file('INFO-HUB-GUIDE', 'en');
+function maca_njuvs_info_hub_guide_file() {
+    return maca_njuvs_get_localized_doc_file('INFO-HUB-GUIDE', 'en');
 }
 
 /**
@@ -85,28 +85,28 @@ function maca_menulist_info_hub_guide_file() {
  *
  * @return string
  */
-function maca_menulist_info_hub_render_guide_html() {
-    if (!function_exists('maca_menulist_render_markdown_file')) {
-        require_once MACA_MENULIST_PLUGIN_DIR . 'includes/markdown.php';
+function maca_njuvs_info_hub_render_guide_html() {
+    if (!function_exists('maca_njuvs_render_markdown_file')) {
+        require_once MACA_NJUVS_PLUGIN_DIR . 'includes/markdown.php';
     }
 
-    $guide_file = maca_menulist_info_hub_guide_file();
+    $guide_file = maca_njuvs_info_hub_guide_file();
 
     if (!file_exists($guide_file)) {
         return '';
     }
 
-    $html = maca_menulist_render_markdown_file($guide_file);
+    $html = maca_njuvs_render_markdown_file($guide_file);
 
     if ($html === '') {
         return '';
     }
 
-    $ics_url = function_exists('maca_menulist_get_info_events_ics_url')
-        ? maca_menulist_get_info_events_ics_url()
+    $ics_url = function_exists('maca_njuvs_get_info_events_ics_url')
+        ? maca_njuvs_get_info_events_ics_url()
         : '';
-    $webcal_url = function_exists('maca_menulist_get_info_events_webcal_url')
-        ? maca_menulist_get_info_events_webcal_url()
+    $webcal_url = function_exists('maca_njuvs_get_info_events_webcal_url')
+        ? maca_njuvs_get_info_events_webcal_url()
         : '';
 
     return str_replace(
@@ -127,7 +127,7 @@ function maca_menulist_info_hub_render_guide_html() {
  *
  * @return bool
  */
-function maca_menulist_info_hub_feature_available() {
+function maca_njuvs_info_hub_feature_available() {
     return true;
 }
 
@@ -137,7 +137,7 @@ function maca_menulist_info_hub_feature_available() {
  * @return bool
  */
 function maca_njuvs_enabled() {
-    if (!maca_menulist_info_hub_feature_available()) {
+    if (!maca_njuvs_info_hub_feature_available()) {
         return false;
     }
 
@@ -145,47 +145,19 @@ function maca_njuvs_enabled() {
 }
 
 /**
- * Enable maca Njuvs automatically when publishable news already exists.
- *
- * @return void
- */
-function maca_menulist_info_hub_sync_module_toggle() {
-    if (!maca_menulist_info_hub_feature_available()) {
-        return;
-    }
-
-    if (get_option('maca_njuvs_enabled', '1') === '1') {
-        return;
-    }
-
-    if (!function_exists('maca_menulist_db_get_info_news_items')) {
-        return;
-    }
-
-    maca_menulist_db_ensure_info_hub_tables();
-
-    foreach (maca_menulist_db_get_info_news_items() as $item) {
-        if (maca_menulist_info_hub_get_news_visibility_blockers($item) === array()) {
-            update_option('maca_njuvs_enabled', '1', false);
-            break;
-        }
-    }
-}
-
-/**
  * Whether any news item is ready for the public website.
  *
  * @return bool
  */
-function maca_menulist_info_hub_has_publishable_news() {
-    if (!function_exists('maca_menulist_db_get_info_news_items')) {
+function maca_njuvs_info_hub_has_publishable_news() {
+    if (!function_exists('maca_njuvs_db_get_info_news_items')) {
         return false;
     }
 
-    maca_menulist_db_ensure_info_hub_tables();
+    maca_njuvs_db_ensure_info_hub_tables();
 
-    foreach (maca_menulist_db_get_info_news_items() as $item) {
-        if (maca_menulist_info_hub_get_news_visibility_blockers($item) === array()) {
+    foreach (maca_njuvs_db_get_info_news_items() as $item) {
+        if (maca_njuvs_info_hub_get_news_visibility_blockers($item) === array()) {
             return true;
         }
     }
@@ -198,7 +170,7 @@ function maca_menulist_info_hub_has_publishable_news() {
  *
  * @return void
  */
-function maca_menulist_info_hub_flag_news_banner_page() {
+function maca_njuvs_info_hub_flag_news_banner_page() {
     static $flagged = false;
 
     if ($flagged) {
@@ -222,16 +194,16 @@ function maca_menulist_info_hub_flag_news_banner_page() {
  *
  * @return void
  */
-function maca_menulist_info_hub_register_shortcodes() {
-    add_shortcode('maca_njuvs_news', 'maca_menulist_info_hub_shortcode_news');
-    add_shortcode('maca_njuvs_events', 'maca_menulist_info_hub_shortcode_events');
+function maca_njuvs_info_hub_register_shortcodes() {
+    add_shortcode('maca_njuvs_news', 'maca_njuvs_info_hub_shortcode_news');
+    add_shortcode('maca_njuvs_events', 'maca_njuvs_info_hub_shortcode_events');
 }
 
 /**
  * @param array<string, string>|string $atts Shortcode attributes.
  * @return string
  */
-function maca_menulist_info_hub_shortcode_news($atts) {
+function maca_njuvs_info_hub_shortcode_news($atts) {
     $atts = shortcode_atts(
         array(
             'limit' => '5',
@@ -245,13 +217,13 @@ function maca_menulist_info_hub_shortcode_news($atts) {
         'maca_njuvs_news'
     );
 
-    return maca_menulist_render_info_news_list(
+    return maca_njuvs_render_info_news_list(
         array(
             'limit' => max(1, min(50, intval($atts['limit']))),
             'showImage' => $atts['show_image'] === '1',
             'showDate' => $atts['show_date'] === '1',
             'showExcerpt' => $atts['show_excerpt'] === '1',
-            'layout' => maca_menulist_info_hub_sanitize_news_layout($atts['layout']),
+            'layout' => maca_njuvs_info_hub_sanitize_news_layout($atts['layout']),
             'bannerScroll' => $atts['banner_scroll'] === '1',
         )
     );
@@ -261,7 +233,7 @@ function maca_menulist_info_hub_shortcode_news($atts) {
  * @param array<string, string>|string $atts Shortcode attributes.
  * @return string
  */
-function maca_menulist_info_hub_shortcode_events($atts) {
+function maca_njuvs_info_hub_shortcode_events($atts) {
     $atts = shortcode_atts(
         array(
             'limit' => '10',
@@ -274,7 +246,7 @@ function maca_menulist_info_hub_shortcode_events($atts) {
         'maca_njuvs_events'
     );
 
-    return maca_menulist_render_info_events_list(
+    return maca_njuvs_render_info_events_list(
         array(
             'limit' => max(1, min(50, intval($atts['limit']))),
             'showImage' => $atts['show_image'] === '1',
@@ -290,7 +262,7 @@ function maca_menulist_info_hub_shortcode_events($atts) {
  *
  * @return void
  */
-function maca_menulist_info_hub_enqueue_assets() {
+function maca_njuvs_info_hub_enqueue_assets() {
     static $done = false;
 
     if ($done) {
@@ -313,6 +285,14 @@ function maca_menulist_info_hub_enqueue_assets() {
         MACA_NJUVS_VERSION,
         true
     );
+
+    wp_localize_script(
+        'maca-njuvs-info-hub',
+        'macaNjuvsInfoHub',
+        array(
+            'feedUrlCopied' => __('Feed URL copied.', 'maca-njuvs'),
+        )
+    );
 }
 
 /**
@@ -321,7 +301,7 @@ function maca_menulist_info_hub_enqueue_assets() {
  * @param mixed $value Raw DB value.
  * @return string Empty string when unset, otherwise trimmed datetime.
  */
-function maca_menulist_info_hub_normalize_stored_datetime($value) {
+function maca_njuvs_info_hub_normalize_stored_datetime($value) {
     $value = trim((string) $value);
 
     if ($value === '' || $value === '0000-00-00 00:00:00' || $value === '0000-00-00') {
@@ -337,8 +317,8 @@ function maca_menulist_info_hub_normalize_stored_datetime($value) {
  * @param object $news News row.
  * @return bool
  */
-function maca_menulist_info_hub_news_is_public($news) {
-    return maca_menulist_info_hub_get_news_visibility_blockers($news) === array();
+function maca_njuvs_info_hub_news_is_public($news) {
+    return maca_njuvs_info_hub_get_news_visibility_blockers($news) === array();
 }
 
 /**
@@ -347,7 +327,7 @@ function maca_menulist_info_hub_news_is_public($news) {
  * @param object|null $news News row.
  * @return array<int, string>
  */
-function maca_menulist_info_hub_get_news_visibility_blockers($news) {
+function maca_njuvs_info_hub_get_news_visibility_blockers($news) {
     if (!$news) {
         return array(__('News item is missing.', 'maca-njuvs'));
     }
@@ -355,11 +335,11 @@ function maca_menulist_info_hub_get_news_visibility_blockers($news) {
     $reasons = array();
 
     $status = isset($news->status) ? (string) $news->status : '';
-    $now = function_exists('maca_menulist_wp_now_mysql')
-        ? maca_menulist_wp_now_mysql()
+    $now = function_exists('maca_njuvs_wp_now_mysql')
+        ? maca_njuvs_wp_now_mysql()
         : current_time('mysql');
-    $publish_at = maca_menulist_info_hub_normalize_stored_datetime($news->publish_at ?? '');
-    $expires_at = maca_menulist_info_hub_normalize_stored_datetime($news->expires_at ?? '');
+    $publish_at = maca_njuvs_info_hub_normalize_stored_datetime($news->publish_at ?? '');
+    $expires_at = maca_njuvs_info_hub_normalize_stored_datetime($news->expires_at ?? '');
     $is_live_status = in_array($status, array('published', 'scheduled'), true);
 
     if ((int) ($news->share_web ?? 0) !== 1 && !$is_live_status) {
@@ -377,7 +357,7 @@ function maca_menulist_info_hub_get_news_visibility_blockers($news) {
             $reasons[] = sprintf(
                 /* translators: %s: formatted datetime */
                 __('Scheduled for %s.', 'maca-njuvs'),
-                maca_menulist_format_wp_datetime($publish_at)
+                maca_njuvs_format_wp_datetime($publish_at)
             );
         }
     } elseif ($status !== 'published' && $status !== 'scheduled') {
@@ -388,7 +368,7 @@ function maca_menulist_info_hub_get_news_visibility_blockers($news) {
         $reasons[] = sprintf(
             /* translators: %s: formatted datetime */
             __('Publish date is in the future (%s).', 'maca-njuvs'),
-            maca_menulist_format_wp_datetime($publish_at)
+            maca_njuvs_format_wp_datetime($publish_at)
         );
     }
 
@@ -404,18 +384,18 @@ function maca_menulist_info_hub_get_news_visibility_blockers($news) {
  *
  * @return void
  */
-function maca_menulist_info_hub_promote_due_scheduled_news() {
-    if (!function_exists('maca_menulist_db_ensure_info_hub_tables')) {
+function maca_njuvs_info_hub_promote_due_scheduled_news() {
+    if (!function_exists('maca_njuvs_db_ensure_info_hub_tables')) {
         return;
     }
 
-    maca_menulist_db_ensure_info_hub_tables();
+    maca_njuvs_db_ensure_info_hub_tables();
 
     global $wpdb;
 
-    $table = maca_menulist_db_info_news_table();
-    $now = function_exists('maca_menulist_wp_now_mysql')
-        ? maca_menulist_wp_now_mysql()
+    $table = maca_njuvs_db_info_news_table();
+    $now = function_exists('maca_njuvs_wp_now_mysql')
+        ? maca_njuvs_wp_now_mysql()
         : current_time('mysql');
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
@@ -433,7 +413,7 @@ function maca_menulist_info_hub_promote_due_scheduled_news() {
  * @param array<string, mixed> $args Query args.
  * @return array<int, object>
  */
-function maca_menulist_info_hub_get_public_news($args = array()) {
+function maca_njuvs_info_hub_get_public_news($args = array()) {
     $defaults = array(
         'limit' => 10,
         'offset' => 0,
@@ -441,28 +421,20 @@ function maca_menulist_info_hub_get_public_news($args = array()) {
     );
     $args = wp_parse_args($args, $defaults);
 
-    if (!maca_menulist_info_hub_feature_available()) {
+    if (!maca_njuvs_info_hub_feature_available()) {
         return array();
-    }
-
-    if (
-        !maca_njuvs_enabled()
-        && empty($args['ignore_module_toggle'])
-        && maca_menulist_info_hub_has_publishable_news()
-    ) {
-        update_option('maca_njuvs_enabled', '1', false);
     }
 
     if (!maca_njuvs_enabled() && empty($args['ignore_module_toggle'])) {
         return array();
     }
 
-    maca_menulist_db_ensure_info_hub_tables();
-    maca_menulist_info_hub_promote_due_scheduled_news();
+    maca_njuvs_db_ensure_info_hub_tables();
+    maca_njuvs_info_hub_promote_due_scheduled_news();
 
     global $wpdb;
 
-    $table = maca_menulist_db_info_news_table();
+    $table = maca_njuvs_db_info_news_table();
     $limit = max(1, min(100, intval($args['limit'])));
     $offset = max(0, intval($args['offset']));
 
@@ -481,7 +453,7 @@ function maca_menulist_info_hub_get_public_news($args = array()) {
 
     $public = array();
     foreach ($rows as $row) {
-        if (maca_menulist_info_hub_news_is_public($row)) {
+        if (maca_njuvs_info_hub_news_is_public($row)) {
             $public[] = $row;
         }
     }
@@ -495,18 +467,18 @@ function maca_menulist_info_hub_get_public_news($args = array()) {
  * @param array<string, mixed> $args Query args.
  * @return array<int, object>
  */
-function maca_menulist_info_hub_get_public_events($args = array()) {
+function maca_njuvs_info_hub_get_public_events($args = array()) {
     $defaults = array(
         'limit' => 20,
         'offset' => 0,
     );
     $args = wp_parse_args($args, $defaults);
 
-    return maca_menulist_info_hub_get_occurrences(
+    return maca_njuvs_info_hub_get_occurrences(
         array(
             'range_start' => wp_date('Y-m-d'),
-            'range_end' => function_exists('maca_menulist_wp_now_modify')
-                ? maca_menulist_wp_now_modify('+6 months', 'Y-m-d')
+            'range_end' => function_exists('maca_njuvs_wp_now_modify')
+                ? maca_njuvs_wp_now_modify('+6 months', 'Y-m-d')
                 : wp_date('Y-m-d', strtotime('+6 months')),
             'limit' => (int) $args['limit'],
             'offset' => (int) $args['offset'],
@@ -521,7 +493,7 @@ function maca_menulist_info_hub_get_public_events($args = array()) {
  * @param object $occurrence Occurrence object.
  * @return string
  */
-function maca_menulist_info_hub_occurrence_list_anchor_id($occurrence) {
+function maca_njuvs_info_hub_occurrence_list_anchor_id($occurrence) {
     $item_id = (int) $occurrence->event_id;
     $occ_date = (string) $occurrence->occurrence_date;
 
@@ -534,7 +506,7 @@ function maca_menulist_info_hub_occurrence_list_anchor_id($occurrence) {
  * @param object $occurrence Occurrence object.
  * @return string
  */
-function maca_menulist_info_hub_occurrence_detail_anchor_id($occurrence) {
+function maca_njuvs_info_hub_occurrence_detail_anchor_id($occurrence) {
     $item_id = (int) $occurrence->event_id;
     $occ_date = (string) $occurrence->occurrence_date;
 
@@ -548,7 +520,7 @@ function maca_menulist_info_hub_occurrence_detail_anchor_id($occurrence) {
  * @param array<string, mixed> $args       Render args.
  * @return void
  */
-function maca_menulist_info_hub_render_occurrence_detail($occurrence, $args = array()) {
+function maca_njuvs_info_hub_render_occurrence_detail($occurrence, $args = array()) {
     $args = wp_parse_args(
         is_array($args) ? $args : array(),
         array(
@@ -561,14 +533,14 @@ function maca_menulist_info_hub_render_occurrence_detail($occurrence, $args = ar
     );
 
     $event = $occurrence->event;
-    $title = maca_menulist_info_hub_get_event_title($event);
-    $description = maca_menulist_info_hub_get_event_description($event);
-    $location = maca_menulist_info_hub_get_event_location($event);
-    $price_label = maca_menulist_info_hub_get_event_price_label($event);
+    $title = maca_njuvs_info_hub_get_event_title($event);
+    $description = maca_njuvs_info_hub_get_event_description($event);
+    $location = maca_njuvs_info_hub_get_event_location($event);
+    $price_label = maca_njuvs_info_hub_get_event_price_label($event);
     $anchor_id = (string) $args['anchor_id'];
 
     if ($anchor_id === '') {
-        $anchor_id = maca_menulist_info_hub_occurrence_list_anchor_id($occurrence);
+        $anchor_id = maca_njuvs_info_hub_occurrence_list_anchor_id($occurrence);
     }
 
     $classes = array('maca-info-event-detail');
@@ -591,7 +563,7 @@ function maca_menulist_info_hub_render_occurrence_detail($occurrence, $args = ar
     $open = '<' . $tag . ' class="' . esc_attr(implode(' ', $classes)) . '" id="' . esc_attr($anchor_id) . '">';
     $close = '</' . $tag . '>';
 
-    echo $open; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    echo wp_kses($open, array('article' => array('class' => true, 'id' => true), 'div' => array('class' => true, 'id' => true), 'li' => array('class' => true, 'id' => true)));
     ?>
         <?php if (!empty($args['show_image']) && !empty($event->image_url)) : ?>
             <div class="maca-info-events-image">
@@ -600,7 +572,7 @@ function maca_menulist_info_hub_render_occurrence_detail($occurrence, $args = ar
         <?php endif; ?>
         <div class="maca-info-events-body">
             <time class="maca-info-events-datetime" datetime="<?php echo esc_attr((string) $occurrence->start_at); ?>">
-                <?php echo esc_html(maca_menulist_info_hub_format_occurrence_datetime($occurrence)); ?>
+                <?php echo esc_html(maca_njuvs_info_hub_format_occurrence_datetime($occurrence)); ?>
             </time>
             <h3 class="maca-info-events-title"><?php echo esc_html($title); ?></h3>
             <?php if ($price_label !== '') : ?>
@@ -610,17 +582,11 @@ function maca_menulist_info_hub_render_occurrence_detail($occurrence, $args = ar
                 <p class="maca-info-events-location"><?php echo esc_html($location); ?></p>
             <?php endif; ?>
             <?php if ($description !== '') : ?>
-                <div class="maca-info-events-description"><?php echo maca_menulist_info_hub_format_rich_text($description); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+                <div class="maca-info-events-description"><?php echo wp_kses_post(maca_njuvs_info_hub_format_rich_text($description)); ?></div>
             <?php endif; ?>
-            <?php
-            $booking_button = maca_menulist_info_hub_render_event_booking_button($occurrence);
-            if ($booking_button !== '') {
-                echo $booking_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            }
-            ?>
         </div>
     <?php
-    echo $close; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    echo wp_kses($close, array('article' => array(), 'div' => array(), 'li' => array()));
 }
 
 /**
@@ -631,8 +597,8 @@ function maca_menulist_info_hub_render_occurrence_detail($occurrence, $args = ar
  * @param bool   $show_location Show location.
  * @return void
  */
-function maca_menulist_info_hub_render_occurrence_item($occurrence, $show_image, $show_location) {
-    maca_menulist_info_hub_render_occurrence_detail(
+function maca_njuvs_info_hub_render_occurrence_item($occurrence, $show_image, $show_location) {
+    maca_njuvs_info_hub_render_occurrence_detail(
         $occurrence,
         array(
             'show_image' => $show_image,
@@ -648,8 +614,8 @@ function maca_menulist_info_hub_render_occurrence_item($occurrence, $show_image,
  * @param object $news News row.
  * @return string
  */
-function maca_menulist_info_hub_get_news_title($news) {
-    return maca_menulist_get_object_bilingual_field($news, 'title', 'title_en');
+function maca_njuvs_info_hub_get_news_title($news) {
+    return maca_njuvs_get_object_bilingual_field($news, 'title', 'title_en');
 }
 
 /**
@@ -658,14 +624,14 @@ function maca_menulist_info_hub_get_news_title($news) {
  * @param object $news News row.
  * @return string
  */
-function maca_menulist_info_hub_get_news_excerpt($news) {
-    $excerpt = maca_menulist_get_object_bilingual_field($news, 'excerpt', 'excerpt_en');
+function maca_njuvs_info_hub_get_news_excerpt($news) {
+    $excerpt = maca_njuvs_get_object_bilingual_field($news, 'excerpt', 'excerpt_en');
 
     if ($excerpt !== '') {
         return $excerpt;
     }
 
-    $content = maca_menulist_get_object_bilingual_field($news, 'content', 'content_en');
+    $content = maca_njuvs_get_object_bilingual_field($news, 'content', 'content_en');
     $plain = wp_strip_all_tags($content);
 
     if ($plain === '') {
@@ -681,8 +647,8 @@ function maca_menulist_info_hub_get_news_excerpt($news) {
  * @param object $news News row.
  * @return string
  */
-function maca_menulist_info_hub_get_news_content($news) {
-    return maca_menulist_get_object_bilingual_field($news, 'content', 'content_en');
+function maca_njuvs_info_hub_get_news_content($news) {
+    return maca_njuvs_get_object_bilingual_field($news, 'content', 'content_en');
 }
 
 /**
@@ -691,8 +657,14 @@ function maca_menulist_info_hub_get_news_content($news) {
  * @param string $content Raw HTML.
  * @return string
  */
-function maca_menulist_info_hub_sanitize_rich_text($content) {
-    return wp_kses_post((string) wp_unslash($content));
+function maca_njuvs_info_hub_sanitize_rich_text($content) {
+    $content = (string) wp_unslash($content);
+
+    // Embedded data-URI images (paste) can exceed PHP post_max_size on save.
+    $content = preg_replace('/<img\b[^>]*\bsrc=["\']data:[^"\']*["\'][^>]*>/i', '', $content);
+    $content = preg_replace('/\bsrc=["\']data:[^"\']*["\']/i', '', $content);
+
+    return wp_kses_post($content);
 }
 
 /**
@@ -701,7 +673,7 @@ function maca_menulist_info_hub_sanitize_rich_text($content) {
  * @param string $content Stored HTML.
  * @return string
  */
-function maca_menulist_info_hub_format_rich_text($content) {
+function maca_njuvs_info_hub_format_rich_text($content) {
     $content = trim((string) $content);
 
     if ($content === '') {
@@ -717,7 +689,7 @@ function maca_menulist_info_hub_format_rich_text($content) {
  * @param string $html Stored HTML.
  * @return string
  */
-function maca_menulist_info_hub_rich_text_to_plain($html) {
+function maca_njuvs_info_hub_rich_text_to_plain($html) {
     $html = trim((string) $html);
 
     if ($html === '') {
@@ -746,8 +718,8 @@ function maca_menulist_info_hub_rich_text_to_plain($html) {
  * @param object $news News row.
  * @return string
  */
-function maca_menulist_info_hub_get_news_content_plain($news) {
-    return maca_menulist_info_hub_rich_text_to_plain(maca_menulist_info_hub_get_news_content($news));
+function maca_njuvs_info_hub_get_news_content_plain($news) {
+    return maca_njuvs_info_hub_rich_text_to_plain(maca_njuvs_info_hub_get_news_content($news));
 }
 
 /**
@@ -756,8 +728,8 @@ function maca_menulist_info_hub_get_news_content_plain($news) {
  * @param object $event Event row.
  * @return string
  */
-function maca_menulist_info_hub_get_event_title($event) {
-    return maca_menulist_get_object_bilingual_field($event, 'title', 'title_en');
+function maca_njuvs_info_hub_get_event_title($event) {
+    return maca_njuvs_get_object_bilingual_field($event, 'title', 'title_en');
 }
 
 /**
@@ -766,8 +738,8 @@ function maca_menulist_info_hub_get_event_title($event) {
  * @param object $event Event row.
  * @return string
  */
-function maca_menulist_info_hub_get_event_description($event) {
-    return maca_menulist_get_object_bilingual_field($event, 'description', 'description_en');
+function maca_njuvs_info_hub_get_event_description($event) {
+    return maca_njuvs_get_object_bilingual_field($event, 'description', 'description_en');
 }
 
 /**
@@ -776,8 +748,8 @@ function maca_menulist_info_hub_get_event_description($event) {
  * @param object $event Event row.
  * @return string
  */
-function maca_menulist_info_hub_get_event_location($event) {
-    return maca_menulist_get_object_bilingual_field($event, 'location', 'location_en');
+function maca_njuvs_info_hub_get_event_location($event) {
+    return maca_njuvs_get_object_bilingual_field($event, 'location', 'location_en');
 }
 
 /**
@@ -786,7 +758,7 @@ function maca_menulist_info_hub_get_event_location($event) {
  * @param object|null $event Event row.
  * @return string
  */
-function maca_menulist_info_hub_get_event_price_label($event) {
+function maca_njuvs_info_hub_get_event_price_label($event) {
     if (!$event || !isset($event->price) || $event->price === null || $event->price === '') {
         return '';
     }
@@ -796,73 +768,7 @@ function maca_menulist_info_hub_get_event_price_label($event) {
         return '';
     }
 
-    return function_exists('maca_menulist_format_price')
-        ? maca_menulist_format_price($amount)
-        : (string) $amount;
-}
-
-/**
- * Whether table booking buttons can be shown on events.
- *
- * @return bool
- */
-function maca_menulist_info_hub_can_show_booking_buttons() {
-    return false;
-}
-
-/**
- * Shared hidden booking form for event list buttons (one per page).
- *
- * @return string
- */
-function maca_menulist_info_hub_render_shared_booking_shell() {
-    static $rendered = false;
-
-    if ($rendered || !maca_menulist_info_hub_can_show_booking_buttons()) {
-        return '';
-    }
-
-    if (!function_exists('maca_menulist_render_table_booking_form')) {
-        return '';
-    }
-
-    $rendered = true;
-
-    if (function_exists('maca_menulist_register_table_booking_assets')) {
-        maca_menulist_register_table_booking_assets();
-        wp_enqueue_script('maca-menulist-table-booking');
-        wp_enqueue_style('maca-menulist-style');
-    }
-
-    return '<div class="maca-info-events-booking-shell">' . maca_menulist_render_table_booking_form() . '</div>';
-}
-
-/**
- * Book-table button for one event occurrence.
- *
- * @param object $occurrence Occurrence object.
- * @return string
- */
-function maca_menulist_info_hub_render_event_booking_button($occurrence) {
-    if (!$occurrence || empty($occurrence->event) || empty($occurrence->event->show_booking_button)) {
-        return '';
-    }
-
-    if (!maca_menulist_info_hub_can_show_booking_buttons()) {
-        return '';
-    }
-
-    maca_menulist_info_hub_enqueue_assets();
-
-    $label = function_exists('maca_menulist_get_table_booking_button_label')
-        ? maca_menulist_get_table_booking_button_label()
-        : __('Book a table', 'maca-njuvs');
-
-    return sprintf(
-        '<p class="maca-info-events-booking"><button type="button" class="maca-category-button maca-info-event-booking-trigger" data-booking-date="%1$s"><span class="maca-category-name">%2$s</span></button></p>',
-        esc_attr((string) $occurrence->occurrence_date),
-        esc_html($label)
-    );
+    return maca_njuvs_format_price($amount);
 }
 
 /**
@@ -871,7 +777,7 @@ function maca_menulist_info_hub_render_event_booking_button($occurrence) {
  * @param object $news News row.
  * @return string
  */
-function maca_menulist_info_hub_format_news_date($news) {
+function maca_njuvs_info_hub_format_news_date($news) {
     $date = '';
 
     if (!empty($news->publish_at)) {
@@ -884,7 +790,7 @@ function maca_menulist_info_hub_format_news_date($news) {
         return '';
     }
 
-    $timestamp = maca_menulist_wp_mysql_to_timestamp($date);
+    $timestamp = maca_njuvs_wp_mysql_to_timestamp($date);
 
     if ($timestamp === false) {
         return '';
@@ -899,13 +805,13 @@ function maca_menulist_info_hub_format_news_date($news) {
  * @param object $event Event row.
  * @return string
  */
-function maca_menulist_info_hub_format_event_datetime($event) {
+function maca_njuvs_info_hub_format_event_datetime($event) {
     if (!$event || empty($event->start_at)) {
         return '';
     }
 
-    $start_ts = maca_menulist_wp_mysql_to_timestamp((string) $event->start_at);
-    $end_ts = !empty($event->end_at) ? maca_menulist_wp_mysql_to_timestamp((string) $event->end_at) : false;
+    $start_ts = maca_njuvs_wp_mysql_to_timestamp((string) $event->start_at);
+    $end_ts = !empty($event->end_at) ? maca_njuvs_wp_mysql_to_timestamp((string) $event->end_at) : false;
 
     if ($start_ts === false) {
         return '';
@@ -942,7 +848,7 @@ function maca_menulist_info_hub_format_event_datetime($event) {
  * @param string $status Status key.
  * @return string
  */
-function maca_menulist_info_hub_news_status_label($status) {
+function maca_njuvs_info_hub_news_status_label($status) {
     $labels = array(
         'draft' => __('Draft', 'maca-njuvs'),
         'scheduled' => __('Scheduled', 'maca-njuvs'),
@@ -960,7 +866,7 @@ function maca_menulist_info_hub_news_status_label($status) {
  * @param string $publish_at       Publish datetime (mysql) or empty.
  * @return string
  */
-function maca_menulist_info_hub_resolve_news_status($requested_status, $publish_at) {
+function maca_njuvs_info_hub_resolve_news_status($requested_status, $publish_at) {
     $requested_status = sanitize_key($requested_status);
     $allowed = array('draft', 'scheduled', 'published', 'archived');
 
@@ -969,8 +875,8 @@ function maca_menulist_info_hub_resolve_news_status($requested_status, $publish_
     }
 
     if ($requested_status === 'published' && $publish_at !== '') {
-        $now = function_exists('maca_menulist_wp_now_mysql')
-            ? maca_menulist_wp_now_mysql()
+        $now = function_exists('maca_njuvs_wp_now_mysql')
+            ? maca_njuvs_wp_now_mysql()
             : current_time('mysql');
 
         if ($publish_at > $now) {
@@ -992,9 +898,9 @@ function maca_menulist_info_hub_resolve_news_status($requested_status, $publish_
  * @param bool   $all_day Treat as date only.
  * @return string|null
  */
-function maca_menulist_info_hub_parse_datetime_input($value, $all_day = false) {
-    if (function_exists('maca_menulist_datetime_local_to_mysql')) {
-        return maca_menulist_datetime_local_to_mysql($value, $all_day);
+function maca_njuvs_info_hub_parse_datetime_input($value, $all_day = false) {
+    if (function_exists('maca_njuvs_datetime_local_to_mysql')) {
+        return maca_njuvs_datetime_local_to_mysql($value, $all_day);
     }
 
     $value = trim((string) $value);
@@ -1024,7 +930,7 @@ function maca_menulist_info_hub_parse_datetime_input($value, $all_day = false) {
  * @param string $layout Requested layout.
  * @return string
  */
-function maca_menulist_info_hub_sanitize_news_layout($layout) {
+function maca_njuvs_info_hub_sanitize_news_layout($layout) {
     if ($layout === 'table') {
         $layout = 'embedded';
     }
@@ -1043,7 +949,7 @@ function maca_menulist_info_hub_sanitize_news_layout($layout) {
  * @param array<string, mixed> $args      List args.
  * @return void
  */
-function maca_menulist_info_hub_render_news_items_list($items, $item_args, $args = array()) {
+function maca_njuvs_info_hub_render_news_items_list($items, $item_args, $args = array()) {
     $args = wp_parse_args(
         is_array($args) ? $args : array(),
         array(
@@ -1065,9 +971,9 @@ function maca_menulist_info_hub_render_news_items_list($items, $item_args, $args
         $attr .= ' aria-hidden="true"';
     }
 
-    echo '<ul ' . $attr . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    echo wp_kses('<ul ' . $attr . '>', array('ul' => array('class' => true, 'aria-hidden' => true)));
     foreach ($items as $item) {
-        maca_menulist_info_hub_render_news_item($item, $item_args);
+        maca_njuvs_info_hub_render_news_item($item, $item_args);
     }
 
     if (!empty($args['duplicate_for_ticker']) && count($items) > 1) {
@@ -1075,7 +981,7 @@ function maca_menulist_info_hub_render_news_items_list($items, $item_args, $args
             $clone_item_args = $item_args;
             $clone_item_args['omit_id'] = true;
             $clone_item_args['ticker_clone'] = true;
-            maca_menulist_info_hub_render_news_item($item, $clone_item_args);
+            maca_njuvs_info_hub_render_news_item($item, $clone_item_args);
         }
     }
 
@@ -1089,7 +995,7 @@ function maca_menulist_info_hub_render_news_items_list($items, $item_args, $args
  * @param array<string, mixed> $args Display args.
  * @return void
  */
-function maca_menulist_info_hub_render_news_item($item, $args = array()) {
+function maca_njuvs_info_hub_render_news_item($item, $args = array()) {
     $args = wp_parse_args(
         is_array($args) ? $args : array(),
         array(
@@ -1105,9 +1011,9 @@ function maca_menulist_info_hub_render_news_item($item, $args = array()) {
         )
     );
 
-    $title = maca_menulist_info_hub_get_news_title($item);
-    $excerpt = maca_menulist_info_hub_get_news_excerpt($item);
-    $content = maca_menulist_info_hub_get_news_content($item);
+    $title = maca_njuvs_info_hub_get_news_title($item);
+    $excerpt = maca_njuvs_info_hub_get_news_excerpt($item);
+    $content = maca_njuvs_info_hub_get_news_content($item);
     $item_id = (int) $item->id;
     $modal_id = 'maca-info-news-modal-' . $item_id;
     $opens_modal = !empty($args['opens_modal']) && ($content !== '' || $excerpt !== '' || $title !== '');
@@ -1120,7 +1026,7 @@ function maca_menulist_info_hub_render_news_item($item, $args = array()) {
     }
 
     if (!empty($args['preview_mode'])) {
-        $blockers = maca_menulist_info_hub_get_news_visibility_blockers($item);
+        $blockers = maca_njuvs_info_hub_get_news_visibility_blockers($item);
 
         if ($blockers !== array()) {
             $preview_notices = $blockers;
@@ -1157,7 +1063,7 @@ function maca_menulist_info_hub_render_news_item($item, $args = array()) {
                 <div class="maca-info-news-banner-line">
                     <?php if (!empty($args['show_date'])) : ?>
                         <time class="maca-info-news-date" datetime="<?php echo esc_attr((string) ($item->publish_at ?: $item->created_at)); ?>">
-                            <?php echo esc_html(maca_menulist_info_hub_format_news_date($item)); ?>
+                            <?php echo esc_html(maca_njuvs_info_hub_format_news_date($item)); ?>
                         </time>
                         <span class="maca-info-news-banner-sep" aria-hidden="true">&middot;</span>
                     <?php endif; ?>
@@ -1170,7 +1076,7 @@ function maca_menulist_info_hub_render_news_item($item, $args = array()) {
             <?php else : ?>
                 <?php if (!empty($args['show_date'])) : ?>
                     <time class="maca-info-news-date" datetime="<?php echo esc_attr((string) ($item->publish_at ?: $item->created_at)); ?>">
-                        <?php echo esc_html(maca_menulist_info_hub_format_news_date($item)); ?>
+                        <?php echo esc_html(maca_njuvs_info_hub_format_news_date($item)); ?>
                     </time>
                 <?php endif; ?>
                 <h3 class="maca-info-news-title"><?php echo esc_html($title); ?></h3>
@@ -1178,7 +1084,7 @@ function maca_menulist_info_hub_render_news_item($item, $args = array()) {
                     <div class="maca-info-news-excerpt"><?php echo wp_kses_post($excerpt); ?></div>
                 <?php endif; ?>
                 <?php if (!empty($args['show_content']) && $content !== '') : ?>
-                    <div class="maca-info-news-content"><?php echo maca_menulist_info_hub_format_rich_text($content); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+                    <div class="maca-info-news-content"><?php echo wp_kses_post(maca_njuvs_info_hub_format_rich_text($content)); ?></div>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
@@ -1196,12 +1102,12 @@ function maca_menulist_info_hub_render_news_item($item, $args = array()) {
  * @param bool   $show_date Show date in modal.
  * @return void
  */
-function maca_menulist_info_hub_render_news_modal($item, $show_date = true) {
+function maca_njuvs_info_hub_render_news_modal($item, $show_date = true) {
     $item_id = (int) $item->id;
     $modal_id = 'maca-info-news-modal-' . $item_id;
-    $title = maca_menulist_info_hub_get_news_title($item);
-    $excerpt = maca_menulist_info_hub_get_news_excerpt($item);
-    $content = maca_menulist_info_hub_get_news_content($item);
+    $title = maca_njuvs_info_hub_get_news_title($item);
+    $excerpt = maca_njuvs_info_hub_get_news_excerpt($item);
+    $content = maca_njuvs_info_hub_get_news_content($item);
     ?>
     <dialog class="maca-info-news-modal" id="<?php echo esc_attr($modal_id); ?>" aria-labelledby="<?php echo esc_attr($modal_id); ?>-title">
         <form method="dialog">
@@ -1210,7 +1116,7 @@ function maca_menulist_info_hub_render_news_modal($item, $show_date = true) {
         <div class="maca-info-news-modal-body">
             <?php if ($show_date) : ?>
                 <time class="maca-info-news-date" datetime="<?php echo esc_attr((string) ($item->publish_at ?: $item->created_at)); ?>">
-                    <?php echo esc_html(maca_menulist_info_hub_format_news_date($item)); ?>
+                    <?php echo esc_html(maca_njuvs_info_hub_format_news_date($item)); ?>
                 </time>
             <?php endif; ?>
             <h2 class="maca-info-news-modal-title" id="<?php echo esc_attr($modal_id); ?>-title"><?php echo esc_html($title); ?></h2>
@@ -1220,9 +1126,9 @@ function maca_menulist_info_hub_render_news_modal($item, $show_date = true) {
                 </div>
             <?php endif; ?>
             <?php if ($content !== '') : ?>
-                <div class="maca-info-news-modal-content"><?php echo maca_menulist_info_hub_format_rich_text($content); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+                <div class="maca-info-news-modal-content"><?php echo wp_kses_post(maca_njuvs_info_hub_format_rich_text($content)); ?></div>
             <?php elseif ($excerpt !== '') : ?>
-                <div class="maca-info-news-modal-excerpt"><?php echo maca_menulist_info_hub_format_rich_text($excerpt); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+                <div class="maca-info-news-modal-excerpt"><?php echo wp_kses_post(maca_njuvs_info_hub_format_rich_text($excerpt)); ?></div>
             <?php endif; ?>
         </div>
     </dialog>
@@ -1234,8 +1140,8 @@ function maca_menulist_info_hub_render_news_modal($item, $show_date = true) {
  *
  * @return string
  */
-function maca_menulist_info_hub_render_news_admin_empty_state() {
-    if (!maca_menulist_user_can_manage_plugin()) {
+function maca_njuvs_info_hub_render_news_admin_empty_state() {
+    if (!maca_njuvs_user_can_manage_plugin()) {
         return '';
     }
 
@@ -1245,8 +1151,8 @@ function maca_menulist_info_hub_render_news_admin_empty_state() {
             . '</div>';
     }
 
-    $items = function_exists('maca_menulist_db_get_info_news_items')
-        ? maca_menulist_db_get_info_news_items()
+    $items = function_exists('maca_njuvs_db_get_info_news_items')
+        ? maca_njuvs_db_get_info_news_items()
         : array();
 
     if (empty($items)) {
@@ -1262,19 +1168,19 @@ function maca_menulist_info_hub_render_news_admin_empty_state() {
         <ul class="maca-info-admin-notice-list">
             <?php foreach ($items as $item) : ?>
                 <?php
-                $blockers = maca_menulist_info_hub_get_news_visibility_blockers($item);
+                $blockers = maca_njuvs_info_hub_get_news_visibility_blockers($item);
                 if ($blockers === array()) {
                     continue;
                 }
                 ?>
                 <li>
-                    <strong><?php echo esc_html(maca_menulist_info_hub_get_news_title($item)); ?></strong>
+                    <strong><?php echo esc_html(maca_njuvs_info_hub_get_news_title($item)); ?></strong>
                     <ul>
                         <?php foreach ($blockers as $reason) : ?>
                             <li><?php echo esc_html($reason); ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <a href="<?php echo esc_url(maca_menulist_info_hub_admin_url('news', array('action' => 'edit', 'id' => (int) $item->id))); ?>">
+                    <a href="<?php echo esc_url(maca_njuvs_info_hub_admin_url('news', array('action' => 'edit', 'id' => (int) $item->id))); ?>">
                         <?php esc_html_e('Edit news item', 'maca-njuvs'); ?>
                     </a>
                 </li>
@@ -1292,28 +1198,22 @@ function maca_menulist_info_hub_render_news_admin_empty_state() {
  * @param array<string, mixed> $args       Extra args.
  * @return string
  */
-function maca_menulist_render_info_news_list($attributes = array(), $args = array()) {
+function maca_njuvs_render_info_news_list($attributes = array(), $args = array()) {
     static $front_banner_rendered = false;
 
     $args = is_array($args) ? $args : array();
     $preview = !empty($args['preview']);
 
     if (!$preview && !maca_njuvs_enabled()) {
-        if (maca_menulist_info_hub_has_publishable_news()) {
-            update_option('maca_njuvs_enabled', '1', false);
-        }
+        return '';
     }
 
-    if (!$preview && !maca_njuvs_enabled()) {
-        if (maca_menulist_user_can_manage_plugin()) {
-            maca_menulist_info_hub_enqueue_assets();
+    if ($preview && !maca_njuvs_enabled()) {
+        maca_njuvs_info_hub_enqueue_assets();
 
-            return '<div class="maca-info-hub maca-info-news-list">'
-                . maca_menulist_info_hub_render_news_admin_empty_state()
-                . '</div>';
-        }
-
-        return '';
+        return '<div class="maca-info-hub"><p class="maca-info-empty">'
+            . esc_html__('Enable maca Njuvs under Settings.', 'maca-njuvs')
+            . '</p></div>';
     }
 
     $attributes = is_array($attributes) ? $attributes : array();
@@ -1321,7 +1221,7 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
     $show_image = !array_key_exists('showImage', $attributes) || !empty($attributes['showImage']);
     $show_date = !array_key_exists('showDate', $attributes) || !empty($attributes['showDate']);
     $show_excerpt = !array_key_exists('showExcerpt', $attributes) || !empty($attributes['showExcerpt']);
-    $layout = maca_menulist_info_hub_sanitize_news_layout($attributes['layout'] ?? 'list');
+    $layout = maca_njuvs_info_hub_sanitize_news_layout($attributes['layout'] ?? 'list');
     $is_compact_layout = in_array($layout, array('sidebar-left', 'sidebar-right', 'banner', 'embedded'), true);
     $banner_scroll_requested = $layout === 'banner' && !empty($attributes['bannerScroll']);
 
@@ -1331,11 +1231,11 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
         $fetch_args['ignore_module_toggle'] = true;
     }
 
-    $items = maca_menulist_info_hub_get_public_news($fetch_args);
+    $items = maca_njuvs_info_hub_get_public_news($fetch_args);
 
-    if (empty($items) && !$preview && function_exists('maca_menulist_db_get_info_news_items')) {
-        foreach (maca_menulist_db_get_info_news_items() as $row) {
-            if (maca_menulist_info_hub_news_is_public($row)) {
+    if (empty($items) && !$preview && maca_njuvs_enabled() && function_exists('maca_njuvs_db_get_info_news_items')) {
+        foreach (maca_njuvs_db_get_info_news_items() as $row) {
+            if (maca_njuvs_info_hub_news_is_public($row)) {
                 $items[] = $row;
             }
 
@@ -1345,16 +1245,16 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
         }
     }
 
-    if (empty($items) && $preview && maca_menulist_user_can_manage_plugin() && function_exists('maca_menulist_db_get_info_news_items')) {
-        $items = array_slice(maca_menulist_db_get_info_news_items(), 0, $limit);
+    if (empty($items) && $preview && maca_njuvs_user_can_manage_plugin() && function_exists('maca_njuvs_db_get_info_news_items')) {
+        $items = array_slice(maca_njuvs_db_get_info_news_items(), 0, $limit);
     }
 
     if ($layout === 'banner' && empty($items) && !$preview) {
-        maca_menulist_info_hub_enqueue_assets();
+        maca_njuvs_info_hub_enqueue_assets();
 
-        if (maca_menulist_user_can_manage_plugin()) {
+        if (maca_njuvs_user_can_manage_plugin()) {
             return '<div class="maca-info-hub maca-info-admin-notice">'
-                . maca_menulist_info_hub_render_news_admin_empty_state()
+                . maca_njuvs_info_hub_render_news_admin_empty_state()
                 . '</div>';
         }
 
@@ -1368,7 +1268,7 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
     // Ticker duplicates items for a seamless loop — only when 2+ news (one item would show twice side by side).
     $banner_scroll = $banner_scroll_requested && count($items) > 1;
 
-    maca_menulist_info_hub_enqueue_assets();
+    maca_njuvs_info_hub_enqueue_assets();
 
     $wrapper_classes = array('maca-info-hub', 'maca-info-news-list');
 
@@ -1422,9 +1322,9 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
         <?php if (empty($items)) : ?>
             <p class="maca-info-empty"><?php esc_html_e('No news to show right now.', 'maca-njuvs'); ?></p>
             <?php
-            if (!$preview && maca_menulist_user_can_manage_plugin()) {
-                echo maca_menulist_info_hub_render_news_admin_empty_state(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            } elseif ($preview && maca_menulist_user_can_manage_plugin()) {
+            if (!$preview && maca_njuvs_user_can_manage_plugin()) {
+                echo wp_kses_post(maca_njuvs_info_hub_render_news_admin_empty_state());
+            } elseif ($preview && maca_njuvs_user_can_manage_plugin()) {
                 ?>
                 <p class="maca-info-empty maca-info-empty--admin-hint"><?php esc_html_e('Published news with “Website” checked appears here. Publish date is optional.', 'maca-njuvs'); ?></p>
                 <?php
@@ -1435,7 +1335,7 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
                 <div class="maca-info-news-banner-track">
                     <div class="maca-info-news-banner-track-inner">
                         <?php
-                        maca_menulist_info_hub_render_news_items_list(
+                        maca_njuvs_info_hub_render_news_items_list(
                             $items,
                             $item_args,
                             array('duplicate_for_ticker' => true)
@@ -1444,12 +1344,12 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
                     </div>
                 </div>
             <?php else : ?>
-                <?php maca_menulist_info_hub_render_news_items_list($items, $item_args); ?>
+                <?php maca_njuvs_info_hub_render_news_items_list($items, $item_args); ?>
             <?php endif; ?>
             <?php if ($is_compact_layout) : ?>
                 <div class="maca-info-news-modals">
                     <?php foreach ($items as $item) : ?>
-                        <?php maca_menulist_info_hub_render_news_modal($item, $show_date); ?>
+                        <?php maca_njuvs_info_hub_render_news_modal($item, $show_date); ?>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
@@ -1460,7 +1360,7 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
 
     if ($layout === 'banner' && !empty($items) && !$preview) {
         $front_banner_rendered = true;
-        maca_menulist_info_hub_flag_news_banner_page();
+        maca_njuvs_info_hub_flag_news_banner_page();
     }
 
     return $html;
@@ -1473,7 +1373,7 @@ function maca_menulist_render_info_news_list($attributes = array(), $args = arra
  * @param array<string, mixed> $args       Extra args.
  * @return string
  */
-function maca_menulist_render_info_events_list($attributes = array(), $args = array()) {
+function maca_njuvs_render_info_events_list($attributes = array(), $args = array()) {
     $args = is_array($args) ? $args : array();
     $preview = !empty($args['preview']);
 
@@ -1482,7 +1382,7 @@ function maca_menulist_render_info_events_list($attributes = array(), $args = ar
     }
 
     if ($preview && !maca_njuvs_enabled()) {
-        maca_menulist_info_hub_enqueue_assets();
+        maca_njuvs_info_hub_enqueue_assets();
 
         return '<div class="maca-info-hub"><p class="maca-info-empty">'
             . esc_html__('Enable maca Njuvs under Settings.', 'maca-njuvs')
@@ -1493,7 +1393,7 @@ function maca_menulist_render_info_events_list($attributes = array(), $args = ar
     $view = isset($attributes['view']) && sanitize_key((string) $attributes['view']) === 'month' ? 'month' : 'list';
 
     if ($view === 'month') {
-        return maca_menulist_render_info_events_calendar($attributes, $args);
+        return maca_njuvs_render_info_events_calendar($attributes, $args);
     }
 
     $limit = isset($attributes['limit']) ? max(1, min(50, intval($attributes['limit']))) : 10;
@@ -1501,35 +1401,24 @@ function maca_menulist_render_info_events_list($attributes = array(), $args = ar
     $show_location = !array_key_exists('showLocation', $attributes) || !empty($attributes['showLocation']);
     $show_subscribe = !array_key_exists('showSubscribe', $attributes) || !empty($attributes['showSubscribe']);
 
-    $items = maca_menulist_info_hub_get_public_events(array('limit' => $limit));
+    $items = maca_njuvs_info_hub_get_public_events(array('limit' => $limit));
 
-    $needs_booking_shell = false;
-    foreach ($items as $item) {
-        if (!empty($item->event->show_booking_button)) {
-            $needs_booking_shell = true;
-            break;
-        }
-    }
-
-    maca_menulist_info_hub_enqueue_assets();
+    maca_njuvs_info_hub_enqueue_assets();
 
     ob_start();
     ?>
     <div class="maca-info-hub maca-info-events-list">
         <?php if ($show_subscribe) : ?>
-            <?php echo maca_menulist_render_info_calendar_subscribe(array('preview' => $preview, 'compact' => true)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+            <?php echo wp_kses(maca_njuvs_render_info_calendar_subscribe(array('preview' => $preview, 'compact' => true)), maca_njuvs_info_hub_get_calendar_subscribe_allowed_html()); ?>
         <?php endif; ?>
         <?php if (empty($items)) : ?>
             <p class="maca-info-empty"><?php esc_html_e('No upcoming events.', 'maca-njuvs'); ?></p>
         <?php else : ?>
             <ul class="maca-info-events-items">
                 <?php foreach ($items as $item) : ?>
-                    <?php maca_menulist_info_hub_render_occurrence_item($item, $show_image, $show_location); ?>
+                    <?php maca_njuvs_info_hub_render_occurrence_item($item, $show_image, $show_location); ?>
                 <?php endforeach; ?>
             </ul>
-            <?php if ($needs_booking_shell) : ?>
-                <?php echo maca_menulist_info_hub_render_shared_booking_shell(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-            <?php endif; ?>
         <?php endif; ?>
     </div>
     <?php
@@ -1543,7 +1432,7 @@ function maca_menulist_render_info_events_list($attributes = array(), $args = ar
  * @param array<string, mixed> $args       Extra args.
  * @return string
  */
-function maca_menulist_render_info_events_calendar($attributes = array(), $args = array()) {
+function maca_njuvs_render_info_events_calendar($attributes = array(), $args = array()) {
     $attributes = is_array($attributes) ? $attributes : array();
     $preview = !empty($args['preview']);
     $monday_first = true;
@@ -1553,15 +1442,15 @@ function maca_menulist_render_info_events_calendar($attributes = array(), $args 
 
     $month = $preview
         ? wp_date('Y-m')
-        : maca_menulist_info_hub_resolve_calendar_month(
+        : maca_njuvs_info_hub_resolve_calendar_month(
             isset($attributes['month']) ? (string) $attributes['month'] : ''
         );
 
-    $bounds = maca_menulist_info_hub_month_bounds($month);
+    $bounds = maca_njuvs_info_hub_month_bounds($month);
 
     if ($bounds === null) {
         $month = wp_date('Y-m');
-        $bounds = maca_menulist_info_hub_month_bounds($month);
+        $bounds = maca_njuvs_info_hub_month_bounds($month);
     }
 
     if ($bounds === null) {
@@ -1570,7 +1459,7 @@ function maca_menulist_render_info_events_calendar($attributes = array(), $args 
 
     list($range_start, $range_end) = $bounds;
 
-    $occurrences = maca_menulist_info_hub_get_occurrences(
+    $occurrences = maca_njuvs_info_hub_get_occurrences(
         array(
             'range_start' => $range_start,
             'range_end' => $range_end,
@@ -1592,37 +1481,28 @@ function maca_menulist_render_info_events_calendar($attributes = array(), $args 
         $by_date[ $date ][] = $occurrence;
     }
 
-    maca_menulist_info_hub_enqueue_assets();
+    maca_njuvs_info_hub_enqueue_assets();
 
     $month_ts = strtotime($range_start . ' 12:00:00');
     $month_label = $month_ts !== false ? wp_date('F Y', $month_ts) : $month;
     $prev_month = wp_date('Y-m', strtotime($range_start . ' -1 day'));
     $next_month = wp_date('Y-m', strtotime($range_end . ' +1 day'));
 
-    $weekday_labels = array_values(maca_menulist_weekday_short_labels_ordered());
+    $weekday_labels = array_values(maca_njuvs_weekday_short_labels_ordered());
 
     $first_weekday = (int) wp_date('w', strtotime($range_start . ' 12:00:00'));
     $leading = $monday_first ? (($first_weekday + 6) % 7) : $first_weekday;
     $days_in_month = (int) wp_date('t', strtotime($range_start . ' 12:00:00'));
     $today = wp_date('Y-m-d');
 
-    $needs_booking_shell = false;
-
-    foreach ($occurrences as $occurrence) {
-        if (!empty($occurrence->event->show_booking_button)) {
-            $needs_booking_shell = true;
-            break;
-        }
-    }
-
     ob_start();
     ?>
     <div class="maca-info-hub maca-info-events-calendar">
         <?php if (!$preview) : ?>
             <nav class="maca-info-calendar-nav" aria-label="<?php esc_attr_e('Calendar navigation', 'maca-njuvs'); ?>">
-                <a class="maca-info-calendar-prev" href="<?php echo esc_url(maca_menulist_info_hub_calendar_month_url($prev_month)); ?>">&larr; <?php esc_html_e('Previous', 'maca-njuvs'); ?></a>
+                <a class="maca-info-calendar-prev" href="<?php echo esc_url(maca_njuvs_info_hub_calendar_month_url($prev_month)); ?>">&larr; <?php esc_html_e('Previous', 'maca-njuvs'); ?></a>
                 <strong class="maca-info-calendar-title"><?php echo esc_html($month_label); ?></strong>
-                <a class="maca-info-calendar-next" href="<?php echo esc_url(maca_menulist_info_hub_calendar_month_url($next_month)); ?>"><?php esc_html_e('Next', 'maca-njuvs'); ?> &rarr;</a>
+                <a class="maca-info-calendar-next" href="<?php echo esc_url(maca_njuvs_info_hub_calendar_month_url($next_month)); ?>"><?php esc_html_e('Next', 'maca-njuvs'); ?> &rarr;</a>
             </nav>
         <?php else : ?>
             <p class="maca-info-calendar-title"><strong><?php echo esc_html($month_label); ?></strong></p>
@@ -1672,9 +1552,9 @@ function maca_menulist_render_info_events_calendar($attributes = array(), $args 
                     if (!empty($by_date[ $date ])) {
                         echo '<ul class="maca-info-cal-events">';
                         foreach ($by_date[ $date ] as $occurrence) {
-                            $title = maca_menulist_info_hub_get_event_title($occurrence->event);
-                            $time_short = maca_menulist_info_hub_format_occurrence_time_short($occurrence);
-                            $detail_anchor = maca_menulist_info_hub_occurrence_detail_anchor_id($occurrence);
+                            $title = maca_njuvs_info_hub_get_event_title($occurrence->event);
+                            $time_short = maca_njuvs_info_hub_format_occurrence_time_short($occurrence);
+                            $detail_anchor = maca_njuvs_info_hub_occurrence_detail_anchor_id($occurrence);
                             echo '<li>';
                             echo '<a class="maca-info-cal-event-link" href="#' . esc_attr($detail_anchor) . '">';
                             if ($time_short !== '') {
@@ -1699,13 +1579,13 @@ function maca_menulist_render_info_events_calendar($attributes = array(), $args 
                 <p class="maca-info-event-details-hint"><?php esc_html_e('Click an event in the calendar to see the full description, price and booking.', 'maca-njuvs'); ?></p>
                 <?php foreach ($occurrences as $occurrence) : ?>
                     <?php
-                    maca_menulist_info_hub_render_occurrence_detail(
+                    maca_njuvs_info_hub_render_occurrence_detail(
                         $occurrence,
                         array(
                             'show_image' => $show_image,
                             'show_location' => $show_location,
                             'collapsible' => true,
-                            'anchor_id' => maca_menulist_info_hub_occurrence_detail_anchor_id($occurrence),
+                            'anchor_id' => maca_njuvs_info_hub_occurrence_detail_anchor_id($occurrence),
                         )
                     );
                     ?>
@@ -1713,20 +1593,15 @@ function maca_menulist_render_info_events_calendar($attributes = array(), $args 
             </section>
         <?php endif; ?>
 
-        <?php if ($needs_booking_shell) : ?>
-            <?php echo maca_menulist_info_hub_render_shared_booking_shell(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-        <?php endif; ?>
-
         <?php if ($show_subscribe) : ?>
-            <?php echo maca_menulist_render_info_calendar_subscribe(array('preview' => $preview, 'compact' => true)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+            <?php echo wp_kses(maca_njuvs_render_info_calendar_subscribe(array('preview' => $preview, 'compact' => true)), maca_njuvs_info_hub_get_calendar_subscribe_allowed_html()); ?>
         <?php endif; ?>
     </div>
     <?php
     return (string) ob_get_clean();
 }
 
-add_action('init', 'maca_menulist_info_hub_register_shortcodes');
-add_action('init', 'maca_menulist_info_hub_sync_module_toggle', 20);
+add_action('init', 'maca_njuvs_info_hub_register_shortcodes');
 
 /**
  * Whether HTML/content contains a news banner block or shortcode.
@@ -1734,7 +1609,7 @@ add_action('init', 'maca_menulist_info_hub_sync_module_toggle', 20);
  * @param string $content Post or template content.
  * @return bool
  */
-function maca_menulist_info_hub_content_has_banner_layout($content) {
+function maca_njuvs_info_hub_content_has_banner_layout($content) {
     $content = (string) $content;
 
     if ($content === '') {
@@ -1754,7 +1629,7 @@ function maca_menulist_info_hub_content_has_banner_layout($content) {
     }
 
     foreach (parse_blocks($content) as $block) {
-        if (maca_menulist_info_hub_block_tree_has_banner_layout($block)) {
+        if (maca_njuvs_info_hub_block_tree_has_banner_layout($block)) {
             return true;
         }
     }
@@ -1766,7 +1641,7 @@ function maca_menulist_info_hub_content_has_banner_layout($content) {
  * @param array<string, mixed> $block Parsed block.
  * @return bool
  */
-function maca_menulist_info_hub_block_tree_has_banner_layout($block) {
+function maca_njuvs_info_hub_block_tree_has_banner_layout($block) {
     if (!is_array($block)) {
         return false;
     }
@@ -1778,7 +1653,7 @@ function maca_menulist_info_hub_block_tree_has_banner_layout($block) {
     }
 
     foreach ($block['innerBlocks'] ?? array() as $inner_block) {
-        if (maca_menulist_info_hub_block_tree_has_banner_layout($inner_block)) {
+        if (maca_njuvs_info_hub_block_tree_has_banner_layout($inner_block)) {
             return true;
         }
     }
@@ -1791,12 +1666,12 @@ function maca_menulist_info_hub_block_tree_has_banner_layout($block) {
  *
  * @return void
  */
-function maca_menulist_info_hub_maybe_flag_banner_from_content() {
-    if (is_admin() || !maca_menulist_info_hub_feature_available()) {
+function maca_njuvs_info_hub_maybe_flag_banner_from_content() {
+    if (is_admin() || !maca_njuvs_info_hub_feature_available() || !maca_njuvs_enabled()) {
         return;
     }
 
-    if (!maca_menulist_info_hub_has_publishable_news()) {
+    if (!maca_njuvs_info_hub_has_publishable_news()) {
         return;
     }
 
@@ -1837,11 +1712,11 @@ function maca_menulist_info_hub_maybe_flag_banner_from_content() {
     }
 
     foreach ($sources as $content) {
-        if (maca_menulist_info_hub_content_has_banner_layout($content)) {
-            maca_menulist_info_hub_flag_news_banner_page();
+        if (maca_njuvs_info_hub_content_has_banner_layout($content)) {
+            maca_njuvs_info_hub_flag_news_banner_page();
             break;
         }
     }
 }
 
-add_action('wp', 'maca_menulist_info_hub_maybe_flag_banner_from_content', 20);
+add_action('wp', 'maca_njuvs_info_hub_maybe_flag_banner_from_content', 20);

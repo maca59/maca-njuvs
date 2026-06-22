@@ -44,6 +44,11 @@ Unter *maca Njuvs → News* erstellen und bearbeiten Sie Nachrichten für Ihre W
 - **Published** — auf der Website sichtbar (wenn das Modul aktiviert ist)
 - **Archived** — von der Website ausgeblendet, in der Verwaltung gespeichert
 
+### Bildtipps
+
+- Verwenden Sie **Select image** — fügen Sie keine Bilder in Auszug oder Inhalt ein.
+- Komprimieren Sie große Bilder (möglichst unter 500 KB). Das Plugin warnt bei großen Dateien; sehr große Bilder können beim Speichern die Meldung *Please reduce the amount of data* auslösen.
+
 ---
 
 ## Veranstaltungen
@@ -63,7 +68,6 @@ Unter *maca Njuvs → Events* verwalten Sie anstehende und wiederkehrende Verans
 | **Start / End** | Datum und Uhrzeit |
 | **Recurrence** | Keine, Täglich, Wöchentlich oder Monatlich mit Intervall, Wochentagen und Enddatum oder Anzahl |
 | **Active** | Auf der Website anzeigen |
-| **Table booking** | Tischreservierungs-Button anzeigen (wenn maca Menulist-Buchung verfügbar ist) |
 | **Publishing** | Website, Facebook und Instagram |
 
 ### Ausnahmen bei wiederkehrenden Serien
@@ -193,7 +197,6 @@ Originalbeiträge werden nicht gelöscht — der Import erstellt neue Nachrichte
 - **Ablaufdatum** — Nachrichten können automatisch ausgeblendet werden
 - **Wiederkehrende Veranstaltungen** — tägliche, wöchentliche und monatliche Serien mit Ausnahmen
 - **Social Publishing** — optionale Freigabe auf Facebook Page und Instagram Business beim Speichern (Meta-App erforderlich)
-- **Tischreservierung** — Veranstaltungen können einen Reservierungs-Button anzeigen, wenn maca Menulist installiert ist
 
 ---
 

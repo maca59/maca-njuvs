@@ -199,7 +199,7 @@ function maca_njuvs_import_wp_post($post_id) {
     }
 
     $existing_news_id = maca_njuvs_import_wp_post_get_news_id($post_id);
-    if ($existing_news_id > 0 && maca_menulist_db_get_info_news($existing_news_id)) {
+    if ($existing_news_id > 0 && maca_njuvs_db_get_info_news($existing_news_id)) {
         return new WP_Error(
             'maca_njuvs_import_already_done',
             __('This post has already been imported.', 'maca-njuvs'),
@@ -207,9 +207,9 @@ function maca_njuvs_import_wp_post($post_id) {
         );
     }
 
-    maca_menulist_db_ensure_info_hub_tables();
+    maca_njuvs_db_ensure_info_hub_tables();
 
-    $inserted = maca_menulist_db_insert_info_news(maca_njuvs_import_wp_post_to_news_data($post));
+    $inserted = maca_njuvs_db_insert_info_news(maca_njuvs_import_wp_post_to_news_data($post));
 
     if (!$inserted) {
         return new WP_Error('maca_njuvs_import_insert_failed', __('Could not create news item.', 'maca-njuvs'));

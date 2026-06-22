@@ -84,7 +84,7 @@ add_filter('block_categories_all', 'maca_njuvs_register_block_category', 10, 1);
  * @return void
  */
 function maca_njuvs_enqueue_block_editor_assets() {
-    if (!function_exists('maca_menulist_info_hub_feature_available') || !maca_menulist_info_hub_feature_available()) {
+    if (!function_exists('maca_njuvs_info_hub_feature_available') || !maca_njuvs_info_hub_feature_available()) {
         return;
     }
 
@@ -136,7 +136,7 @@ function maca_njuvs_enqueue_block_editor_assets() {
  * @return string
  */
 function maca_njuvs_render_info_news_block_callback($attributes) {
-    return maca_menulist_render_info_news_list(
+    return maca_njuvs_render_info_news_list(
         is_array($attributes) ? $attributes : array(),
         array('preview' => is_admin())
     );
@@ -147,17 +147,8 @@ function maca_njuvs_render_info_news_block_callback($attributes) {
  * @return string
  */
 function maca_njuvs_render_info_events_block_callback($attributes) {
-    return maca_menulist_render_info_events_list(
+    return maca_njuvs_render_info_events_list(
         is_array($attributes) ? $attributes : array(),
         array('preview' => is_admin())
     );
-}
-
-/**
- * Admin page slug helper.
- *
- * @return string
- */
-function maca_njuvs_info_hub_admin_page() {
-    return 'maca-njuvs';
 }

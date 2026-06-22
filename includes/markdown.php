@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  *
  * @return array<string, array<string, bool>>
  */
-function maca_menulist_get_markdown_allowed_html() {
+function maca_njuvs_get_markdown_allowed_html() {
     return array(
         'h1'     => array(),
         'h2'     => array(
@@ -52,7 +52,7 @@ function maca_menulist_get_markdown_allowed_html() {
  * @param string $text Raw text.
  * @return string
  */
-function maca_menulist_format_inline_markdown($text) {
+function maca_njuvs_format_inline_markdown($text) {
     $text = (string) $text;
     if ($text === '') {
         return '';
@@ -86,7 +86,7 @@ function maca_menulist_format_inline_markdown($text) {
  * @param string $markdown Markdown source.
  * @return string
  */
-function maca_menulist_markdown_to_html($markdown) {
+function maca_njuvs_markdown_to_html($markdown) {
     $html = str_replace(array("\r\n", "\r"), "\n", (string) $markdown);
     $lines = explode("\n", $html);
     $output = array();
@@ -160,7 +160,7 @@ function maca_menulist_markdown_to_html($markdown) {
             $table_header_pending = false;
             $row = '<tr>';
             foreach ($cells as $cell) {
-                $row .= '<' . $tag . '>' . maca_menulist_format_inline_markdown($cell) . '</' . $tag . '>';
+                $row .= '<' . $tag . '>' . maca_njuvs_format_inline_markdown($cell) . '</' . $tag . '>';
             }
             $row .= '</tr>';
             $output[] = $row;
@@ -181,7 +181,7 @@ function maca_menulist_markdown_to_html($markdown) {
                 $output[] = '<ol>';
                 $in_ol = true;
             }
-            $output[] = '<li>' . maca_menulist_format_inline_markdown($matches[1]) . '</li>';
+            $output[] = '<li>' . maca_njuvs_format_inline_markdown($matches[1]) . '</li>';
             continue;
         }
 
@@ -194,7 +194,7 @@ function maca_menulist_markdown_to_html($markdown) {
                 $output[] = '<ul>';
                 $in_ul = true;
             }
-            $output[] = '<li>' . maca_menulist_format_inline_markdown($matches[1]) . '</li>';
+            $output[] = '<li>' . maca_njuvs_format_inline_markdown($matches[1]) . '</li>';
             continue;
         }
 
@@ -208,19 +208,19 @@ function maca_menulist_markdown_to_html($markdown) {
         }
 
         if (preg_match('/^#### (.*)$/', $trimmed, $matches)) {
-            $output[] = '<h4>' . maca_menulist_format_inline_markdown($matches[1]) . '</h4>';
+            $output[] = '<h4>' . maca_njuvs_format_inline_markdown($matches[1]) . '</h4>';
         } elseif (preg_match('/^### \{#([a-z0-9_-]+)\}\s+(.*)$/', $trimmed, $matches)) {
-            $output[] = '<h3 id="' . esc_attr($matches[1]) . '">' . maca_menulist_format_inline_markdown($matches[2]) . '</h3>';
+            $output[] = '<h3 id="' . esc_attr($matches[1]) . '">' . maca_njuvs_format_inline_markdown($matches[2]) . '</h3>';
         } elseif (preg_match('/^### (.*)$/', $trimmed, $matches)) {
-            $output[] = '<h3>' . maca_menulist_format_inline_markdown($matches[1]) . '</h3>';
+            $output[] = '<h3>' . maca_njuvs_format_inline_markdown($matches[1]) . '</h3>';
         } elseif (preg_match('/^## \{#([a-z0-9_-]+)\}\s+(.*)$/', $trimmed, $matches)) {
-            $output[] = '<h2 id="' . esc_attr($matches[1]) . '">' . maca_menulist_format_inline_markdown($matches[2]) . '</h2>';
+            $output[] = '<h2 id="' . esc_attr($matches[1]) . '">' . maca_njuvs_format_inline_markdown($matches[2]) . '</h2>';
         } elseif (preg_match('/^## (.*)$/', $trimmed, $matches)) {
-            $output[] = '<h2>' . maca_menulist_format_inline_markdown($matches[1]) . '</h2>';
+            $output[] = '<h2>' . maca_njuvs_format_inline_markdown($matches[1]) . '</h2>';
         } elseif (preg_match('/^# (.*)$/', $trimmed, $matches)) {
-            $output[] = '<h1>' . maca_menulist_format_inline_markdown($matches[1]) . '</h1>';
+            $output[] = '<h1>' . maca_njuvs_format_inline_markdown($matches[1]) . '</h1>';
         } else {
-            $output[] = '<p>' . maca_menulist_format_inline_markdown($trimmed) . '</p>';
+            $output[] = '<p>' . maca_njuvs_format_inline_markdown($trimmed) . '</p>';
         }
     }
 
@@ -246,7 +246,7 @@ function maca_menulist_markdown_to_html($markdown) {
  * @param string $path Absolute file path.
  * @return string Safe HTML or empty string.
  */
-function maca_menulist_render_markdown_file($path) {
+function maca_njuvs_render_markdown_file($path) {
     if (!is_string($path) || $path === '' || !file_exists($path)) {
         return '';
     }
@@ -256,5 +256,5 @@ function maca_menulist_render_markdown_file($path) {
         return '';
     }
 
-    return wp_kses(maca_menulist_markdown_to_html($content), maca_menulist_get_markdown_allowed_html());
+    return wp_kses(maca_njuvs_markdown_to_html($content), maca_njuvs_get_markdown_allowed_html());
 }

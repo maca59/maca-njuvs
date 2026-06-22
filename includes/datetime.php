@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
  *
  * @return string
  */
-function maca_menulist_wp_now_mysql() {
+function maca_njuvs_wp_now_mysql() {
     return current_time('mysql');
 }
 
@@ -26,7 +26,7 @@ function maca_menulist_wp_now_mysql() {
  *
  * @return string
  */
-function maca_menulist_wp_today() {
+function maca_njuvs_wp_today() {
     return wp_date('Y-m-d');
 }
 
@@ -36,7 +36,7 @@ function maca_menulist_wp_today() {
  * @param int $days Number of days.
  * @return string
  */
-function maca_menulist_wp_days_ago_mysql($days) {
+function maca_njuvs_wp_days_ago_mysql($days) {
     $days = max(0, (int) $days);
     $timezone = wp_timezone();
     $date = new DateTimeImmutable('now', $timezone);
@@ -55,7 +55,7 @@ function maca_menulist_wp_days_ago_mysql($days) {
  * @param string $format   PHP date format; "mysql" and "timestamp" are aliases.
  * @return int|string
  */
-function maca_menulist_wp_now_modify($modifier, $format = 'Y-m-d') {
+function maca_njuvs_wp_now_modify($modifier, $format = 'Y-m-d') {
     $timezone = wp_timezone();
     $date = new DateTimeImmutable('now', $timezone);
 
@@ -80,13 +80,13 @@ function maca_menulist_wp_now_modify($modifier, $format = 'Y-m-d') {
  * @param string $date Date Y-m-d.
  * @return int|false
  */
-function maca_menulist_wp_date_to_timestamp($date) {
+function maca_njuvs_wp_date_to_timestamp($date) {
     $date = trim((string) $date);
     if ($date === '' || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
         return false;
     }
 
-    return maca_menulist_wp_mysql_to_timestamp($date . ' 12:00:00');
+    return maca_njuvs_wp_mysql_to_timestamp($date . ' 12:00:00');
 }
 
 /**
@@ -95,7 +95,7 @@ function maca_menulist_wp_date_to_timestamp($date) {
  * @param string $value Normalized datetime string (Y-m-d H:i:s).
  * @return DateTimeImmutable|false
  */
-function maca_menulist_create_site_wall_datetime($value) {
+function maca_njuvs_create_site_wall_datetime($value) {
     $value = trim((string) $value);
     if ($value === '') {
         return false;
@@ -122,7 +122,7 @@ function maca_menulist_create_site_wall_datetime($value) {
  * @param int $timestamp Unix timestamp.
  * @return string
  */
-function maca_menulist_unix_to_site_mysql($timestamp) {
+function maca_njuvs_unix_to_site_mysql($timestamp) {
     $timezone = wp_timezone();
     $date = (new DateTimeImmutable('@' . (int) $timestamp))->setTimezone($timezone);
 
@@ -135,10 +135,10 @@ function maca_menulist_unix_to_site_mysql($timestamp) {
  * @param int|null $timestamp Optional Unix timestamp; defaults to now.
  * @return string
  */
-function maca_menulist_wp_timestamp_to_datetime_local($timestamp = null) {
+function maca_njuvs_wp_timestamp_to_datetime_local($timestamp = null) {
     if ($timestamp === null) {
-        $mysql = maca_menulist_wp_now_mysql();
-        $parsed = maca_menulist_wp_mysql_to_timestamp($mysql);
+        $mysql = maca_njuvs_wp_now_mysql();
+        $parsed = maca_njuvs_wp_mysql_to_timestamp($mysql);
 
         if ($parsed === false) {
             return '';
@@ -147,7 +147,7 @@ function maca_menulist_wp_timestamp_to_datetime_local($timestamp = null) {
         $timestamp = $parsed;
     }
 
-    $mysql = maca_menulist_unix_to_site_mysql((int) $timestamp);
+    $mysql = maca_njuvs_unix_to_site_mysql((int) $timestamp);
 
     return str_replace(' ', 'T', substr($mysql, 0, 16));
 }
@@ -158,18 +158,18 @@ function maca_menulist_wp_timestamp_to_datetime_local($timestamp = null) {
  * @param string $value datetime-local value (Y-m-dTH:i or Y-m-dTH:i:s).
  * @return int|false
  */
-function maca_menulist_wp_datetime_local_to_timestamp($value) {
+function maca_njuvs_wp_datetime_local_to_timestamp($value) {
     $value = trim((string) $value);
     if ($value === '') {
         return false;
     }
 
-    $mysql = maca_menulist_datetime_local_to_mysql($value);
+    $mysql = maca_njuvs_datetime_local_to_mysql($value);
     if ($mysql === null) {
         return false;
     }
 
-    return maca_menulist_wp_mysql_to_timestamp($mysql);
+    return maca_njuvs_wp_mysql_to_timestamp($mysql);
 }
 
 /**
@@ -178,13 +178,13 @@ function maca_menulist_wp_datetime_local_to_timestamp($value) {
  * @param string $datetime MySQL datetime (Y-m-d H:i:s).
  * @return int|false
  */
-function maca_menulist_wp_mysql_to_timestamp($datetime) {
+function maca_njuvs_wp_mysql_to_timestamp($datetime) {
     $datetime = trim((string) $datetime);
     if ($datetime === '') {
         return false;
     }
 
-    $date = maca_menulist_create_site_wall_datetime($datetime);
+    $date = maca_njuvs_create_site_wall_datetime($datetime);
 
     if ($date === false) {
         return false;
@@ -201,13 +201,13 @@ function maca_menulist_wp_mysql_to_timestamp($datetime) {
  * @param string $empty Value when date is empty.
  * @return string
  */
-function maca_menulist_format_wp_date($date, $format = '', $empty = '') {
+function maca_njuvs_format_wp_date($date, $format = '', $empty = '') {
     $date = trim((string) $date);
     if ($date === '') {
         return $empty;
     }
 
-    $timestamp = maca_menulist_wp_date_to_timestamp($date);
+    $timestamp = maca_njuvs_wp_date_to_timestamp($date);
     if ($timestamp === false) {
         return $date;
     }
@@ -227,13 +227,13 @@ function maca_menulist_format_wp_date($date, $format = '', $empty = '') {
  * @param string $empty    Value when datetime is empty.
  * @return string
  */
-function maca_menulist_format_wp_datetime($datetime, $format = '', $empty = '—') {
+function maca_njuvs_format_wp_datetime($datetime, $format = '', $empty = '—') {
     $datetime = trim((string) $datetime);
     if ($datetime === '') {
         return $empty;
     }
 
-    $timestamp = maca_menulist_wp_mysql_to_timestamp($datetime);
+    $timestamp = maca_njuvs_wp_mysql_to_timestamp($datetime);
     if ($timestamp === false) {
         return $datetime;
     }
@@ -251,18 +251,18 @@ function maca_menulist_format_wp_datetime($datetime, $format = '', $empty = '—
  * @param string $datetime MySQL datetime.
  * @return string
  */
-function maca_menulist_wp_mysql_to_datetime_local($datetime) {
+function maca_njuvs_wp_mysql_to_datetime_local($datetime) {
     $datetime = trim((string) $datetime);
     if ($datetime === '') {
         return '';
     }
 
-    $timestamp = maca_menulist_wp_mysql_to_timestamp($datetime);
+    $timestamp = maca_njuvs_wp_mysql_to_timestamp($datetime);
     if ($timestamp === false) {
         return '';
     }
 
-    return maca_menulist_wp_timestamp_to_datetime_local($timestamp);
+    return maca_njuvs_wp_timestamp_to_datetime_local($timestamp);
 }
 
 /**
@@ -272,7 +272,7 @@ function maca_menulist_wp_mysql_to_datetime_local($datetime) {
  * @param bool   $all_day Treat date-only as start of day.
  * @return string|null
  */
-function maca_menulist_datetime_local_to_mysql($value, $all_day = false) {
+function maca_njuvs_datetime_local_to_mysql($value, $all_day = false) {
     $value = trim((string) $value);
 
     if ($value === '') {
@@ -286,7 +286,7 @@ function maca_menulist_datetime_local_to_mysql($value, $all_day = false) {
     }
 
     if (preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/', $value)) {
-        $date = maca_menulist_create_site_wall_datetime(str_replace('T', ' ', $value));
+        $date = maca_njuvs_create_site_wall_datetime(str_replace('T', ' ', $value));
 
         if ($date === false) {
             return null;
@@ -310,8 +310,8 @@ function maca_menulist_datetime_local_to_mysql($value, $all_day = false) {
  * @param bool                 $is_insert Whether this is an insert.
  * @return void
  */
-function maca_menulist_db_stamp_row_timestamps(&$row, &$formats, $is_insert = true) {
-    $now = maca_menulist_wp_now_mysql();
+function maca_njuvs_db_stamp_row_timestamps(&$row, &$formats, $is_insert = true) {
+    $now = maca_njuvs_wp_now_mysql();
 
     if ($is_insert && !isset($row['created_at'])) {
         $row['created_at'] = $now;

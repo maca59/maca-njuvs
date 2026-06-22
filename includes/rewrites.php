@@ -15,11 +15,7 @@ if (!defined('ABSPATH')) {
  * @return void
  */
 function maca_njuvs_register_rewrites() {
-    if (!function_exists('maca_menulist_get_info_events_ics_filename')) {
-        return;
-    }
-
-    $ics_file = maca_menulist_get_info_events_ics_filename();
+    $ics_file = maca_njuvs_get_info_events_ics_filename();
 
     add_rewrite_rule(
         '^' . preg_quote($ics_file, '/') . '/?$',
@@ -58,7 +54,7 @@ function maca_njuvs_query_vars($vars) {
  *
  * @return string
  */
-function maca_menulist_get_request_path() {
+function maca_njuvs_get_request_path() {
     global $wp;
 
     $path = '';
@@ -105,7 +101,7 @@ function maca_menulist_get_request_path() {
  * @param string $slug Target slug.
  * @return bool
  */
-function maca_menulist_request_path_matches_slug($path, $slug) {
+function maca_njuvs_request_path_matches_slug($path, $slug) {
     $path = strtolower(trim((string) $path, '/'));
     $slug = strtolower(trim((string) $slug, '/'));
 
@@ -128,3 +124,48 @@ function maca_menulist_request_path_matches_slug($path, $slug) {
 
 add_action('init', 'maca_njuvs_register_rewrites', 10);
 add_filter('query_vars', 'maca_njuvs_query_vars');
+
+/**
+ * Force HTTPS for media URLs when the site is served over SSL.
+ *
+ * @param string $url Raw URL.
+ * @return string
+ */
+function maca_njuvs_normalize_url($url) {
+    if ($url === '') {
+        return '';
+    }
+
+    $url = trim((string) $url);
+
+    if (is_ssl() || wp_parse_url(home_url(), PHP_URL_SCHEME) === 'https') {
+        return set_url_scheme($url, 'https');
+    }
+
+    return $url;
+}
+
+/**
+ * Schedule a rewrite flush on the next request.
+ *
+ * @return void
+ */
+function maca_njuvs_schedule_rewrite_flush() {
+    update_option('maca_njuvs_flush_rewrite_rules', '1', false);
+}
+
+/**
+ * Flush rewrite rules once after settings changes.
+ *
+ * @return void
+ */
+function maca_njuvs_maybe_flush_rewrite_rules() {
+    if (get_option('maca_njuvs_flush_rewrite_rules') !== '1') {
+        return;
+    }
+
+    delete_option('maca_njuvs_flush_rewrite_rules');
+    flush_rewrite_rules(false);
+}
+
+add_action('init', 'maca_njuvs_maybe_flush_rewrite_rules', 99);

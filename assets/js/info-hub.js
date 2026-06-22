@@ -4,43 +4,6 @@
 (function () {
     'use strict';
 
-    document.addEventListener('click', function (event) {
-        var trigger = event.target.closest('.maca-info-event-booking-trigger');
-        if (!trigger) {
-            return;
-        }
-
-        event.preventDefault();
-
-        var shell = document.querySelector('.maca-info-events-booking-shell .maca-table-booking');
-        if (!shell) {
-            return;
-        }
-
-        if (typeof window.macaMenulistInitTableBooking === 'function') {
-            window.macaMenulistInitTableBooking(shell);
-        }
-
-        var bookingDate = trigger.getAttribute('data-booking-date') || '';
-        var dateInput = shell.querySelector('[name="booking_date"]');
-        if (dateInput && bookingDate) {
-            dateInput.value = bookingDate;
-            dateInput.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-
-        var modal = shell.querySelector('.maca-table-booking-modal');
-        if (modal) {
-            modal.hidden = false;
-            document.body.classList.add('maca-booking-modal-open');
-            return;
-        }
-
-        var openTrigger = shell.querySelector('.maca-table-booking-trigger');
-        if (openTrigger) {
-            openTrigger.click();
-        }
-    });
-
     function scrollToEventDetail() {
         var hash = window.location.hash;
 
@@ -249,6 +212,49 @@
             dialog.showModal();
         } else {
             dialog.setAttribute('open', 'open');
+        }
+    });
+
+    document.addEventListener('click', function (event) {
+        var openBtn = event.target.closest('.maca-info-subscribe-open');
+
+        if (openBtn) {
+            var subscribeRoot = openBtn.closest('.maca-info-calendar-subscribe');
+            var subscribeDialog = subscribeRoot ? subscribeRoot.querySelector('.maca-info-calendar-subscribe-dialog') : null;
+
+            if (subscribeDialog) {
+                if (typeof subscribeDialog.showModal === 'function') {
+                    subscribeDialog.showModal();
+                } else {
+                    subscribeDialog.setAttribute('open', 'open');
+                }
+            }
+
+            return;
+        }
+
+        var copyBtn = event.target.closest('.maca-info-subscribe-copy');
+
+        if (!copyBtn) {
+            return;
+        }
+
+        var feedUrl = copyBtn.getAttribute('data-feed-url') || '';
+
+        if (!feedUrl) {
+            return;
+        }
+
+        var copiedMessage = (window.macaNjuvsInfoHub && window.macaNjuvsInfoHub.feedUrlCopied) || 'Feed URL copied.';
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(feedUrl).then(function () {
+                window.alert(copiedMessage);
+            }).catch(function () {
+                window.prompt(copiedMessage, feedUrl);
+            });
+        } else {
+            window.prompt(copiedMessage, feedUrl);
         }
     });
 })();

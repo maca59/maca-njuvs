@@ -44,6 +44,11 @@ Under *maca Njuvs → News* opretter og redigerer du nyheder, der vises på dit 
 - **Published** — vises på websitet (når modulet er aktiveret)
 - **Archived** — skjult fra websitet men gemt i admin
 
+### Billedtips
+
+- Brug **Select image** — indsæt ikke billeder i uddrag eller indholdsfelter.
+- Komprimer store billeder (helst under 500 KB). Pluginet advarer, hvis billedet er stort; meget store filer kan give fejlen *Please reduce the amount of data* ved gemning.
+
 ---
 
 ## Begivenheder
@@ -63,7 +68,6 @@ Under *maca Njuvs → Events* administrerer du kommende og gentagne begivenheder
 | **Start / End** | Dato og tid |
 | **Recurrence** | Ingen, Dagligt, Ugentligt eller Månedligt med interval, ugedage og slutdato eller antal forekomster |
 | **Active** | Vis på websitet |
-| **Table booking** | Vis bestil-bord-knap (hvis maca Menulist-booking er tilgængelig) |
 | **Publishing** | Website, Facebook og Instagram |
 
 ### Undtagelser i gentagne serier
@@ -193,7 +197,6 @@ Originale indlæg slettes ikke — importen opretter nye nyheder i maca Njuvs.
 - **Udløbsdato** — nyheder kan skjules automatisk
 - **Gentagne begivenheder** — daglige, ugentlige og månedlige serier med undtagelser
 - **Social publicering** — valgfri deling til Facebook Page og Instagram Business ved gem (Meta-app påkrævet)
-- **Bordbestilling** — begivenheder kan vise bestil-bord-knap, hvis maca Menulist er installeret
 
 ---
 

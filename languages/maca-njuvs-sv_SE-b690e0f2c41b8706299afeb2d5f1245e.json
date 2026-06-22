@@ -831,6 +831,9 @@
       "This can take a little while — please keep this tab open.": [
         "Detta kan ta en stund — håll denna flik öppen."
       ],
+      "This image is large (%1$s). Compress it or choose a smaller file (under %2$s) — very large images can cause errors when saving.": [
+        "Bilden är stor (%1$s). Komprimera den eller välj en mindre fil (under %2$s) — mycket stora bilder kan ge fel vid sparning."
+      ],
       "This is the text that will be sent to the selected channels.": [
         "Detta är texten som kommer att skickas till de valda kanalerna."
       ],
@@ -876,8 +879,11 @@
       "Use image": [
         "Använd bild"
       ],
-      "Use the link button to add hyperlinks. Basic formatting is supported.": [
-        "Använd länkknappen för att lägga till hyperlänkar. Grundläggande formatering stöds."
+      "Use the link button to add hyperlinks. Basic formatting is supported. Add images via the Image field — do not paste images into the text.": [
+        "Använd länkknappen för att lägga till hyperlänkar. Grundläggande formatering stöds. Lägg till bilder via fältet Bild — klistra inte in bilder i texten."
+      ],
+      "Use the toolbar buttons for basic formatting and links.": [
+        "Använd verktygsradens knappar för enkel formatering och länkar."
       ],
       "Use webcal:// in Apple Calendar and many other apps.": [
         "Använd webcal:// i Apple Calendar och många andra appar."

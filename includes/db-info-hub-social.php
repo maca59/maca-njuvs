@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  *
  * @return string
  */
-function maca_menulist_db_info_social_log_table() {
+function maca_njuvs_db_info_social_log_table() {
     global $wpdb;
 
     return $wpdb->prefix . 'maca_njuvs_social_log';
@@ -27,14 +27,14 @@ function maca_menulist_db_info_social_log_table() {
  *
  * @return void
  */
-function maca_menulist_db_create_info_social_log_table() {
+function maca_njuvs_db_create_info_social_log_table() {
     global $wpdb;
 
     if (!isset($wpdb) || empty($wpdb)) {
         return;
     }
 
-    $table = maca_menulist_db_info_social_log_table();
+    $table = maca_njuvs_db_info_social_log_table();
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE $table (
@@ -61,7 +61,7 @@ function maca_menulist_db_create_info_social_log_table() {
  *
  * @return void
  */
-function maca_menulist_db_ensure_info_social_log_table() {
+function maca_njuvs_db_ensure_info_social_log_table() {
     static $ensured = false;
 
     if ($ensured) {
@@ -70,12 +70,12 @@ function maca_menulist_db_ensure_info_social_log_table() {
 
     global $wpdb;
 
-    $table = maca_menulist_db_info_social_log_table();
+    $table = maca_njuvs_db_info_social_log_table();
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table));
 
     if ($exists !== $table) {
-        maca_menulist_db_create_info_social_log_table();
+        maca_njuvs_db_create_info_social_log_table();
     }
 
     $ensured = true;
@@ -85,11 +85,11 @@ function maca_menulist_db_ensure_info_social_log_table() {
  * @param array<string, mixed> $data Log row.
  * @return int|false
  */
-function maca_menulist_db_insert_info_social_log($data) {
+function maca_njuvs_db_insert_info_social_log($data) {
     global $wpdb;
 
     return $wpdb->insert(
-        maca_menulist_db_info_social_log_table(),
+        maca_njuvs_db_info_social_log_table(),
         array(
             'object_type' => sanitize_key($data['object_type'] ?? 'news'),
             'object_id' => intval($data['object_id'] ?? 0),
@@ -106,10 +106,10 @@ function maca_menulist_db_insert_info_social_log($data) {
  * @param int $limit Max rows.
  * @return array<int, object>
  */
-function maca_menulist_db_get_info_social_log($limit = 50) {
+function maca_njuvs_db_get_info_social_log($limit = 50) {
     global $wpdb;
 
-    $table = maca_menulist_db_info_social_log_table();
+    $table = maca_njuvs_db_info_social_log_table();
     $limit = max(1, min(200, intval($limit)));
 
     return $wpdb->get_results(
@@ -125,10 +125,10 @@ function maca_menulist_db_get_info_social_log($limit = 50) {
  *
  * @return void
  */
-function maca_menulist_db_drop_info_social_log_table() {
+function maca_njuvs_db_drop_info_social_log_table() {
     global $wpdb;
 
-    $table = maca_menulist_db_info_social_log_table();
+    $table = maca_njuvs_db_info_social_log_table();
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
     $wpdb->query("DROP TABLE IF EXISTS {$table}");
 }

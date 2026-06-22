@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
  * @param string $plain Plain text.
  * @return string
  */
-function maca_menulist_info_hub_encrypt_secret($plain) {
+function maca_njuvs_info_hub_encrypt_secret($plain) {
     $plain = (string) $plain;
 
     if ($plain === '') {
@@ -39,7 +39,7 @@ function maca_menulist_info_hub_encrypt_secret($plain) {
  * @param string $stored Stored value.
  * @return string
  */
-function maca_menulist_info_hub_decrypt_secret($stored) {
+function maca_njuvs_info_hub_decrypt_secret($stored) {
     $stored = (string) $stored;
 
     if ($stored === '') {

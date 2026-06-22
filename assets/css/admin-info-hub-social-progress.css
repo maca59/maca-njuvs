@@ -46,8 +46,23 @@
     height: 100%;
     width: 0;
     border-radius: inherit;
+    background: linear-gradient(
+        90deg,
+        #2271b1 0%,
+        #3b82f6 35%,
+        #60a5fa 50%,
+        #3b82f6 65%,
+        #22c55e 100%
+    );
+    background-size: 220% 100%;
+    animation: maca-info-hub-progress-shimmer 1.8s linear infinite;
+}
+
+.maca-info-hub-social-progress-overlay.is-complete .maca-info-hub-social-progress-bar-fill,
+.maca-info-hub-social-progress-overlay.is-error .maca-info-hub-social-progress-bar-fill {
+    animation: none;
     background: linear-gradient(90deg, #2271b1 0%, #3b82f6 55%, #22c55e 100%);
-    transition: width 0.45s ease;
+    background-size: 100% 100%;
 }
 
 .maca-info-hub-social-progress-steps {
@@ -101,6 +116,16 @@
 @keyframes maca-info-hub-social-spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes maca-info-hub-progress-shimmer {
+    0% {
+        background-position: 120% 0;
+    }
+
+    100% {
+        background-position: -120% 0;
     }
 }
 

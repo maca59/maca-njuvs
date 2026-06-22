@@ -44,6 +44,11 @@ Kohdassa *maca Njuvs → News* luot ja muokkaat verkkosivustolla näkyviä uutis
 - **Published** — näkyy verkkosivustolla (kun moduuli on käytössä)
 - **Archived** — piilotettu sivustolta, mutta tallennettu hallintaan
 
+### Kuvavinkit
+
+- Käytä **Select image** -painiketta — älä liitä kuvia ingressi- tai sisältökenttiin.
+- Pakkaa suuret kuvat (mieluiten alle 500 KB). Lisäosa varoittaa suurista kuvista; erittäin suuret tiedostot voivat aiheuttaa virheen *Please reduce the amount of data* tallennuksessa.
+
 ---
 
 ## Tapahtumat
@@ -63,7 +68,6 @@ Kohdassa *maca Njuvs → Events* hallitset tulevia ja toistuvia tapahtumia.
 | **Start / End** | Päivämäärä ja aika |
 | **Recurrence** | Ei toistoa, Päivittäin, Viikoittain tai Kuukausittain intervallilla, viikonpäivillä ja päättymispäivällä tai esiintymien määrällä |
 | **Active** | Näytä verkkosivustolla |
-| **Table booking** | Näytä pöytävarauspainike (jos maca Menulist-varaus on käytettävissä) |
 | **Publishing** | Verkkosivusto, Facebook ja Instagram |
 
 ### Poikkeukset toistuvissa sarjoissa
@@ -193,7 +197,6 @@ Alkuperäisiä artikkeleita ei poisteta — tuonti luo uusia uutisia maca Njuvsi
 - **Vanhenemispäivä** — uutiset voidaan piilottaa automaattisesti
 - **Toistuvat tapahtumat** — päivittäiset, viikoittaiset ja kuukausittaiset sarjat poikkeuksineen
 - **Sosiaalinen julkaisu** — valinnainen jako Facebook Pageen ja Instagram Businessiin tallennuksen yhteydessä (Meta-sovellus vaaditaan)
-- **Pöytävaraus** — tapahtumat voivat näyttää pöytävarauspainikkeen, jos maca Menulist on asennettu
 
 ---
 

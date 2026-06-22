@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 /**
  * @return string
  */
-function maca_menulist_get_site_locale() {
+function maca_njuvs_get_site_locale() {
     if (defined('WPLANG')) {
         $constant_locale = WPLANG;
 
@@ -39,8 +39,8 @@ function maca_menulist_get_site_locale() {
 /**
  * @return bool
  */
-function maca_menulist_site_locale_is_english() {
-    $locale = strtolower(str_replace('-', '_', maca_menulist_get_site_locale()));
+function maca_njuvs_site_locale_is_english() {
+    $locale = strtolower(str_replace('-', '_', maca_njuvs_get_site_locale()));
 
     if (in_array($locale, array('en', 'en_us', 'en_gb', 'en_au', 'en_ca', 'en_nz', 'en_za'), true)) {
         return true;
@@ -52,8 +52,8 @@ function maca_menulist_site_locale_is_english() {
 /**
  * @return string
  */
-function maca_menulist_get_local_language_code() {
-    $locale = strtolower(maca_menulist_get_site_locale());
+function maca_njuvs_get_local_language_code() {
+    $locale = strtolower(maca_njuvs_get_site_locale());
     $code = sanitize_key(substr($locale, 0, 2));
 
     return $code !== '' ? $code : 'en';
@@ -64,7 +64,7 @@ function maca_menulist_get_local_language_code() {
  *
  * @return string[]
  */
-function maca_menulist_get_guide_language_codes() {
+function maca_njuvs_get_guide_language_codes() {
     return array('sv', 'en', 'de', 'es', 'fr', 'da', 'no', 'fi');
 }
 
@@ -73,7 +73,7 @@ function maca_menulist_get_guide_language_codes() {
  *
  * @return string
  */
-function maca_menulist_get_admin_guide_language_code() {
+function maca_njuvs_get_admin_guide_language_code() {
     $locale = function_exists('determine_locale') ? determine_locale() : get_locale();
     $locale = strtolower(str_replace('-', '_', (string) $locale));
     $code = sanitize_key(substr($locale, 0, 2));
@@ -82,7 +82,7 @@ function maca_menulist_get_admin_guide_language_code() {
         $code = 'no';
     }
 
-    if (in_array($code, maca_menulist_get_guide_language_codes(), true)) {
+    if (in_array($code, maca_njuvs_get_guide_language_codes(), true)) {
         return $code;
     }
 
@@ -96,14 +96,14 @@ function maca_menulist_get_admin_guide_language_code() {
  * @param string $fallback Fallback language code.
  * @return string
  */
-function maca_menulist_get_localized_doc_file($basename, $fallback = 'en') {
+function maca_njuvs_get_localized_doc_file($basename, $fallback = 'en') {
     $basename = preg_replace('/[^A-Z0-9_-]/i', '', (string) $basename);
-    $lang = maca_menulist_get_admin_guide_language_code();
-    $file = MACA_MENULIST_PLUGIN_DIR . 'docs/' . $basename . '-' . $lang . '.md';
+    $lang = maca_njuvs_get_admin_guide_language_code();
+    $file = MACA_NJUVS_PLUGIN_DIR . 'docs/' . $basename . '-' . $lang . '.md';
 
     if (!file_exists($file)) {
-        $fallback = in_array($fallback, maca_menulist_get_guide_language_codes(), true) ? $fallback : 'en';
-        $file = MACA_MENULIST_PLUGIN_DIR . 'docs/' . $basename . '-' . $fallback . '.md';
+        $fallback = in_array($fallback, maca_njuvs_get_guide_language_codes(), true) ? $fallback : 'en';
+        $file = MACA_NJUVS_PLUGIN_DIR . 'docs/' . $basename . '-' . $fallback . '.md';
     }
 
     return $file;
@@ -112,7 +112,7 @@ function maca_menulist_get_localized_doc_file($basename, $fallback = 'en') {
 /**
  * @return array<string, string>
  */
-function maca_menulist_get_local_language_options() {
+function maca_njuvs_get_local_language_options() {
     return array(
         'sv' => __('Swedish', 'maca-njuvs'),
         'no' => __('Norwegian', 'maca-njuvs'),
@@ -135,8 +135,8 @@ function maca_menulist_get_local_language_options() {
 /**
  * @return string
  */
-function maca_menulist_get_local_language_label() {
-    $locale = maca_menulist_get_site_locale();
+function maca_njuvs_get_local_language_label() {
+    $locale = maca_njuvs_get_site_locale();
 
     if (function_exists('locale_get_display_name')) {
         $display = locale_get_display_name($locale, $locale);
@@ -146,8 +146,8 @@ function maca_menulist_get_local_language_label() {
         }
     }
 
-    $options = maca_menulist_get_local_language_options();
-    $code = maca_menulist_get_local_language_code();
+    $options = maca_njuvs_get_local_language_options();
+    $code = maca_njuvs_get_local_language_code();
 
     if (isset($options[ $code ])) {
         return $options[ $code ];
@@ -159,33 +159,33 @@ function maca_menulist_get_local_language_label() {
 /**
  * @return string
  */
-function maca_menulist_get_local_language_name() {
-    return maca_menulist_get_local_language_label();
+function maca_njuvs_get_local_language_name() {
+    return maca_njuvs_get_local_language_label();
 }
 
 /**
  * @return bool
  */
-function maca_menulist_bilingual_menus_available() {
+function maca_njuvs_bilingual_menus_available() {
     return false;
 }
 
 /**
  * @return bool
  */
-function maca_menulist_dual_language_menu_enabled() {
+function maca_njuvs_dual_language_menu_enabled() {
     return false;
 }
 
 /**
  * @return bool
  */
-function maca_menulist_should_use_local_content() {
-    if (maca_menulist_site_locale_is_english()) {
+function maca_njuvs_should_use_local_content() {
+    if (maca_njuvs_site_locale_is_english()) {
         return true;
     }
 
-    $local_code = maca_menulist_get_local_language_code();
+    $local_code = maca_njuvs_get_local_language_code();
     $visitor = function_exists('determine_locale') ? determine_locale() : get_locale();
 
     return strpos(strtolower((string) $visitor), $local_code) === 0;
@@ -196,11 +196,11 @@ function maca_menulist_should_use_local_content() {
  * @param string $english English value.
  * @return string
  */
-function maca_menulist_get_bilingual_field($local, $english) {
+function maca_njuvs_get_bilingual_field($local, $english) {
     $local = trim((string) $local);
     $english = trim((string) $english);
 
-    if (maca_menulist_should_use_local_content()) {
+    if (maca_njuvs_should_use_local_content()) {
         return $local !== '' ? $local : $english;
     }
 
@@ -213,7 +213,7 @@ function maca_menulist_get_bilingual_field($local, $english) {
  * @param string      $en_key    English field property name.
  * @return string
  */
-function maca_menulist_get_object_bilingual_field($object, $local_key, $en_key) {
+function maca_njuvs_get_object_bilingual_field($object, $local_key, $en_key) {
     if (!is_object($object)) {
         return '';
     }
@@ -221,23 +221,23 @@ function maca_menulist_get_object_bilingual_field($object, $local_key, $en_key) 
     $local = isset($object->{$local_key}) ? (string) $object->{$local_key} : '';
     $english = isset($object->{$en_key}) ? (string) $object->{$en_key} : '';
 
-    return maca_menulist_get_bilingual_field($local, $english);
+    return maca_njuvs_get_bilingual_field($local, $english);
 }
 
 /**
  * @return bool
  */
-function maca_menulist_admin_show_local_content_fields() {
-    return !maca_menulist_site_locale_is_english();
+function maca_njuvs_admin_show_local_content_fields() {
+    return !maca_njuvs_site_locale_is_english();
 }
 
 /**
  * @param string $field_label Base field name, already translated.
  * @return string
  */
-function maca_menulist_admin_primary_field_label($field_label) {
-    if (maca_menulist_admin_show_local_content_fields()) {
-        return maca_menulist_bilingual_field_label($field_label, false);
+function maca_njuvs_admin_primary_field_label($field_label) {
+    if (maca_njuvs_admin_show_local_content_fields()) {
+        return maca_njuvs_bilingual_field_label($field_label, false);
     }
 
     return $field_label;
@@ -248,7 +248,7 @@ function maca_menulist_admin_primary_field_label($field_label) {
  * @param bool   $english     True for English field, false for local.
  * @return string
  */
-function maca_menulist_bilingual_field_label($field_label, $english = false) {
+function maca_njuvs_bilingual_field_label($field_label, $english = false) {
     if ($english) {
         /* translators: %s: field label */
         return sprintf(__('%s (English)', 'maca-njuvs'), $field_label);
@@ -258,7 +258,7 @@ function maca_menulist_bilingual_field_label($field_label, $english = false) {
         /* translators: 1: field label, 2: local language name */
         __('%1$s (%2$s)', 'maca-njuvs'),
         $field_label,
-        maca_menulist_get_local_language_name()
+        maca_njuvs_get_local_language_name()
     );
 }
 
@@ -267,7 +267,7 @@ function maca_menulist_bilingual_field_label($field_label, $english = false) {
  * @param string $english English value.
  * @return string
  */
-function maca_menulist_get_admin_bilingual_label($local, $english) {
+function maca_njuvs_get_admin_bilingual_label($local, $english) {
     $local = trim((string) $local);
     $english = trim((string) $english);
 
@@ -287,9 +287,9 @@ function maca_menulist_get_admin_bilingual_label($local, $english) {
  * @param string $english English value.
  * @return string
  */
-function maca_menulist_get_admin_content_label($local, $english) {
-    if (maca_menulist_admin_show_local_content_fields()) {
-        return maca_menulist_get_admin_bilingual_label($local, $english);
+function maca_njuvs_get_admin_content_label($local, $english) {
+    if (maca_njuvs_admin_show_local_content_fields()) {
+        return maca_njuvs_get_admin_bilingual_label($local, $english);
     }
 
     $local = trim((string) $local);
@@ -306,8 +306,8 @@ function maca_menulist_get_admin_content_label($local, $english) {
  * @param string $english English value.
  * @return bool
  */
-function maca_menulist_admin_content_field_missing($local, $english) {
-    if (maca_menulist_admin_show_local_content_fields()) {
+function maca_njuvs_admin_content_field_missing($local, $english) {
+    if (maca_njuvs_admin_show_local_content_fields()) {
         return trim((string) $local) === '' && trim((string) $english) === '';
     }
 

@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  *
  * @return string
  */
-function maca_menulist_admin_secret_mask() {
+function maca_njuvs_admin_secret_mask() {
     return '********';
 }
 
@@ -24,8 +24,8 @@ function maca_menulist_admin_secret_mask() {
  * @param bool $has_stored_value Whether a value exists in storage.
  * @return string
  */
-function maca_menulist_admin_secret_input_value($has_stored_value) {
-    return $has_stored_value ? maca_menulist_admin_secret_mask() : '';
+function maca_njuvs_admin_secret_input_value($has_stored_value) {
+    return $has_stored_value ? maca_njuvs_admin_secret_mask() : '';
 }
 
 /**
@@ -34,10 +34,10 @@ function maca_menulist_admin_secret_input_value($has_stored_value) {
  * @param string $submitted Raw POST value.
  * @return bool
  */
-function maca_menulist_admin_secret_submission_is_unchanged($submitted) {
+function maca_njuvs_admin_secret_submission_is_unchanged($submitted) {
     $submitted = trim((string) $submitted);
 
-    return $submitted === '' || $submitted === maca_menulist_admin_secret_mask();
+    return $submitted === '' || $submitted === maca_njuvs_admin_secret_mask();
 }
 
 /**
@@ -46,12 +46,12 @@ function maca_menulist_admin_secret_submission_is_unchanged($submitted) {
  * @param string $submitted Raw POST value.
  * @return bool
  */
-function maca_menulist_admin_secret_should_update($submitted) {
-    if (!function_exists('maca_menulist_user_can_manage_secrets') || !maca_menulist_user_can_manage_secrets()) {
+function maca_njuvs_admin_secret_should_update($submitted) {
+    if (!function_exists('maca_njuvs_user_can_manage_secrets') || !maca_njuvs_user_can_manage_secrets()) {
         return false;
     }
 
-    return !maca_menulist_admin_secret_submission_is_unchanged($submitted);
+    return !maca_njuvs_admin_secret_submission_is_unchanged($submitted);
 }
 
 /**
@@ -61,7 +61,7 @@ function maca_menulist_admin_secret_should_update($submitted) {
  * @param array<string, mixed> $extra            id, name, class, inputmode, etc.
  * @return array<string, mixed>
  */
-function maca_menulist_admin_secret_input_attrs($has_stored_value, $extra = array()) {
+function maca_njuvs_admin_secret_input_attrs($has_stored_value, $extra = array()) {
     $class = 'maca-admin-secret-field';
 
     if (isset($extra['class']) && is_string($extra['class']) && $extra['class'] !== '') {
@@ -75,7 +75,7 @@ function maca_menulist_admin_secret_input_attrs($has_stored_value, $extra = arra
         array(
             'type' => 'password',
             'class' => $class,
-            'value' => maca_menulist_admin_secret_input_value($has_stored_value),
+            'value' => maca_njuvs_admin_secret_input_value($has_stored_value),
             'autocomplete' => 'new-password',
         ),
         $extra
@@ -85,7 +85,7 @@ function maca_menulist_admin_secret_input_attrs($has_stored_value, $extra = arra
         $attrs['data-maca-secret-mask'] = '1';
     }
 
-    if (function_exists('maca_menulist_user_can_manage_secrets') && !maca_menulist_user_can_manage_secrets()) {
+    if (function_exists('maca_njuvs_user_can_manage_secrets') && !maca_njuvs_user_can_manage_secrets()) {
         $attrs['readonly'] = true;
         $attrs['aria-disabled'] = 'true';
         $attrs['class'] .= ' maca-admin-secret-field--locked';
@@ -95,12 +95,12 @@ function maca_menulist_admin_secret_input_attrs($has_stored_value, $extra = arra
 }
 
 /**
- * Render an attribute string for maca_menulist_admin_secret_input_attrs().
+ * Render an attribute string for maca_njuvs_admin_secret_input_attrs().
  *
  * @param array<string, mixed> $attrs Attributes.
  * @return string
  */
-function maca_menulist_admin_secret_field_attr_string($attrs) {
+function maca_njuvs_admin_secret_field_attr_string($attrs) {
     $parts = array();
 
     foreach ($attrs as $key => $value) {
@@ -125,7 +125,7 @@ function maca_menulist_admin_secret_field_attr_string($attrs) {
  * @param string $hook Admin page hook.
  * @return void
  */
-function maca_menulist_admin_enqueue_secret_fields_script($hook) {
+function maca_njuvs_admin_enqueue_secret_fields_script($hook) {
     if (!is_string($hook) || $hook === '' || strpos($hook, 'maca-njuvs') === false) {
         return;
     }
@@ -139,4 +139,4 @@ function maca_menulist_admin_enqueue_secret_fields_script($hook) {
     );
 }
 
-add_action('admin_enqueue_scripts', 'maca_menulist_admin_enqueue_secret_fields_script', 20);
+add_action('admin_enqueue_scripts', 'maca_njuvs_admin_enqueue_secret_fields_script', 20);

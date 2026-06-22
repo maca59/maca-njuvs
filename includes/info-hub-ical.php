@@ -9,16 +9,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-add_action('template_redirect', 'maca_menulist_handle_info_events_ical_request', 0);
-add_action('parse_request', 'maca_menulist_parse_request_info_events_ical', 0);
-add_filter('pre_handle_404', 'maca_menulist_prevent_info_events_ical_404', 10, 2);
+add_action('template_redirect', 'maca_njuvs_handle_info_events_ical_request', 0);
+add_action('parse_request', 'maca_njuvs_parse_request_info_events_ical', 0);
+add_filter('pre_handle_404', 'maca_njuvs_prevent_info_events_ical_404', 10, 2);
 
 /**
  * Fixed public feed filename.
  *
  * @return string
  */
-function maca_menulist_get_info_events_ics_filename() {
+function maca_njuvs_get_info_events_ics_filename() {
     return 'maca-njuvs-events.ics';
 }
 
@@ -27,8 +27,8 @@ function maca_menulist_get_info_events_ics_filename() {
  *
  * @return string
  */
-function maca_menulist_get_info_events_ics_url() {
-    return home_url('/' . maca_menulist_get_info_events_ics_filename());
+function maca_njuvs_get_info_events_ics_url() {
+    return home_url('/' . maca_njuvs_get_info_events_ics_filename());
 }
 
 /**
@@ -36,8 +36,8 @@ function maca_menulist_get_info_events_ics_url() {
  *
  * @return string
  */
-function maca_menulist_get_info_events_webcal_url() {
-    $url = maca_menulist_get_info_events_ics_url();
+function maca_njuvs_get_info_events_webcal_url() {
+    $url = maca_njuvs_get_info_events_ics_url();
 
     if (stripos($url, 'https://') === 0) {
         return 'webcal://' . substr($url, 8);
@@ -55,8 +55,8 @@ function maca_menulist_get_info_events_webcal_url() {
  *
  * @return string
  */
-function maca_menulist_get_info_events_google_calendar_url() {
-    return 'https://www.google.com/calendar/render?cid=' . rawurlencode(maca_menulist_get_info_events_webcal_url());
+function maca_njuvs_get_info_events_google_calendar_url() {
+    return 'https://www.google.com/calendar/render?cid=' . rawurlencode(maca_njuvs_get_info_events_webcal_url());
 }
 
 /**
@@ -64,12 +64,12 @@ function maca_menulist_get_info_events_google_calendar_url() {
  *
  * @return bool
  */
-function maca_menulist_is_info_events_ical_request() {
+function maca_njuvs_is_info_events_ical_request() {
     if (defined('MACA_NJUVS_EVENTS_ICS_REQUEST') && MACA_NJUVS_EVENTS_ICS_REQUEST) {
         return true;
     }
 
-    maca_menulist_bootstrap_info_events_ical_query_vars();
+    maca_njuvs_bootstrap_info_events_ical_query_vars();
 
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     if (isset($_GET['maca_njuvs_events_ics']) && sanitize_text_field(wp_unslash($_GET['maca_njuvs_events_ics'])) === '1') {
@@ -84,21 +84,21 @@ function maca_menulist_is_info_events_ical_request() {
  *
  * @return bool
  */
-function maca_menulist_bootstrap_info_events_ical_query_vars() {
+function maca_njuvs_bootstrap_info_events_ical_query_vars() {
     if ((string) get_query_var('maca_njuvs_events_ics') === '1') {
         return false;
     }
 
-    if (!function_exists('maca_menulist_request_path_matches_slug')) {
+    if (!function_exists('maca_njuvs_request_path_matches_slug')) {
         return false;
     }
 
     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
     $path = sanitize_text_field($request_uri);
-    $filename = maca_menulist_get_info_events_ics_filename();
+    $filename = maca_njuvs_get_info_events_ics_filename();
 
-    if (!maca_menulist_request_path_matches_slug($path, $filename)) {
+    if (!maca_njuvs_request_path_matches_slug($path, $filename)) {
         return false;
     }
 
@@ -118,9 +118,9 @@ function maca_menulist_bootstrap_info_events_ical_query_vars() {
  * @param mixed $wp Unused parse_request argument.
  * @return void
  */
-function maca_menulist_parse_request_info_events_ical($wp) {
+function maca_njuvs_parse_request_info_events_ical($wp) {
     unset($wp);
-    maca_menulist_bootstrap_info_events_ical_query_vars();
+    maca_njuvs_bootstrap_info_events_ical_query_vars();
 }
 
 /**
@@ -128,7 +128,7 @@ function maca_menulist_parse_request_info_events_ical($wp) {
  * @param WP_Query  $wp_query Main query instance.
  * @return bool|null
  */
-function maca_menulist_prevent_info_events_ical_404($preempt, $wp_query) {
+function maca_njuvs_prevent_info_events_ical_404($preempt, $wp_query) {
     if ($preempt) {
         return $preempt;
     }
@@ -141,7 +141,7 @@ function maca_menulist_prevent_info_events_ical_404($preempt, $wp_query) {
         return true;
     }
 
-    if (maca_menulist_bootstrap_info_events_ical_query_vars()) {
+    if (maca_njuvs_bootstrap_info_events_ical_query_vars()) {
         return true;
     }
 
@@ -153,8 +153,8 @@ function maca_menulist_prevent_info_events_ical_404($preempt, $wp_query) {
  *
  * @return void
  */
-function maca_menulist_handle_info_events_ical_request() {
-    if (!maca_menulist_is_info_events_ical_request()) {
+function maca_njuvs_handle_info_events_ical_request() {
+    if (!maca_njuvs_is_info_events_ical_request()) {
         return;
     }
 
@@ -167,8 +167,8 @@ function maca_menulist_handle_info_events_ical_request() {
         define('MACA_NJUVS_EVENTS_ICS_REQUEST', true);
     }
 
-    $body = maca_menulist_info_hub_build_ical_feed();
-    $filename = maca_menulist_get_info_events_ics_filename();
+    $body = maca_njuvs_info_hub_build_ical_feed();
+    $filename = maca_njuvs_get_info_events_ics_filename();
 
     nocache_headers();
     header('Content-Type: text/calendar; charset=utf-8');
@@ -176,8 +176,7 @@ function maca_menulist_handle_info_events_ical_request() {
     header('X-Robots-Tag: noindex, nofollow', true);
     header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
-    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo $body;
+    echo wp_kses($body, array());
     exit;
 }
 
@@ -187,7 +186,7 @@ function maca_menulist_handle_info_events_ical_request() {
  * @param string $text Raw text.
  * @return string
  */
-function maca_menulist_info_hub_ical_escape($text) {
+function maca_njuvs_info_hub_ical_escape($text) {
     $text = wp_strip_all_tags((string) $text);
     $text = str_replace('\\', '\\\\', $text);
     $text = str_replace("\r\n", '\n', $text);
@@ -205,7 +204,7 @@ function maca_menulist_info_hub_ical_escape($text) {
  * @param string $line Line content without CRLF.
  * @return string
  */
-function maca_menulist_info_hub_ical_fold_line($line) {
+function maca_njuvs_info_hub_ical_fold_line($line) {
     $line = (string) $line;
 
     if (strlen($line) <= 75) {
@@ -240,7 +239,7 @@ function maca_menulist_info_hub_ical_fold_line($line) {
  * @param int|null $timestamp Unix timestamp.
  * @return string
  */
-function maca_menulist_info_hub_ical_dtstamp($timestamp = null) {
+function maca_njuvs_info_hub_ical_dtstamp($timestamp = null) {
     $timestamp = $timestamp === null ? time() : (int) $timestamp;
 
     return gmdate('Ymd\THis\Z', $timestamp);
@@ -252,7 +251,7 @@ function maca_menulist_info_hub_ical_dtstamp($timestamp = null) {
  * @param object $occurrence Occurrence object.
  * @return array{0: string, 1: string}
  */
-function maca_menulist_info_hub_ical_datetime_bounds($occurrence) {
+function maca_njuvs_info_hub_ical_datetime_bounds($occurrence) {
     if (!empty($occurrence->event->is_all_day)) {
         $start_date = substr((string) $occurrence->start_at, 0, 10);
         $end_date = substr((string) $occurrence->end_at, 0, 10);
@@ -264,16 +263,16 @@ function maca_menulist_info_hub_ical_datetime_bounds($occurrence) {
         $end_exclusive = $end_date;
 
         if ($end_exclusive <= $start_date) {
-            $start_ts = function_exists('maca_menulist_wp_date_to_timestamp')
-                ? maca_menulist_wp_date_to_timestamp($start_date)
+            $start_ts = function_exists('maca_njuvs_wp_date_to_timestamp')
+                ? maca_njuvs_wp_date_to_timestamp($start_date)
                 : strtotime($start_date . ' 12:00:00');
 
             if ($start_ts !== false) {
                 $end_exclusive = gmdate('Y-m-d', $start_ts + DAY_IN_SECONDS);
             }
         } else {
-            $end_ts = function_exists('maca_menulist_wp_date_to_timestamp')
-                ? maca_menulist_wp_date_to_timestamp($end_date)
+            $end_ts = function_exists('maca_njuvs_wp_date_to_timestamp')
+                ? maca_njuvs_wp_date_to_timestamp($end_date)
                 : strtotime($end_date . ' 12:00:00');
 
             if ($end_ts !== false) {
@@ -287,11 +286,11 @@ function maca_menulist_info_hub_ical_datetime_bounds($occurrence) {
         );
     }
 
-    $start_ts = function_exists('maca_menulist_wp_mysql_to_timestamp')
-        ? maca_menulist_wp_mysql_to_timestamp((string) $occurrence->start_at)
+    $start_ts = function_exists('maca_njuvs_wp_mysql_to_timestamp')
+        ? maca_njuvs_wp_mysql_to_timestamp((string) $occurrence->start_at)
         : strtotime((string) $occurrence->start_at);
-    $end_ts = function_exists('maca_menulist_wp_mysql_to_timestamp')
-        ? maca_menulist_wp_mysql_to_timestamp((string) $occurrence->end_at)
+    $end_ts = function_exists('maca_njuvs_wp_mysql_to_timestamp')
+        ? maca_njuvs_wp_mysql_to_timestamp((string) $occurrence->end_at)
         : strtotime((string) $occurrence->end_at);
 
     if ($start_ts === false || $end_ts === false) {
@@ -314,7 +313,7 @@ function maca_menulist_info_hub_ical_datetime_bounds($occurrence) {
  * @param object $occurrence Occurrence object.
  * @return string
  */
-function maca_menulist_info_hub_ical_occurrence_uid($occurrence) {
+function maca_njuvs_info_hub_ical_occurrence_uid($occurrence) {
     $host = wp_parse_url(home_url(), PHP_URL_HOST);
 
     if (!is_string($host) || $host === '') {
@@ -331,12 +330,12 @@ function maca_menulist_info_hub_ical_occurrence_uid($occurrence) {
  *
  * @return string
  */
-function maca_menulist_info_hub_build_ical_feed() {
+function maca_njuvs_info_hub_build_ical_feed() {
     $range_start = wp_date('Y-m-d');
-    $range_end = function_exists('maca_menulist_wp_now_modify')
-        ? maca_menulist_wp_now_modify('+12 months', 'Y-m-d')
+    $range_end = function_exists('maca_njuvs_wp_now_modify')
+        ? maca_njuvs_wp_now_modify('+12 months', 'Y-m-d')
         : wp_date('Y-m-d', strtotime('+12 months'));
-    $occurrences = maca_menulist_info_hub_get_occurrences(
+    $occurrences = maca_njuvs_info_hub_get_occurrences(
         array(
             'range_start' => $range_start,
             'range_end' => $range_end,
@@ -359,30 +358,30 @@ function maca_menulist_info_hub_build_ical_feed() {
         'METHOD:PUBLISH',
         'REFRESH-INTERVAL;VALUE=DURATION:PT1H',
         'X-PUBLISHED-TTL:PT1H',
-        'NAME:' . maca_menulist_info_hub_ical_escape($calendar_name),
-        'X-WR-CALNAME:' . maca_menulist_info_hub_ical_escape($calendar_name),
+        'NAME:' . maca_njuvs_info_hub_ical_escape($calendar_name),
+        'X-WR-CALNAME:' . maca_njuvs_info_hub_ical_escape($calendar_name),
     );
 
     $tz = wp_timezone_string();
 
     if ($tz !== '') {
-        $lines[] = 'X-WR-TIMEZONE:' . maca_menulist_info_hub_ical_escape($tz);
+        $lines[] = 'X-WR-TIMEZONE:' . maca_njuvs_info_hub_ical_escape($tz);
     }
 
     foreach ($occurrences as $occurrence) {
         $event = $occurrence->event;
-        $summary = maca_menulist_info_hub_get_event_title($event);
-        $description = maca_menulist_info_hub_get_event_description($event);
-        $location = maca_menulist_info_hub_get_event_location($event);
-        list($dtstart, $dtend) = maca_menulist_info_hub_ical_datetime_bounds($occurrence);
+        $summary = maca_njuvs_info_hub_get_event_title($event);
+        $description = maca_njuvs_info_hub_get_event_description($event);
+        $location = maca_njuvs_info_hub_get_event_location($event);
+        list($dtstart, $dtend) = maca_njuvs_info_hub_ical_datetime_bounds($occurrence);
 
         if ($dtstart === '' || $dtend === '') {
             continue;
         }
 
         $updated_ts = !empty($event->updated_at)
-            ? (function_exists('maca_menulist_wp_mysql_to_timestamp')
-                ? maca_menulist_wp_mysql_to_timestamp((string) $event->updated_at)
+            ? (function_exists('maca_njuvs_wp_mysql_to_timestamp')
+                ? maca_njuvs_wp_mysql_to_timestamp((string) $event->updated_at)
                 : strtotime((string) $event->updated_at))
             : time();
 
@@ -391,8 +390,8 @@ function maca_menulist_info_hub_build_ical_feed() {
         }
 
         $created_ts = !empty($event->created_at)
-            ? (function_exists('maca_menulist_wp_mysql_to_timestamp')
-                ? maca_menulist_wp_mysql_to_timestamp((string) $event->created_at)
+            ? (function_exists('maca_njuvs_wp_mysql_to_timestamp')
+                ? maca_njuvs_wp_mysql_to_timestamp((string) $event->created_at)
                 : strtotime((string) $event->created_at))
             : $updated_ts;
 
@@ -401,23 +400,23 @@ function maca_menulist_info_hub_build_ical_feed() {
         }
 
         $lines[] = 'BEGIN:VEVENT';
-        $lines[] = 'UID:' . maca_menulist_info_hub_ical_occurrence_uid($occurrence);
-        $lines[] = 'DTSTAMP:' . maca_menulist_info_hub_ical_dtstamp($updated_ts);
-        $lines[] = 'CREATED:' . maca_menulist_info_hub_ical_dtstamp($created_ts);
-        $lines[] = 'LAST-MODIFIED:' . maca_menulist_info_hub_ical_dtstamp($updated_ts);
+        $lines[] = 'UID:' . maca_njuvs_info_hub_ical_occurrence_uid($occurrence);
+        $lines[] = 'DTSTAMP:' . maca_njuvs_info_hub_ical_dtstamp($updated_ts);
+        $lines[] = 'CREATED:' . maca_njuvs_info_hub_ical_dtstamp($created_ts);
+        $lines[] = 'LAST-MODIFIED:' . maca_njuvs_info_hub_ical_dtstamp($updated_ts);
         $lines[] = 'SEQUENCE:0';
         $lines[] = 'STATUS:CONFIRMED';
         $lines[] = 'TRANSP:OPAQUE';
         $lines[] = $dtstart;
         $lines[] = $dtend;
-        $lines[] = 'SUMMARY:' . maca_menulist_info_hub_ical_escape($summary);
+        $lines[] = 'SUMMARY:' . maca_njuvs_info_hub_ical_escape($summary);
 
         if ($description !== '') {
-            $lines[] = 'DESCRIPTION:' . maca_menulist_info_hub_ical_escape($description);
+            $lines[] = 'DESCRIPTION:' . maca_njuvs_info_hub_ical_escape($description);
         }
 
         if ($location !== '') {
-            $lines[] = 'LOCATION:' . maca_menulist_info_hub_ical_escape($location);
+            $lines[] = 'LOCATION:' . maca_njuvs_info_hub_ical_escape($location);
         }
 
         $lines[] = 'URL:' . esc_url_raw(home_url('/'));
@@ -429,10 +428,47 @@ function maca_menulist_info_hub_build_ical_feed() {
     $output = '';
 
     foreach ($lines as $line) {
-        $output .= maca_menulist_info_hub_ical_fold_line($line) . "\r\n";
+        $output .= maca_njuvs_info_hub_ical_fold_line($line) . "\r\n";
     }
 
     return $output;
+}
+
+/**
+ * Allowed HTML for calendar subscription markup.
+ *
+ * @return array<string, array<string, bool>>
+ */
+function maca_njuvs_info_hub_get_calendar_subscribe_allowed_html() {
+    return array(
+        'div'    => array(
+            'class' => true,
+            'id'    => true,
+        ),
+        'p'      => array('class' => true),
+        'h3'     => array('class' => true),
+        'ol'     => array('class' => true),
+        'li'     => array(),
+        'a'      => array(
+            'class'  => true,
+            'href'   => true,
+            'target' => true,
+            'rel'    => true,
+        ),
+        'button' => array(
+            'type'           => true,
+            'class'          => true,
+            'data-feed-url'  => true,
+            'aria-haspopup'  => true,
+            'aria-controls'  => true,
+        ),
+        'dialog' => array(
+            'class' => true,
+            'id'    => true,
+            'open'  => true,
+        ),
+        'form'   => array('method' => true),
+    );
 }
 
 /**
@@ -441,7 +477,7 @@ function maca_menulist_info_hub_build_ical_feed() {
  * @param array<string, mixed> $args Optional args.
  * @return string
  */
-function maca_menulist_render_info_calendar_subscribe($args = array()) {
+function maca_njuvs_render_info_calendar_subscribe($args = array()) {
     $args = is_array($args) ? $args : array();
     $preview = !empty($args['preview']);
     $compact = !empty($args['compact']);
@@ -454,11 +490,11 @@ function maca_menulist_render_info_calendar_subscribe($args = array()) {
         return '';
     }
 
-    maca_menulist_info_hub_enqueue_assets();
+    maca_njuvs_info_hub_enqueue_assets();
 
-    $ics_url = maca_menulist_get_info_events_ics_url();
-    $webcal_url = maca_menulist_get_info_events_webcal_url();
-    $google_url = maca_menulist_get_info_events_google_calendar_url();
+    $ics_url = maca_njuvs_get_info_events_ics_url();
+    $webcal_url = maca_njuvs_get_info_events_webcal_url();
+    $google_url = maca_njuvs_get_info_events_google_calendar_url();
     $uid = 'maca-info-subscribe-' . wp_unique_id();
 
     ob_start();
@@ -514,38 +550,6 @@ function maca_menulist_render_info_calendar_subscribe($args = array()) {
             </div>
         <?php endif; ?>
     </div>
-    <script>
-    (function() {
-        var root = document.getElementById(<?php echo wp_json_encode($uid); ?>);
-        if (!root) { return; }
-
-        var openBtn = root.querySelector('.maca-info-subscribe-open');
-        var dialog = root.querySelector('.maca-info-calendar-subscribe-dialog');
-
-        if (openBtn && dialog) {
-            openBtn.addEventListener('click', function() {
-                if (typeof dialog.showModal === 'function') {
-                    dialog.showModal();
-                } else {
-                    dialog.setAttribute('open', 'open');
-                }
-            });
-        }
-
-        var copyBtn = root.querySelector('.maca-info-subscribe-copy');
-        if (!copyBtn) { return; }
-        copyBtn.addEventListener('click', function() {
-            var url = copyBtn.getAttribute('data-feed-url') || '';
-            if (!url) { return; }
-            var copied = <?php echo wp_json_encode(__('Feed URL copied.', 'maca-njuvs')); ?>;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(function() { window.alert(copied); }).catch(function() { window.prompt(copied, url); });
-            } else {
-                window.prompt(copied, url);
-            }
-        });
-    })();
-    </script>
     <?php
     return (string) ob_get_clean();
 }
@@ -555,17 +559,17 @@ function maca_menulist_render_info_calendar_subscribe($args = array()) {
  *
  * @return string
  */
-function maca_menulist_info_hub_shortcode_calendar_subscribe() {
-    return maca_menulist_render_info_calendar_subscribe();
+function maca_njuvs_info_hub_shortcode_calendar_subscribe() {
+    return maca_njuvs_render_info_calendar_subscribe();
 }
 
-add_action('init', 'maca_menulist_info_hub_register_ical_shortcode');
+add_action('init', 'maca_njuvs_info_hub_register_ical_shortcode');
 
 /**
  * Register subscribe shortcode.
  *
  * @return void
  */
-function maca_menulist_info_hub_register_ical_shortcode() {
-    add_shortcode('maca_njuvs_calendar_subscribe', 'maca_menulist_info_hub_shortcode_calendar_subscribe');
+function maca_njuvs_info_hub_register_ical_shortcode() {
+    add_shortcode('maca_njuvs_calendar_subscribe', 'maca_njuvs_info_hub_shortcode_calendar_subscribe');
 }

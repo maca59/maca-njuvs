@@ -44,6 +44,11 @@ Under *maca Njuvs → News* oppretter og redigerer du nyheter som vises på nett
 - **Published** — vises på nettstedet (når modulen er aktivert)
 - **Archived** — skjult fra nettstedet, men lagret i admin
 
+### Bildetips
+
+- Bruk **Select image** — ikke lim inn bilder i utdrag eller innholdsfelt.
+- Komprimer store bilder (helst under 500 KB). Utvidelsen varsler hvis bildet er stort; svært store filer kan gi feilen *Please reduce the amount of data* ved lagring.
+
 ---
 
 ## Arrangementer
@@ -63,7 +68,6 @@ Under *maca Njuvs → Events* administrerer du kommende og gjentakende arrangeme
 | **Start / End** | Dato og tid |
 | **Recurrence** | Ingen, Daglig, Ukentlig eller Månedlig med intervall, ukedager og sluttdato eller antall forekomster |
 | **Active** | Vis på nettstedet |
-| **Table booking** | Vis bestill-bord-knapp (hvis maca Menulist-booking er tilgjengelig) |
 | **Publishing** | Nettsted, Facebook og Instagram |
 
 ### Unntak i gjentakende serier
@@ -193,7 +197,6 @@ Originale innlegg slettes ikke — importen oppretter nye nyheter i maca Njuvs.
 - **Utløpsdato** — nyheter kan skjules automatisk
 - **Gjentakende arrangementer** — daglige, ukentlige og månedlige serier med unntak
 - **Sosial publisering** — valgfri deling til Facebook Page og Instagram Business ved lagring (Meta-app kreves)
-- **Bordbestilling** — arrangementer kan vise bestill-bord-knapp hvis maca Menulist er installert
 
 ---
 

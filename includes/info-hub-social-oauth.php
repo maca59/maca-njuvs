@@ -9,20 +9,20 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-add_action('admin_init', 'maca_menulist_info_hub_meta_oauth_admin_init', 5);
-add_action('rest_api_init', 'maca_menulist_info_hub_meta_oauth_register_rest_routes');
+add_action('admin_init', 'maca_njuvs_info_hub_meta_oauth_admin_init', 5);
+add_action('rest_api_init', 'maca_njuvs_info_hub_meta_oauth_register_rest_routes');
 
 /**
  * Handle OAuth redirects and callbacks in admin.
  *
  * @return void
  */
-function maca_menulist_info_hub_meta_oauth_admin_init() {
-    if (!is_admin() || !maca_menulist_user_can_manage_secrets()) {
+function maca_njuvs_info_hub_meta_oauth_admin_init() {
+    if (!is_admin() || !maca_njuvs_user_can_manage_secrets()) {
         return;
     }
 
-    if (!function_exists('maca_menulist_info_hub_admin_page')) {
+    if (!function_exists('maca_njuvs_info_hub_admin_page')) {
         return;
     }
 
@@ -36,12 +36,12 @@ function maca_menulist_info_hub_meta_oauth_admin_init() {
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     $page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
 
-    if ($page !== maca_menulist_info_hub_admin_page()) {
+    if ($page !== maca_njuvs_info_hub_admin_page()) {
         return;
     }
 
     if ($oauth === 'start') {
-        maca_menulist_info_hub_meta_oauth_start();
+        maca_njuvs_info_hub_meta_oauth_start();
     }
 }
 
@@ -50,13 +50,13 @@ function maca_menulist_info_hub_meta_oauth_admin_init() {
  *
  * @return void
  */
-function maca_menulist_info_hub_meta_oauth_register_rest_routes() {
+function maca_njuvs_info_hub_meta_oauth_register_rest_routes() {
     register_rest_route(
         'maca-njuvs/v1',
         '/info-hub/meta-oauth/callback',
         array(
             'methods'             => 'GET',
-            'callback'            => 'maca_menulist_info_hub_meta_oauth_rest_callback',
+            'callback'            => 'maca_njuvs_info_hub_meta_oauth_rest_callback',
             'permission_callback' => '__return_true',
         )
     );
@@ -67,8 +67,8 @@ function maca_menulist_info_hub_meta_oauth_register_rest_routes() {
  *
  * @return void
  */
-function maca_menulist_info_hub_meta_oauth_rest_callback() {
-    maca_menulist_info_hub_meta_oauth_callback();
+function maca_njuvs_info_hub_meta_oauth_rest_callback() {
+    maca_njuvs_info_hub_meta_oauth_callback();
 }
 
 /**
@@ -77,7 +77,7 @@ function maca_menulist_info_hub_meta_oauth_rest_callback() {
  * @param int $user_id User ID.
  * @return string
  */
-function maca_menulist_info_hub_meta_oauth_state_transient_key($user_id) {
+function maca_njuvs_info_hub_meta_oauth_state_transient_key($user_id) {
     return 'maca_njuvs_meta_oauth_state_' . absint($user_id);
 }
 
@@ -87,7 +87,7 @@ function maca_menulist_info_hub_meta_oauth_state_transient_key($user_id) {
  * @param string $state OAuth state.
  * @return string
  */
-function maca_menulist_info_hub_meta_oauth_user_lookup_transient_key($state) {
+function maca_njuvs_info_hub_meta_oauth_user_lookup_transient_key($state) {
     return 'maca_njuvs_meta_oauth_uid_' . hash('sha256', 'maca_njuvs_meta_oauth|' . (string) $state);
 }
 
@@ -96,18 +96,18 @@ function maca_menulist_info_hub_meta_oauth_user_lookup_transient_key($state) {
  *
  * @return void
  */
-function maca_menulist_info_hub_meta_oauth_start() {
-    if (!maca_menulist_info_hub_meta_has_app_credentials()) {
+function maca_njuvs_info_hub_meta_oauth_start() {
+    if (!maca_njuvs_info_hub_meta_has_app_credentials()) {
         wp_die(esc_html__('Enter Meta App ID and App Secret first.', 'maca-njuvs'));
     }
 
     $user_id = get_current_user_id();
     $state = wp_create_nonce('maca_njuvs_meta_oauth');
 
-    set_transient(maca_menulist_info_hub_meta_oauth_state_transient_key($user_id), $state, 15 * MINUTE_IN_SECONDS);
-    set_transient(maca_menulist_info_hub_meta_oauth_user_lookup_transient_key($state), $user_id, 15 * MINUTE_IN_SECONDS);
+    set_transient(maca_njuvs_info_hub_meta_oauth_state_transient_key($user_id), $state, 15 * MINUTE_IN_SECONDS);
+    set_transient(maca_njuvs_info_hub_meta_oauth_user_lookup_transient_key($state), $user_id, 15 * MINUTE_IN_SECONDS);
 
-    $url = maca_menulist_info_hub_meta_oauth_authorize_url($state);
+    $url = maca_njuvs_info_hub_meta_oauth_authorize_url($state);
 
     nocache_headers();
     // Meta OAuth requires an external redirect; wp_safe_redirect() blocks off-site hosts.
@@ -121,16 +121,16 @@ function maca_menulist_info_hub_meta_oauth_start() {
  * @param string $state OAuth state nonce.
  * @return string
  */
-function maca_menulist_info_hub_meta_oauth_authorize_url($state) {
+function maca_njuvs_info_hub_meta_oauth_authorize_url($state) {
     $params = array(
-        'client_id' => maca_menulist_info_hub_meta_get_app_id(),
-        'redirect_uri' => maca_menulist_info_hub_meta_oauth_redirect_uri(),
+        'client_id' => maca_njuvs_info_hub_meta_get_app_id(),
+        'redirect_uri' => maca_njuvs_info_hub_meta_oauth_redirect_uri(),
         'state' => (string) $state,
-        'scope' => maca_menulist_info_hub_meta_oauth_scopes(),
+        'scope' => maca_njuvs_info_hub_meta_oauth_scopes(),
         'response_type' => 'code',
     );
 
-    $base = 'https://www.facebook.com/' . MACA_MENULIST_INFO_HUB_META_GRAPH_VERSION . '/dialog/oauth';
+    $base = 'https://www.facebook.com/' . MACA_NJUVS_META_GRAPH_VERSION . '/dialog/oauth';
 
     return $base . '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
 }
@@ -140,7 +140,7 @@ function maca_menulist_info_hub_meta_oauth_authorize_url($state) {
  *
  * @return void
  */
-function maca_menulist_info_hub_meta_oauth_callback() {
+function maca_njuvs_info_hub_meta_oauth_callback() {
     // phpcs:disable WordPress.Security.NonceVerification.Recommended
     $state = isset($_GET['state']) ? sanitize_text_field(wp_unslash($_GET['state'])) : '';
     $code = isset($_GET['code']) ? sanitize_text_field(wp_unslash($_GET['code'])) : '';
@@ -150,7 +150,7 @@ function maca_menulist_info_hub_meta_oauth_callback() {
     $user_id = 0;
 
     if ($state !== '') {
-        $user_id = (int) get_transient(maca_menulist_info_hub_meta_oauth_user_lookup_transient_key($state));
+        $user_id = (int) get_transient(maca_njuvs_info_hub_meta_oauth_user_lookup_transient_key($state));
     }
 
     if ($user_id <= 0 && is_user_logged_in()) {
@@ -167,31 +167,31 @@ function maca_menulist_info_hub_meta_oauth_callback() {
         !$user
         || (
             !user_can($user_id, 'manage_options')
-            && !user_can($user_id, MACA_MENULIST_CAP_MANAGE_SECRETS)
+            && !user_can($user_id, MACA_NJUVS_CAP_MANAGE_SECRETS)
         )
     ) {
         wp_die(esc_html__('You do not have permission to connect Facebook for this site.', 'maca-njuvs'));
     }
 
-    $expected = get_transient(maca_menulist_info_hub_meta_oauth_state_transient_key($user_id));
+    $expected = get_transient(maca_njuvs_info_hub_meta_oauth_state_transient_key($user_id));
 
     if ($expected === false || $state === '' || !hash_equals((string) $expected, $state)) {
         wp_die(esc_html__('Invalid OAuth state. Try connecting again.', 'maca-njuvs'));
     }
 
-    delete_transient(maca_menulist_info_hub_meta_oauth_state_transient_key($user_id));
-    delete_transient(maca_menulist_info_hub_meta_oauth_user_lookup_transient_key($state));
+    delete_transient(maca_njuvs_info_hub_meta_oauth_state_transient_key($user_id));
+    delete_transient(maca_njuvs_info_hub_meta_oauth_user_lookup_transient_key($state));
 
     if ($code === '') {
         wp_die(esc_html($error !== '' ? $error : __('Facebook authorization was cancelled.', 'maca-njuvs')));
     }
 
-    $token_result = maca_menulist_info_hub_meta_graph_request(
+    $token_result = maca_njuvs_info_hub_meta_graph_request(
         'oauth/access_token',
         array(
-            'client_id' => maca_menulist_info_hub_meta_get_app_id(),
-            'client_secret' => maca_menulist_info_hub_meta_get_app_secret(),
-            'redirect_uri' => maca_menulist_info_hub_meta_oauth_redirect_uri(),
+            'client_id' => maca_njuvs_info_hub_meta_get_app_id(),
+            'client_secret' => maca_njuvs_info_hub_meta_get_app_secret(),
+            'redirect_uri' => maca_njuvs_info_hub_meta_oauth_redirect_uri(),
             'code' => $code,
         ),
         'GET'
@@ -203,12 +203,12 @@ function maca_menulist_info_hub_meta_oauth_callback() {
 
     $short_token = (string) $token_result['body']['access_token'];
 
-    $long_result = maca_menulist_info_hub_meta_graph_request(
+    $long_result = maca_njuvs_info_hub_meta_graph_request(
         'oauth/access_token',
         array(
             'grant_type' => 'fb_exchange_token',
-            'client_id' => maca_menulist_info_hub_meta_get_app_id(),
-            'client_secret' => maca_menulist_info_hub_meta_get_app_secret(),
+            'client_id' => maca_njuvs_info_hub_meta_get_app_id(),
+            'client_secret' => maca_njuvs_info_hub_meta_get_app_secret(),
             'fb_exchange_token' => $short_token,
         ),
         'GET'
@@ -221,13 +221,13 @@ function maca_menulist_info_hub_meta_oauth_callback() {
     $user_token = (string) $long_result['body']['access_token'];
     $expires_in = isset($long_result['body']['expires_in']) ? (int) $long_result['body']['expires_in'] : 0;
 
-    maca_menulist_info_hub_meta_set('user_token', maca_menulist_info_hub_encrypt_secret($user_token));
+    maca_njuvs_info_hub_meta_set('user_token', maca_njuvs_info_hub_encrypt_secret($user_token));
 
     if ($expires_in > 0) {
-        maca_menulist_info_hub_meta_set('token_expires', time() + $expires_in);
+        maca_njuvs_info_hub_meta_set('token_expires', time() + $expires_in);
     }
 
-    $pages_result = maca_menulist_info_hub_meta_graph_request(
+    $pages_result = maca_njuvs_info_hub_meta_graph_request(
         'me/accounts',
         array(
             'fields' => 'id,name,access_token,instagram_business_account{id,username}',
@@ -253,7 +253,7 @@ function maca_menulist_info_hub_meta_oauth_callback() {
     }
 
     wp_safe_redirect(
-        maca_menulist_info_hub_admin_url(
+        maca_njuvs_info_hub_admin_url(
             'social',
             array(
                 'maca_meta_oauth' => 'select_page',
@@ -268,15 +268,15 @@ function maca_menulist_info_hub_meta_oauth_callback() {
  *
  * @return bool
  */
-function maca_menulist_info_hub_meta_refresh_page_token() {
-    $page_id = (string) maca_menulist_info_hub_meta_get('page_id', '');
-    $user_token = maca_menulist_info_hub_meta_get_user_token();
+function maca_njuvs_info_hub_meta_refresh_page_token() {
+    $page_id = (string) maca_njuvs_info_hub_meta_get('page_id', '');
+    $user_token = maca_njuvs_info_hub_meta_get_user_token();
 
     if ($page_id === '' || $user_token === '') {
         return false;
     }
 
-    $pages_result = maca_menulist_info_hub_meta_graph_request(
+    $pages_result = maca_njuvs_info_hub_meta_graph_request(
         'me/accounts',
         array(
             'fields' => 'id,name,access_token,instagram_business_account{id,username}',
@@ -295,7 +295,7 @@ function maca_menulist_info_hub_meta_refresh_page_token() {
             continue;
         }
 
-        maca_menulist_info_hub_meta_store_page_connection($page);
+        maca_njuvs_info_hub_meta_store_page_connection($page);
         return true;
     }
 
@@ -308,14 +308,14 @@ function maca_menulist_info_hub_meta_refresh_page_token() {
  * @param array<string, mixed> $page Page payload from Graph API.
  * @return void
  */
-function maca_menulist_info_hub_meta_store_page_connection($page) {
+function maca_njuvs_info_hub_meta_store_page_connection($page) {
     $page_id = (string) ($page['id'] ?? '');
     $page_name = (string) ($page['name'] ?? '');
     $page_token = (string) ($page['access_token'] ?? '');
 
-    maca_menulist_info_hub_meta_set('page_id', $page_id);
-    maca_menulist_info_hub_meta_set('page_name', $page_name);
-    maca_menulist_info_hub_meta_set('page_token', maca_menulist_info_hub_encrypt_secret($page_token));
+    maca_njuvs_info_hub_meta_set('page_id', $page_id);
+    maca_njuvs_info_hub_meta_set('page_name', $page_name);
+    maca_njuvs_info_hub_meta_set('page_token', maca_njuvs_info_hub_encrypt_secret($page_token));
 
     $ig_id = '';
     $ig_username = '';
@@ -325,8 +325,8 @@ function maca_menulist_info_hub_meta_store_page_connection($page) {
         $ig_username = (string) ($page['instagram_business_account']['username'] ?? '');
     }
 
-    maca_menulist_info_hub_meta_set('ig_user_id', $ig_id);
-    maca_menulist_info_hub_meta_set('ig_username', $ig_username);
+    maca_njuvs_info_hub_meta_set('ig_user_id', $ig_id);
+    maca_njuvs_info_hub_meta_set('ig_username', $ig_username);
 }
 
 /**
@@ -335,7 +335,7 @@ function maca_menulist_info_hub_meta_store_page_connection($page) {
  * @param string $page_id Facebook page ID.
  * @return bool
  */
-function maca_menulist_info_hub_meta_select_page($page_id) {
+function maca_njuvs_info_hub_meta_select_page($page_id) {
     $pages = get_transient('maca_njuvs_meta_pages_' . get_current_user_id());
 
     if (!is_array($pages)) {
@@ -349,7 +349,7 @@ function maca_menulist_info_hub_meta_select_page($page_id) {
             continue;
         }
 
-        maca_menulist_info_hub_meta_store_page_connection($page);
+        maca_njuvs_info_hub_meta_store_page_connection($page);
         delete_transient('maca_njuvs_meta_pages_' . get_current_user_id());
         return true;
     }
@@ -362,7 +362,7 @@ function maca_menulist_info_hub_meta_select_page($page_id) {
  *
  * @return array{facebook: string, instagram: string}
  */
-function maca_menulist_info_hub_meta_test_publish() {
+function maca_njuvs_info_hub_meta_test_publish() {
     $caption = sprintf(
         /* translators: %s: site name */
         __('Test post from %s via maca Njuvs.', 'maca-njuvs'),
@@ -374,18 +374,18 @@ function maca_menulist_info_hub_meta_test_publish() {
         'instagram' => '',
     );
 
-    $fb = maca_menulist_info_hub_publish_facebook($caption, '');
+    $fb = maca_njuvs_info_hub_publish_facebook($caption, '');
     $results['facebook'] = $fb['ok']
         ? __('Facebook test post published.', 'maca-njuvs')
         : $fb['error'];
 
-    if (maca_menulist_info_hub_meta_has_instagram()) {
-        $image = maca_menulist_info_hub_meta_get('test_image_url', '');
+    if (maca_njuvs_info_hub_meta_has_instagram()) {
+        $image = maca_njuvs_info_hub_meta_get('test_image_url', '');
 
         if ($image === '') {
             $results['instagram'] = __('Add a test image URL in Social settings to test Instagram.', 'maca-njuvs');
         } else {
-            $ig = maca_menulist_info_hub_publish_instagram($caption, $image);
+            $ig = maca_njuvs_info_hub_publish_instagram($caption, $image);
             $results['instagram'] = $ig['ok']
                 ? __('Instagram test post published.', 'maca-njuvs')
                 : $ig['error'];

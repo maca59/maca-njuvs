@@ -248,6 +248,95 @@
         input.value = '1';
     }
 
+    function createProgressController(fillElement) {
+        var display = 0;
+        var ceiling = 12;
+        var running = false;
+        var rafId = null;
+        var lastTs = 0;
+
+        function render() {
+            if (!fillElement) {
+                return;
+            }
+
+            fillElement.style.width = Math.max(0, Math.min(100, display)).toFixed(2) + '%';
+        }
+
+        function frame(ts) {
+            if (!running) {
+                return;
+            }
+
+            if (!lastTs) {
+                lastTs = ts;
+            }
+
+            var delta = Math.min(120, ts - lastTs);
+            lastTs = ts;
+
+            if (display < ceiling) {
+                var gap = ceiling - display;
+                var speed = Math.min(14, Math.max(3, gap * 0.12));
+                display = Math.min(ceiling, display + (speed * delta) / 1000);
+                render();
+            }
+
+            rafId = window.requestAnimationFrame(frame);
+        }
+
+        function start() {
+            if (running) {
+                return;
+            }
+
+            running = true;
+            lastTs = 0;
+            rafId = window.requestAnimationFrame(frame);
+        }
+
+        function stop() {
+            running = false;
+
+            if (rafId) {
+                window.cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+        }
+
+        return {
+            setPhase: function (floor, nextCeiling) {
+                var nextFloor = Math.max(0, Math.min(99, floor));
+                ceiling = Math.max(nextCeiling, nextFloor + 0.5);
+
+                if (display < nextFloor) {
+                    display = nextFloor;
+                    render();
+                }
+
+                start();
+            },
+            finish: function () {
+                stop();
+                display = 100;
+                ceiling = 100;
+                render();
+            },
+            halt: function () {
+                stop();
+            }
+        };
+    }
+
+    function attachProgressController(ui) {
+        if (!ui || !ui.fill || ui.progress) {
+            return ui;
+        }
+
+        ui.progress = createProgressController(ui.fill);
+        return ui;
+    }
+
     function createOverlay(initialStatus, mode) {
         var existing = document.getElementById('maca-info-hub-social-progress');
 
@@ -282,12 +371,18 @@
 
         document.body.appendChild(overlay);
 
-        return {
+        var ui = {
             root: overlay,
             status: overlay.querySelector('.maca-info-hub-social-progress-status'),
             fill: overlay.querySelector('.maca-info-hub-social-progress-bar-fill'),
             steps: overlay.querySelector('.maca-info-hub-social-progress-steps')
         };
+
+        if (mode !== 'preview') {
+            attachProgressController(ui);
+        }
+
+        return ui;
     }
 
     function buildSteps(ui, stepKeys) {
@@ -305,9 +400,11 @@
         });
     }
 
-    function setProgress(ui, stepKeys, activeIndex, percent) {
-        if (ui.fill) {
-            ui.fill.style.width = Math.max(0, Math.min(100, percent)) + '%';
+    function setProgress(ui, stepKeys, activeIndex, floor, ceiling) {
+        if (ui.progress) {
+            ui.progress.setPhase(floor, ceiling);
+        } else if (ui.fill) {
+            ui.fill.style.width = Math.max(0, Math.min(100, floor)) + '%';
         }
 
         if (!ui.steps) {
@@ -329,6 +426,17 @@
                 dot.classList.add('is-active');
             }
         });
+    }
+
+    function channelProgressRange(index, total) {
+        var span = 78;
+        var start = 12 + (index / total) * span;
+        var end = 12 + ((index + 0.95) / total) * span;
+
+        return {
+            start: start,
+            end: Math.min(96, end)
+        };
     }
 
     function channelName(channel) {
@@ -424,11 +532,13 @@
         var ui = createOverlay(labels.saving || 'Saving…');
 
         buildSteps(ui, stepKeys);
-        setProgress(ui, stepKeys, 0, 8);
+        setProgress(ui, stepKeys, 1, 10, 28);
 
         if (!channels.length) {
             ui.status.textContent = labels.done || 'Done!';
-            setProgress(ui, stepKeys, stepKeys.length - 1, 100);
+            if (ui.progress) {
+                ui.progress.finish();
+            }
             ui.root.classList.add('is-complete');
             return Promise.resolve();
         }
@@ -437,8 +547,10 @@
 
         channels.forEach(function (channel, index) {
             chain = chain.then(function () {
+                var range = channelProgressRange(index, channels.length);
+
                 ui.status.textContent = channelLabel(channel);
-                setProgress(ui, stepKeys, index + 1, 20 + ((index + 1) / channels.length) * 75);
+                setProgress(ui, stepKeys, index + 1, range.start, range.end);
 
                 return $.ajax({
                     url: config.ajaxUrl,
@@ -458,13 +570,17 @@
                             : (labels.failed || 'Something went wrong.');
                         throw new Error(message);
                     }
+
+                    setProgress(ui, stepKeys, index + 1, range.end, range.end);
                 });
             });
         });
 
         return chain.then(function () {
             ui.status.textContent = labels.done || 'Done!';
-            setProgress(ui, stepKeys, stepKeys.length - 1, 100);
+            if (ui.progress) {
+                ui.progress.finish();
+            }
             ui.root.classList.add('is-complete');
 
             window.setTimeout(function () {
@@ -474,6 +590,9 @@
                 window.location.reload();
             }, 900);
         }).catch(function (error) {
+            if (ui.progress) {
+                ui.progress.halt();
+            }
             ui.status.textContent = error && error.message ? error.message : (labels.failed || 'Something went wrong.');
             ui.root.classList.add('is-error');
         });
@@ -484,11 +603,11 @@
         var ui = createOverlay(labels.testFacebook || 'Sending test post to Facebook…');
 
         buildSteps(ui, stepKeys);
-        setProgress(ui, stepKeys, 0, 20);
+        setProgress(ui, stepKeys, 0, 8, 58);
 
         window.setTimeout(function () {
             ui.status.textContent = labels.testInstagram || 'Sending test post to Instagram…';
-            setProgress(ui, stepKeys, 1, 65);
+            setProgress(ui, stepKeys, 1, 58, 94);
         }, 3500);
     }
 
@@ -522,7 +641,7 @@
                 var stepKeys = ['save'].concat(channels);
                 var ui = createOverlay(labels.saving || 'Saving…');
                 buildSteps(ui, stepKeys);
-                setProgress(ui, stepKeys, 0, 12);
+                setProgress(ui, stepKeys, 0, 6, 42);
                 return;
             }
 

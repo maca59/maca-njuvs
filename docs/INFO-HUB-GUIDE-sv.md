@@ -44,6 +44,11 @@ Under *maca Njuvs → Nyheter* skapar och redigerar ni nyheter som visas på web
 - **Publicerad** — visas på webbplatsen (om modulen är aktiverad)
 - **Arkiverad** — dold från webbplatsen men sparad i admin
 
+### Tips för bilder
+
+- Använd **Välj bild** — klistra inte in bilder i ingress eller innehåll.
+- Komprimera stora bilder (helst under 500 KB). Pluginet varnar om bilden är stor; mycket stora filer kan ge felmeddelandet *Please reduce the amount of data* vid sparning.
+
 ---
 
 ## Evenemang
@@ -63,7 +68,6 @@ Under *maca Njuvs → Evenemang* hanterar ni kommande och återkommande eveneman
 | **Start / Slut** | Datum och tid |
 | **Återkommande** | Ingen, Dagligen, Veckovis eller Månadsvis med intervall, veckodagar och slutdatum eller antal tillfällen |
 | **Aktiv** | Visa på webbplatsen |
-| **Bordsbokning** | Visa boka-bord-knapp (om maca Menulist-bokning finns på webbplatsen) |
 | **Publicering** | Webbplats, Facebook och Instagram |
 
 ### Undantag i återkommande serier
@@ -193,7 +197,6 @@ Originalinläggen raderas inte — importen skapar nya nyheter i maca Njuvs.
 - **Utgångsdatum** — nyheter kan döljas automatiskt
 - **Återkommande evenemang** — dagliga, veckovisa och månatliga serier med undantag
 - **Social publicering** — valfri delning till Facebook Page och Instagram Business vid sparning (kräver Meta-app)
-- **Bordsbokning** — evenemang kan visa boka-bord-knapp om maca Menulist finns installerat
 
 ---
 

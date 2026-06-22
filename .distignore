@@ -1,12 +1,21 @@
-# Files excluded from release ZIP
-
-# Version control & build
-.git
-.gitignore
-.distignore
-*.ps1
-maca-njuvs-*.zip
-
-# Editor / local
-.cursor
-.vscode
+# Files excluded from release ZIP
+
+# Version control & build
+.git
+.gitignore
+.distignore
+*.ps1
+maca-njuvs-*.zip
+
+# Editor / local
+.cursor
+.vscode
+
+# Dev-only build tools (not shipped in release)
+tools/
+
+# WordPress.org promo assets (source files + SVN output folder)
+wordpress-org/
+assets/banner.png
+assets/maca-njuvs_ikon.png
+assets/screenshot-*.png
